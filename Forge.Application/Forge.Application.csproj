@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>net481</TargetFramework>
     <LanguageTargets>$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\MaterialRoutesWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
-    <PackageReference Include="MaterialDesignColors" Version="2.0.5" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.4.0" />
-    <PackageReference Include="Ninject" Version="3.3.4" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+    <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
+    <PackageReference Include="Ninject" Version="3.3.6" />
     <PackageReference Include="NuGet.Build.Tasks.Pack">
-      <Version>6.1.0</Version>
+      <Version>6.11.1</Version>
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

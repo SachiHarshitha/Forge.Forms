@@ -14,7 +14,7 @@ namespace Forge.Forms.FormBuilding.Defaults
 
         private static ImageSource FromString(string value)
         {
-            return (ImageSource)Converter.ConvertFromString(value);
+            return (ImageSource)Converter?.ConvertFromString(value);
         }
 
         private class ImageSourceValueConverter : IValueConverter

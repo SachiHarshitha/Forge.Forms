@@ -1,6 +1,7 @@
 ﻿namespace Forge.Application.Infrastructure.Internal
 {
     using System.Windows.Media;
+
     using MaterialDesignThemes.Wpf;
 
     internal class PaletteService : IPaletteService
@@ -19,7 +20,7 @@
         {
             var paletteHelper = new PaletteHelper();
             var theme = paletteHelper.GetTheme();
-            IBaseTheme baseTheme = DarkMode ? new MaterialDesignDarkTheme() : (IBaseTheme)new MaterialDesignLightTheme();
+            BaseTheme baseTheme = DarkMode ? BaseTheme.Dark : BaseTheme.Light;
             theme.SetBaseTheme(baseTheme);
             paletteHelper.SetTheme(theme);
         }
