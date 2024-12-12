@@ -5,12 +5,34 @@
              xmlns:vm="clr-namespace:Forge.Forms.Avalonia.Demo.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Forge.Forms.Avalonia.Demo.Views.MainView"
-             x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
+			 xmlns:forms="clr-namespace:Forge.Forms.AvaloniaUI.Controls;assembly=Forge.Forms.AvaloniaUI"
+			 xmlns:views="clr-namespace:Forge.Forms.Avalonia.Demo.Views"
+			 x:DataType="vm:MainViewModel">
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
-
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<vm:MainViewModel />
+	</Design.DataContext>
+	<TabControl>
+		<TabItem Header="Home">
+			<ScrollViewer>
+				<views:FormView/>
+			</ScrollViewer>
+		</TabItem>
+		<TabItem Header="Examples">
+			<ScrollViewer>
+				<views:ExamplesView/>
+			</ScrollViewer>			
+		</TabItem>
+		<TabItem Header="XML">
+			<ScrollViewer>
+				<views:XmlExamplesView/>
+			</ScrollViewer>					
+		</TabItem>
+		<TabItem Header="Source">
+			<ScrollViewer>
+				<views:SourceView/>
+			</ScrollViewer>					
+		</TabItem>
+	</TabControl>
 </UserControl>

@@ -1,0 +1,44 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+	<formBuilding:FormBindingConverter x:Key="FormBindingConverter"/>
+
+	<ControlTemplate x:Key="WpfSwitchPresenterTemplate">
+		<Grid Margin="8,12" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<packIcon:PackIcon
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}"
+                IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}" />
+			<TextBlock
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Name}"
+                ToolTip.Tip="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ToolTip}" />
+			<ToggleButton
+                Name="ValueHolderControl"
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                internal:FocusHelper.InitialFocus="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=InitialFocus}"
+                Content="Toggle"
+                FontSize="12"
+                IsChecked="{Binding Value}"
+                IsEnabled="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsEnabled}" />
+		</Grid>
+	</ControlTemplate>
+</ResourceDictionary>

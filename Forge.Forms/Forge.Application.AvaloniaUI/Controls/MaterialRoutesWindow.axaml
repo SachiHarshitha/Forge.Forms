@@ -1,0 +1,37 @@
+﻿<Window x:Class="Forge.Application.AvaloniaUI.Controls.MaterialRoutesWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:internal="clr-namespace:Forge.Application.AvaloniaUI.Helpers.Internal"
+                       xmlns:valueConverters="clr-namespace:Forge.Application.AvaloniaUI.ValueConverters"
+                       xmlns:controls1="clr-namespace:Forge.Application.AvaloniaUI.Controls"
+                       xmlns:routing="clr-namespace:Forge.Application.AvaloniaUI.Routing"
+                       xmlns:commands="clr-namespace:Forge.Application.AvaloniaUI.Commands"
+                       xmlns:infrastructure="clr-namespace:Forge.Application.AvaloniaUI.Infrastructure"
+                       Title="{Binding Title}"
+                       Width="800"
+                       Height="600"
+                       d:DataContext="{d:DesignInstance Type=infrastructure:AppController,
+                                                        IsDesignTimeCreatable=False}"
+                       internal:AttachedProperties.InputBindingsSource="{Binding Routes.Current.RouteConfig.KeyBindings}"
+                       Background="{DynamicResource MaterialDesignPaper}"
+                       FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+                       TextElement.FontSize="{Binding FontSize,
+                                                      Mode=OneWay}"
+                       TextElement.FontWeight="Regular"
+                       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                       WindowStartupLocation="CenterScreen"
+                       WindowState="Maximized"
+                      mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary>
+            
+            <valueConverters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <valueConverters:CollectionToVisibilityConverter x:Key="CollectionToVisibilityConverter" />
+            <controls1:NullAsSeparatorTemplateSelector x:Key="NullAsSeparatorTemplateSelector" />
+        </ResourceDictionary>
+    </Window.Resources>
+</Window>

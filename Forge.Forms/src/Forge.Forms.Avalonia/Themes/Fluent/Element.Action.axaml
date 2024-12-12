@@ -1,0 +1,58 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+	<formBuilding:FormBindingConverter x:Key="FormBindingConverter"/>
+
+	 <ControlTemplate x:Key="MaterialActionPresenterTemplate" >
+        <Button
+            MinWidth="48"
+            MinHeight="36"
+            Command="{Binding Command}"
+            IsCancel="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsCancel}"
+            IsDefault="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsDefault}">
+            <StackPanel Orientation="Horizontal">
+                <packIcon:PackIcon
+                    Width="18"
+                    Height="18"
+                    Margin="0,0,4,0"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource MaterialDesignBody}"
+                    Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}"
+                    IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Content}" />
+            </StackPanel>
+        </Button>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MaterialPrimaryActionPresenterTemplate" TargetType="{x:Type defaults:ActionPresenter}">
+        <Button
+            MinWidth="48"
+            MinHeight="36"
+            Command="{Binding Command}"
+            IsCancel="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsCancel}"
+            IsDefault="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsDefault}">
+            <StackPanel Orientation="Horizontal">
+                <packIcon:PackIcon
+                    Width="18"
+                    Height="18"
+                    Margin="0,0,4,0"
+                    VerticalAlignment="Center"
+                    Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}"
+                    IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Content}" />
+            </StackPanel>
+        </Button>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MaterialActionPresenterLoadingTemplate" TargetType="{x:Type defaults:ActionPresenter}">
+        <Border MinWidth="48" MinHeight="36">
+            <ProgressBar
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsIndeterminate="True"/>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>

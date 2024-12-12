@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+
+    <ControlTheme x:Key="WpfColoredIconStyle" TargetType="{x:Type materialDesign:PackIcon}">
+        <Setter Property="Foreground" Value="{Binding Foreground, ElementName=ValueHolderControl}" />
+        <Interaction.Behaviors>
+            <DataTriggerBehavior Binding="{Binding ElementName=ValueHolderControl, Path=(HasError)}" Value="True">
+                <ChangePropertyAction PropertyName="Foreground" Value="#FFDB000C" />
+            </DataTriggerBehavior>
+        </Interaction.Behaviors>
+        
+    </ControlTheme>
+
+</ResourceDictionary>

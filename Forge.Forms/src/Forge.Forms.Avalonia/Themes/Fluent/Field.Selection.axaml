@@ -1,0 +1,234 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:annotations="clr-namespace:Forge.Forms.AvaloniaUI.Annotations"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+	<formBuilding:FormBindingConverter x:Key="FormBindingConverter"/>
+
+	<ControlTemplate x:Key="WpfComboBoxSelectionPresenterTemplate">
+		<Grid
+            Margin="8"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<packIcon:PackIcon
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}"
+                Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}" />
+			<TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,0,4"
+                FontSize="12"
+                Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Name}" />
+			<ComboBox
+                Name="ValueHolderControl"
+                Grid.Row="1"
+                Grid.Column="1"
+                internal:FocusHelper.InitialFocus="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=InitialFocus}"
+                DisplayMemberBinding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=DisplayPath}"
+                IsEnabled="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsNotReadOnly}"
+                ItemsSource="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ItemsSource}"
+                SelectedValue="{Binding Value}"
+                SelectedValueBinding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ValuePath}"
+                ToolTip.Tip="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ToolTip}">
+				<ComboBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<VirtualizingStackPanel />
+					</ItemsPanelTemplate>
+				</ComboBox.ItemsPanel>
+			</ComboBox>
+		</Grid>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="WpfEditableComboBoxSelectionPresenterTemplate">
+		<Grid
+            Margin="8"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<packIcon:PackIcon
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}"
+                Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}" />
+			<TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,0,4"
+                FontSize="12"
+                Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Name}" />
+			<ComboBox
+                Name="ValueHolderControl"
+                Grid.Row="1"
+                Grid.Column="1"
+                internal:FocusHelper.InitialFocus="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=InitialFocus}"
+                DisplayMemberBinding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=DisplayPath}"
+                IsEnabled="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsNotReadOnly}"
+                ItemsSource="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ItemsSource}"
+                SelectedValue="{Binding Value}"
+                ToolTip.Tip="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ToolTip}">
+				<ComboBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<VirtualizingStackPanel />
+					</ItemsPanelTemplate>
+				</ComboBox.ItemsPanel>
+			</ComboBox>
+		</Grid>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="WpfRadioButtonsSelectionPresenterTemplate" TargetType="{x:Type defaults:SelectionPresenter}">
+		<Grid
+            Margin="8"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<packIcon:PackIcon
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}"
+                Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}" />
+			<TextBlock
+                Name="HintText"
+                Grid.Row="0"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Name}"
+                ToolTip.Tip="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ToolTip}" />
+			<ListBox
+                Name="ValueHolderControl"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Padding="0,8,0,0"
+                BorderThickness="0"
+                DisplayMemberBinding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=DisplayPath}"
+                IsEnabled="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsNotReadOnly}"
+                ItemsSource="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ItemsSource}"
+                SelectedValue="{Binding Value}"
+                SelectedValueBinding="{Binding ValuePath}">
+				<ListBox.ItemContainerTheme>
+					<ControlTheme TargetType="ListBoxItem">
+						<Setter Property="Margin" Value="2,6,0,6" />
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="ListBoxItem">
+									<RadioButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}">
+										<ContentPresenter />
+									</RadioButton>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+					</ControlTheme>
+				</ListBox.ItemContainerTheme>
+			</ListBox>
+		</Grid>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="WpfRadioButtonsInlineSelectionPresenterTemplate" TargetType="{x:Type defaults:SelectionPresenter}">
+		<Grid
+            Margin="8"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<packIcon:PackIcon
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}"
+                Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}" />
+			<TextBlock
+                Name="HintText"
+                Grid.Row="0"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Name}"
+                ToolTip.Tip="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ToolTip}" />
+			<ListBox
+                Name="ValueHolderControl"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Padding="0,8,0,0"
+                BorderThickness="0"
+                DisplayMemberBinding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=DisplayPath}"
+                IsEnabled="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsNotReadOnly}"
+                ItemsSource="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ItemsSource}"
+                SelectedValue="{Binding Value}"
+                SelectedValueBinding="{Binding ValuePath}">
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel />
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+				<ListBox.ItemContainerTheme>
+					<ControlTheme TargetType="ListBoxItem">
+						<Setter Property="Margin" Value="2,6,12,6" />
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="ListBoxItem">
+									<RadioButton Padding="4,0,0,0" IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}">
+										<ContentPresenter />
+									</RadioButton>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+					</ControlTheme>
+				</ListBox.ItemContainerTheme>
+			</ListBox>
+		</Grid>
+	</ControlTemplate>
+</ResourceDictionary>

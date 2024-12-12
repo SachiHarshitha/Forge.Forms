@@ -1,0 +1,48 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+	<formBuilding:FormBindingConverter x:Key="FormBindingConverter"/>
+
+	<ControlTemplate x:Key="WpfConvertedPresenterTemplate" TargetType="{x:Type defaults:ConvertedPresenter}">
+		<Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<packIcon:PackIcon
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}"
+                IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}" />
+			<TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,0,4"
+                FontSize="12"
+                Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Name}" />
+			<TextBox
+                Name="ValueHolderControl"
+                Grid.Row="1"
+                Grid.Column="1"
+                internal:FocusHelper.InitialFocus="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=InitialFocus}"
+                FontSize="12"
+                IsEnabled="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsEnabled}"
+                IsReadOnly="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsReadOnly}"
+                Text="{Binding Value}"
+                ToolTip.Tip="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ToolTip}" />
+		</Grid>
+	</ControlTemplate>
+</ResourceDictionary>

@@ -1,0 +1,47 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+             xmlns:controls1="clr-namespace:Forge.Forms.AvaloniaUI.Controls;assembly=Forge.Forms.AvaloniaUI"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Forge.Forms.Avalonia.Demo.Views.ExamplesView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="160" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition MaxWidth="200" />
+        </Grid.ColumnDefinitions>
+        <controls:Card
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            VerticalAlignment="Stretch">
+            <ListBox
+                DisplayMemberBinding="{Binding DisplayString}"
+                ItemsSource="{Binding Models}"
+                SelectedItem="{Binding CurrentModel}"
+                SelectedValueBinding="{Binding Object}" />
+        </controls:Card>
+        <controls:Card
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            MaxWidth="{Binding CurrentModel.PreferredWidth}"
+            Margin="8"
+            VerticalAlignment="Center">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <controls1:DynamicForm Margin="16,16,16,8" Model="{Binding CurrentModel.Object}" />
+            </ScrollViewer>
+        </controls:Card>
+        <controls:ColorZone
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Stretch"
+            ZIndex="-1"
+            Mode="PrimaryMid" />
+    </Grid></UserControl>

@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+                    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+                    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+                    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal">
+	<formBuilding:FormBindingConverter x:Key="FormBindingConverter"/>
+
+
+	<ControlTemplate x:Key="WpfCheckBoxPresenterTemplate" TargetType="{x:Type defaults:CheckBoxPresenter}">
+		<Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<packIcon:PackIcon
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}"
+                IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}" />
+			<CheckBox
+                Name="ValueHolderControl"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                internal:FocusHelper.InitialFocus="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=InitialFocus}"
+                Content="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Name}"
+                FontSize="12"
+                IsChecked="{Binding Value}"
+                IsEnabled="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsEnabled}"
+                ToolTip.Tip="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ToolTip}" />
+		</Grid>
+	</ControlTemplate>
+</ResourceDictionary>
