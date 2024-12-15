@@ -5,7 +5,7 @@
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
-	 <ControlTemplate x:Key="MaterialActionPresenterTemplate" >
+    <ControlTemplate x:Key="MaterialActionPresenterTemplate">
         <Button
             MinWidth="48"
             MinHeight="36"
@@ -51,7 +51,7 @@
             <ProgressBar
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                IsIndeterminate="True"/>
+                IsIndeterminate="True" />
         </Border>
     </ControlTemplate>
 </ResourceDictionary>

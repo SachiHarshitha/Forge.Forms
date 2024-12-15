@@ -1,15 +1,13 @@
-﻿using Avalonia.Data;
-
+﻿using System;
+using Avalonia.Data;
 using Forge.Forms.AvaloniaUI.FormBuilding;
-
-using System;
 
 namespace Forge.Forms.AvaloniaUI.DynamicExpressions;
 
 public sealed class ConvertedDirectBinding : IValueProvider
 {
     public ConvertedDirectBinding(BindingOptions bindingOptions,
-         ReplacementPipe replacementPipe)
+        ReplacementPipe replacementPipe)
     {
         BindingOptions = bindingOptions ?? throw new ArgumentNullException(nameof(bindingOptions));
         ReplacementPipe = replacementPipe ?? throw new ArgumentNullException(nameof(replacementPipe));

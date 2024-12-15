@@ -14,11 +14,8 @@ public class ErrorTextElement : ContentElement
 
 public class ErrorTextPresenter : BindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(ErrorTextPresenter);
-
     static ErrorTextPresenter()
     {
-
     }
 
     public ErrorTextPresenter(IResourceContext context, IDictionary<string, IValueProvider> fieldResources,
@@ -26,4 +23,6 @@ public class ErrorTextPresenter : BindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(ErrorTextPresenter);
 }

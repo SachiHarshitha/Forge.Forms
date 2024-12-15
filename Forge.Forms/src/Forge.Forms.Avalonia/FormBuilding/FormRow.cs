@@ -210,7 +210,7 @@ internal class Layout : ILayout
 
 internal class TabLayout : ILayout
 {
-   // private static ThicknessConverter thicknessConverter = new ThicknessConverter();
+    // private static ThicknessConverter thicknessConverter = new ThicknessConverter();
     //private static GridLengthConverter gridLengthConverter = new GridLengthConverter();
 
     public TabLayout(
@@ -252,8 +252,8 @@ internal class TabLayout : ILayout
         tabControl.MaxHeight = MaxHeight.HasValue ? MaxHeight.Value : tabControl.MaxHeight;
         if (string.IsNullOrWhiteSpace(TabHeaderMargin) == false)
         {
-           // var margin = (Thickness)thicknessConverter.ConvertFromString(TabHeaderMargin);
-           // Headered.SetTabHeaderMargin(tabControl, margin);
+            // var margin = (Thickness)thicknessConverter.ConvertFromString(TabHeaderMargin);
+            // Headered.SetTabHeaderMargin(tabControl, margin);
         }
 
         if (TabHeaderFontSize != null) tabControl.FontSize = TabHeaderFontSize.Value;

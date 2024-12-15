@@ -1,46 +1,46 @@
 ﻿<ResourceDictionary
-  xmlns="https://github.com/avaloniaui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
-  xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
-  xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
-  
-  <ControlTemplate x:Key="DatePickerPresenterTemplate">
-    <Grid>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition />
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-      				<RowDefinition />
-      				<RowDefinition />
-      </Grid.RowDefinitions>
-      <packIcon:PackIcon
-        Grid.Row="1"
-        Grid.Column="0"        
-        Width="24"
-        Height="24"
-        Margin="0,0,8,0"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Kind="{formBuilding:FormBinding Icon}"
-        IsVisible="{formBuilding:FormBinding IconVisibility}" />
-      <TextBlock
-        Grid.Row="0"
-        Grid.Column="1"
-        Margin="0,0,0,4"
-        FontSize="12"
-        Text="{formBuilding:FormBinding Name}" />
-      <DatePicker
-        Name="ValueHolderControl"
-        Grid.Row="1"
-        Grid.Column="1"        
-        VerticalAlignment="Center"
-        internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
-        IsEnabled="{formBuilding:FormBinding IsEnabled}"
-        SelectedDate="{formBuilding:FormBinding Value}"
-        ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
-    </Grid>
-  </ControlTemplate>
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+
+    <ControlTemplate x:Key="DatePickerPresenterTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <packIcon:PackIcon
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,8,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Kind="{formBuilding:FormBinding Icon}"
+                IsVisible="{formBuilding:FormBinding IconVisibility}" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,0,4"
+                FontSize="12"
+                Text="{formBuilding:FormBinding Name}" />
+            <DatePicker
+                Name="ValueHolderControl"
+                Grid.Row="1"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
+                IsEnabled="{formBuilding:FormBinding IsEnabled}"
+                SelectedDate="{formBuilding:FormBinding Value}"
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+        </Grid>
+    </ControlTemplate>
 
 </ResourceDictionary>

@@ -14,11 +14,8 @@ public class HeadingElement : ContentElement
 
 public class HeadingPresenter : BindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(HeadingPresenter);
-
     static HeadingPresenter()
     {
-
     }
 
     public HeadingPresenter(IResourceContext context, IDictionary<string, IValueProvider> fieldResources,
@@ -26,4 +23,6 @@ public class HeadingPresenter : BindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(HeadingPresenter);
 }

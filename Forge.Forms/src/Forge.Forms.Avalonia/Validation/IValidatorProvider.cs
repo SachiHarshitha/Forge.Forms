@@ -1,9 +1,8 @@
 ﻿using Forge.Forms.AvaloniaUI.FormBuilding;
 
-namespace Forge.Forms.AvaloniaUI.Validation
+namespace Forge.Forms.AvaloniaUI.Validation;
+
+public interface IValidatorProvider
 {
-    public interface IValidatorProvider
-    {
-        FieldValidator GetValidator(IResourceContext context, ValidationPipe pipe);
-    }
+    FieldValidator GetValidator(IResourceContext context, ValidationPipe pipe);
 }

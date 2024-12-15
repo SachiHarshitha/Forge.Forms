@@ -1,5 +1,4 @@
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
-
 using MaterialDesign.Avalonia.PackIcon;
 
 namespace Forge.Forms.AvaloniaUI.FormBuilding;
@@ -28,7 +27,7 @@ public abstract class FormField : FormElement
     ///     Gets or sets the field's PackIconKind resource. Not all controls may display an icon.
     /// </summary>
     public IValueProvider Icon { get; set; }
-    
+
 
     /// <summary>
     ///     Finalizes the field state by adding all appropriate values as resources.

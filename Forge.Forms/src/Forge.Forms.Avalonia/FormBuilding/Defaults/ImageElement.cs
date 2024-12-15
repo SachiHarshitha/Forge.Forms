@@ -9,8 +9,28 @@ namespace Forge.Forms.AvaloniaUI.FormBuilding.Defaults;
 
 public class ImageElement : FormElement
 {
+    private class ImageSourceValueConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            switch (value)
+            {
+                case string path:
+                    return path;
+                default:
+                    return null;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return BindingOperations.DoNothing;
+        }
+    }
+
     #region Properties
-   public IValueProvider Source { get; set; }
+
+    public IValueProvider Source { get; set; }
 
     public IValueProvider Width { get; set; }
 
@@ -23,9 +43,11 @@ public class ImageElement : FormElement
     public IValueProvider Stretch { get; set; }
 
     public IValueProvider StretchDirection { get; set; }
+
     #endregion
 
     #region Methoods
+
     private static IValueProvider GetSource(IValueProvider source)
     {
         switch (source)
@@ -52,12 +74,12 @@ public class ImageElement : FormElement
         Resources.Add(nameof(Width), Width ?? new LiteralValue(double.NaN));
         Resources.Add(nameof(Height), Height ?? new LiteralValue(double.NaN));
         Resources.Add(nameof(VerticalAlignment),
-            VerticalAlignment ?? new LiteralValue(global::Avalonia.Layout.VerticalAlignment.Center));
+            VerticalAlignment ?? new LiteralValue(Avalonia.Layout.VerticalAlignment.Center));
         Resources.Add(nameof(HorizontalAlignment),
             HorizontalAlignment ?? new LiteralValue(Stretch));
-        Resources.Add(nameof(Stretch), Stretch ?? new LiteralValue(global::Avalonia.Media.Stretch.Uniform));
+        Resources.Add(nameof(Stretch), Stretch ?? new LiteralValue(Avalonia.Media.Stretch.Uniform));
         Resources.Add(nameof(StretchDirection),
-            StretchDirection ?? new LiteralValue(global::Avalonia.Media.StretchDirection.DownOnly));
+            StretchDirection ?? new LiteralValue(Avalonia.Media.StretchDirection.DownOnly));
     }
 
     protected internal override IBindingProvider CreateBindingProvider(IResourceContext context,
@@ -65,37 +87,14 @@ public class ImageElement : FormElement
     {
         return new ImagePresenter(context, Resources, formResources);
     }
+
     #endregion
-
-
-
-    private class ImageSourceValueConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            switch (value)
-            {
-                case string path:
-                    return path;
-                default:
-                    return null;
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return BindingOperations.DoNothing;
-        }
-    }
 }
 
 public class ImagePresenter : BindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(ImagePresenter);
-
     static ImagePresenter()
     {
-
     }
 
     public ImagePresenter(IResourceContext context, IDictionary<string, IValueProvider> fieldResources,
@@ -103,4 +102,6 @@ public class ImagePresenter : BindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(ImagePresenter);
 }

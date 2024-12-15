@@ -4,11 +4,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
-
 using Avalonia.Data;
-
 using FastMember;
-
 using Forge.Forms.AvaloniaUI.Controls;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using Forge.Forms.AvaloniaUI.FormBuilding;
@@ -181,12 +178,8 @@ public static class ModelState
     public static bool Validate(object model)
     {
         var hasErrors = false;
-        foreach (var expression in GetBindings(model))
-        {
-            expression.UpdateSource();
-            //hasErrors = hasErrors || expression.HasValidationError;
-        }
-
+        foreach (var expression in GetBindings(model)) expression.UpdateSource();
+        //hasErrors = hasErrors || expression.HasValidationError;
         return !hasErrors;
     }
 
@@ -197,13 +190,10 @@ public static class ModelState
     {
         var hasErrors = false;
         foreach (var expression in GetBindings(model, properties))
-        {
             // The only way to validate is to attempt a write-through,
             // otherwise non-strict validation won't fire.
             expression.UpdateSource();
-            //hasErrors = hasErrors || expression.HasValidationError;
-        }
-
+        //hasErrors = hasErrors || expression.HasValidationError;
         return !hasErrors;
     }
 
@@ -222,9 +212,9 @@ public static class ModelState
         if (properties == null || properties.Length == 0) return list;
 
         foreach (var form in GetForms(model))
-            foreach (var property in properties)
-                if (form.DataBindingProviders.TryGetValue(property, out var provider))
-                    list.AddRange(provider.GetBindings());
+        foreach (var property in properties)
+            if (form.DataBindingProviders.TryGetValue(property, out var provider))
+                list.AddRange(provider.GetBindings());
 
         return list;
     }

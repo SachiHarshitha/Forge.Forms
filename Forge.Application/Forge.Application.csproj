@@ -12,7 +12,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
     <PackageReference Include="Ninject" Version="3.3.6" />
     <PackageReference Include="NuGet.Build.Tasks.Pack">
-      <Version>6.11.1</Version>
+      <Version>6.12.1</Version>
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

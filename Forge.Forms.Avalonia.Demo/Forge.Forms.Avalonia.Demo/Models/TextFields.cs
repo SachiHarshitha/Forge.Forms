@@ -1,17 +1,13 @@
 ﻿using Forge.Forms.AvaloniaUI.Annotations;
 
-namespace Forge.Forms.Avalonia.Demo.Models
+namespace Forge.Forms.Avalonia.Demo.Models;
+
+[Title("Text fields")]
+public class TextFields
 {
-    [Title("Text fields")]
-    public class TextFields
-    {
-        public string SingleLine { get; set; }
+    public string SingleLine { get; set; }
 
-        [Password]
-        public string Password { get; set; }
+    [Password] public string Password { get; set; }
 
-        [MultiLine]
-        public string MultiLine { get; set; }
-
-    }
+    [MultiLine] public string MultiLine { get; set; }
 }

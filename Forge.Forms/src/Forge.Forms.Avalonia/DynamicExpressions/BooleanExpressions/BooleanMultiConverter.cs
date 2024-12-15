@@ -19,12 +19,17 @@ internal class BooleanMultiConverter : IMultiValueConverter
 
     public IValueConverter Converter { get; }
 
+    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         var boolResult = Expression.Evaluate(values.Select(c => c is true).ToArray());
         object result = boolResult;
         if (Converter != null) result = Converter.Convert(boolResult, targetType, parameter, culture);
-        
+
         return result;
     }
 
@@ -42,10 +47,5 @@ internal class BooleanMultiConverter : IMultiValueConverter
         if (context != null && context.TryFindResource(valueConverter) is IValueConverter converter) return converter;
 
         throw new InvalidOperationException($"Value converter '{valueConverter}' not found.");
-    }
-
-    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
     }
 }

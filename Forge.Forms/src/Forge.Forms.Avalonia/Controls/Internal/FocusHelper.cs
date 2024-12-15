@@ -7,19 +7,18 @@ namespace Forge.Forms.AvaloniaUI.Controls.Internal;
 // Source: https://stackoverflow.com/questions/817610/wpf-and-initial-focus
 internal class FocusHelper : AvaloniaObject
 {
+    public static readonly AttachedProperty<bool> InitialFocusProperty =
+        AvaloniaProperty.RegisterAttached<FocusHelper, Control, bool>(
+            "InitialFocus");
+
     static FocusHelper()
     {
         InitialFocusProperty.Changed.AddClassHandler<DynamicForm>(OnInitialFocusPropertyChanged);
     }
-    
-    public static readonly AttachedProperty<bool> InitialFocusProperty =
-        AvaloniaProperty.RegisterAttached<FocusHelper,Control,bool>(
-            "InitialFocus",
-            false);
 
     public static bool GetInitialFocus(Control control)
     {
-        return (bool)control.GetValue(InitialFocusProperty);
+        return control.GetValue(InitialFocusProperty);
     }
 
     public static void SetInitialFocus(Control control, bool value)

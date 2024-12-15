@@ -13,4 +13,5 @@
         IsReadOnly="True"
         ShowLineNumbers="True"
         SyntaxHighlighting="C#"
-        VerticalScrollBarVisibility="Auto" /></UserControl>
+        VerticalScrollBarVisibility="Auto" />
+</UserControl>

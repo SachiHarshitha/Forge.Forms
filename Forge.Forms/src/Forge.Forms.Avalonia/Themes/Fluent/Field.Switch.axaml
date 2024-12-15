@@ -1,19 +1,18 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
-	<ControlTemplate x:Key="WpfSwitchPresenterTemplate">
-		<Grid Margin="8,12" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
-				<ColumnDefinition Width="Auto" />
-			</Grid.ColumnDefinitions>
-			<packIcon:PackIcon
+    <ControlTemplate x:Key="WpfSwitchPresenterTemplate">
+        <Grid Margin="8,12" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <packIcon:PackIcon
                 Grid.Column="0"
                 Width="24"
                 Height="24"
@@ -22,13 +21,13 @@
                 VerticalAlignment="Center"
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
-			<TextBlock
+            <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 FontSize="12"
                 Text="{formBuilding:FormBinding Name}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
-			<ToggleButton
+            <ToggleButton
                 Name="ValueHolderControl"
                 Grid.Column="2"
                 HorizontalAlignment="Center"
@@ -38,6 +37,6 @@
                 FontSize="12"
                 IsChecked="{Binding Value}"
                 IsEnabled="{formBuilding:FormBinding IsEnabled}" />
-		</Grid>
-	</ControlTemplate>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

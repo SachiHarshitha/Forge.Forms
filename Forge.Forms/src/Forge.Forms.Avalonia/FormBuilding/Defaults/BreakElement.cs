@@ -23,11 +23,8 @@ public class BreakElement : FormElement
 
 public class BreakPresenter : BindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(BreakPresenter);
-
     static BreakPresenter()
     {
-
     }
 
     public BreakPresenter(IResourceContext context, IDictionary<string, IValueProvider> fieldResources,
@@ -35,4 +32,6 @@ public class BreakPresenter : BindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(BreakPresenter);
 }

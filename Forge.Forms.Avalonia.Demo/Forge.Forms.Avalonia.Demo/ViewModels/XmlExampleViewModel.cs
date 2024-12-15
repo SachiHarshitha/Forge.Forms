@@ -10,85 +10,78 @@ using Newtonsoft.Json;
 namespace Forge.Forms.Avalonia.Demo.ViewModels;
 
 public class XmlExampleViewModel : ObservableObject, IActionHandler
+{
+    public ICommand _buildDefinitionCommand;
+
+    private IFormDefinition compiledDefinition;
+    private string xmlString;
+
+    public XmlExampleViewModel()
     {
+        RouteInitializing();
+    }
 
-        private IFormDefinition compiledDefinition;
-        private string xmlString;
-        public ICommand _buildDefinitionCommand;
-        public XmlExampleViewModel()
-        {RouteInitializing();
+    public IFormDefinition CompiledDefinition
+    {
+        get => compiledDefinition;
+        private set
+        {
+            if (Equals(compiledDefinition, value)) return;
+
+            compiledDefinition = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string XmlString
+    {
+        get => xmlString;
+        set
+        {
+            if (Equals(xmlString, value)) return;
+
+            xmlString = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ICommand BuildDefinitionCommand => _buildDefinitionCommand ??= new RelayCommand(BuildDefinition);
+
+    public object CurrentModel { get; set; }
+
+    public Visual Form { get; set; }
+
+    public void HandleAction(IActionContext actionContext)
+    {
+        //notificationService.Notify($"Action '{actionContext.Action}'");
+    }
+
+    private void ViewSource()
+    {
+        string json;
+        try
+        {
+            json = JsonConvert.SerializeObject(CurrentModel, Formatting.Indented);
+        }
+        catch
+        {
+        }
+    }
+
+    private void Print()
+    {
+        if (Form == null)
+        {
         }
 
-        public IFormDefinition CompiledDefinition
-        {
-            get => compiledDefinition;
-            private set
-            {
-                if (Equals(compiledDefinition, value))
-                {
-                    return;
-                }
+        // var printDlg = new PrintDialog();
+        // printDlg.PrintVisual(Form, "Form Printing.");
+    }
 
-                compiledDefinition = value;
-                OnPropertyChanged(nameof(CompiledDefinition));
-            }
-        }
-
-        public string XmlString
-        {
-            get => xmlString;
-            set
-            {
-                if (Equals(xmlString, value))
-                {
-                    return;
-                }
-
-                xmlString = value;
-                OnPropertyChanged(nameof(XmlString));
-            }
-        }
-
-        public ICommand BuildDefinitionCommand => _buildDefinitionCommand ??= new RelayCommand(BuildDefinition);
-
-        public object CurrentModel { get; set; }
-
-        public Visual Form { get; set; }
-
-        private void ViewSource()
-        {
-            string json;
-            try
-            {
-                json = JsonConvert.SerializeObject(CurrentModel, Formatting.Indented);
-            }
-            catch
-            {
-                return;
-            }
-
-        }
-
-        private void Print()
-        {
-            if (Form == null)
-            {
-                return;
-            }
-
-            // var printDlg = new PrintDialog();
-            // printDlg.PrintVisual(Form, "Form Printing.");
-        }
-
-        public void HandleAction(IActionContext actionContext)
-        {
-            //notificationService.Notify($"Action '{actionContext.Action}'");
-        }
-
-        protected void RouteInitializing()
-        {
-            XmlString =
-                @"<form>
+    protected void RouteInitializing()
+    {
+        XmlString =
+            @"<form>
     <title>Create account</title>
     <heading>Personal details</heading>
     <input type=""string"" name=""FirstName""
@@ -148,18 +141,18 @@ public class XmlExampleViewModel : ObservableObject, IActionHandler
     </row>
 </form>";
 
-            BuildDefinition();
-        }
+        BuildDefinition();
+    }
 
-        private void BuildDefinition()
+    private void BuildDefinition()
+    {
+        try
         {
-            try
-            {
-                CompiledDefinition = FormBuilder.Default.GetDefinition(xmlString);
-            }
-            catch (Exception ex)
-            {
-               // notificationService.ForceNotify(ex.Message, "COPY", () => Clipboard.SetText(ex.ToString()));
-            }
+            CompiledDefinition = FormBuilder.Default.GetDefinition(xmlString);
+        }
+        catch (Exception ex)
+        {
+            // notificationService.ForceNotify(ex.Message, "COPY", () => Clipboard.SetText(ex.ToString()));
         }
     }
+}

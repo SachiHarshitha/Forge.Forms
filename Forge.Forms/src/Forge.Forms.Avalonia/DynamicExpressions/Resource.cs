@@ -24,7 +24,7 @@ public abstract class Resource : IEquatable<Resource>, IValueProvider
             ["ToUpper"] = new ToUpperConverter(),
             ["ToLower"] = new ToLowerConverter(),
             ["Length"] = new LengthValueConverter(),
-            ["ToString"] = new ToStringConverter(),
+            ["ToString"] = new ToStringConverter()
         };
 
     /// <summary>

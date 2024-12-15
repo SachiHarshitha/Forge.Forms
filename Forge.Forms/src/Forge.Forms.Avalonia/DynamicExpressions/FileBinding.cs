@@ -22,7 +22,7 @@ public sealed class FileBinding : Resource
         return new Binding(nameof(IProxy.Value))
         {
             Source = IsDynamic
-                ? (object)new FileWatcher(FilePath)
+                ? new FileWatcher(FilePath)
                 : new PlainString(Utilities.TryReadFile(FilePath)),
             Converter = GetValueConverter(context),
             Mode = BindingMode.OneWay

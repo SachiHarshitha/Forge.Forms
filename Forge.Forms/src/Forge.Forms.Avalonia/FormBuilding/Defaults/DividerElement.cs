@@ -23,11 +23,8 @@ public class DividerElement : FormElement
 
 public class DividerPresenter : BindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(DividerPresenter);
-
     static DividerPresenter()
     {
-
     }
 
     public DividerPresenter(IResourceContext context, IDictionary<string, IValueProvider> fieldResources,
@@ -35,4 +32,6 @@ public class DividerPresenter : BindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(DividerPresenter);
 }

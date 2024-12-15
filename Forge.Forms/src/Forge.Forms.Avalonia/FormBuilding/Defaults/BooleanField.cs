@@ -22,11 +22,8 @@ public class BooleanField : DataFormField
 
 public class CheckBoxPresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(CheckBoxPresenter);
-
     static CheckBoxPresenter()
     {
-
     }
 
     public CheckBoxPresenter(IResourceContext context,
@@ -35,15 +32,14 @@ public class CheckBoxPresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(CheckBoxPresenter);
 }
 
 public class SwitchPresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(SwitchPresenter);
-
     static SwitchPresenter()
     {
-
     }
 
     public SwitchPresenter(IResourceContext context,
@@ -52,4 +48,6 @@ public class SwitchPresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(SwitchPresenter);
 }

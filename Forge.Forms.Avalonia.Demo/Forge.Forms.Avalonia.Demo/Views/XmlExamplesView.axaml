@@ -14,7 +14,7 @@
     Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModels:XmlExampleViewModel></viewModels:XmlExampleViewModel>
+        <viewModels:XmlExampleViewModel />
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -45,7 +45,7 @@
                     FontFamily="Consolas"
                     WordWrap="True">
                     <Interaction.Behaviors>
-                        <behaviors:DocumentTextBindingBehavior Text="{Binding XmlString, Mode=TwoWay}"/>
+                        <behaviors:DocumentTextBindingBehavior Text="{Binding XmlString, Mode=TwoWay}" />
                     </Interaction.Behaviors>
                 </avaloniaEdit:TextEditor>
                 <Button
@@ -64,11 +64,8 @@
             VerticalAlignment="Center">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ScrollViewer.Resources>
-                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FFFFFFFF" />
                 </ScrollViewer.Resources>
-                <controls:DynamicForm Margin="12,12,12,8" Model="{Binding CompiledDefinition}">
-                  
-                </controls:DynamicForm>
+                <controls:DynamicForm Margin="12,12,12,8" Model="{Binding CompiledDefinition}" />
             </ScrollViewer>
         </materialDesign:Card>
         <materialDesign:ColorZone

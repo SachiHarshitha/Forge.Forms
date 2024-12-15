@@ -19,11 +19,8 @@ public class DirectContentField : DataFormField
 
 public class DirectContentPresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(DirectContentPresenter);
-
     static DirectContentPresenter()
     {
-
     }
 
     public DirectContentPresenter(IResourceContext context,
@@ -32,4 +29,6 @@ public class DirectContentPresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(DirectContentPresenter);
 }

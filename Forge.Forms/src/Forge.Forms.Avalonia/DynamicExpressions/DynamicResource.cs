@@ -1,6 +1,5 @@
 ﻿using System;
 using Avalonia.Data;
-using Avalonia.Data.Core;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Forge.Forms.AvaloniaUI.FormBuilding;
@@ -27,13 +26,13 @@ public sealed class DynamicResource : Resource
     public override IBinding ProvideBinding(IResourceContext context)
     {
         var key = new DynamicResourceKey(ResourceKey);
-        if (context.TryFindResource(key) is BindingProxy proxy) 
+        if (context.TryFindResource(key) is BindingProxy proxy)
             return CreateBinding(context, proxy);
 
         proxy = new BindingProxy();
         context.AddResource(key, proxy);
         proxy.Value = new DynamicResourceExtension(ResourceKey).ProvideValue(new Target(context));
-        return CreateBinding(context,proxy);
+        return CreateBinding(context, proxy);
     }
 
     public override bool Equals(Resource other)
@@ -54,7 +53,7 @@ public sealed class DynamicResource : Resource
         return new Binding
         {
             Source = proxy,
-           // Path = new PropertyPath(BindingProxy.ValueProperty),
+            // Path = new PropertyPath(BindingProxy.ValueProperty),
             Path = BindingProxy.ValueProperty.Name,
             Converter = GetValueConverter(context),
             Mode = BindingMode.OneWay

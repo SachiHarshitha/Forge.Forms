@@ -14,11 +14,8 @@ public class TitleElement : ContentElement
 
 public class TitlePresenter : BindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(TitlePresenter);
-
     static TitlePresenter()
     {
-
     }
 
     public TitlePresenter(IResourceContext context, IDictionary<string, IValueProvider> fieldResources,
@@ -26,4 +23,6 @@ public class TitlePresenter : BindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(TitlePresenter);
 }

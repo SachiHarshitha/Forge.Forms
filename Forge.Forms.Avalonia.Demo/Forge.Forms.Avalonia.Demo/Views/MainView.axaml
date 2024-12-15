@@ -5,30 +5,30 @@
              xmlns:vm="clr-namespace:Forge.Forms.Avalonia.Demo.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Forge.Forms.Avalonia.Demo.Views.MainView"
-			 xmlns:views="clr-namespace:Forge.Forms.Avalonia.Demo.Views"
-			 x:DataType="vm:MainViewModel">
-	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
+             xmlns:views="clr-namespace:Forge.Forms.Avalonia.Demo.Views"
+             x:DataType="vm:MainViewModel">
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:MainViewModel />
-	</Design.DataContext>
-	<TabControl>
-		<TabItem Header="Home">
-			<views:FormView/>
-		</TabItem>
-		<TabItem Header="Examples">
-				<views:ExamplesView/>
-		</TabItem>
-		<TabItem Header="XML">
-			<views:XmlExamplesView/>
-		</TabItem>
-		<TabItem Header="Source">
-			<views:SourceView/>
-		</TabItem>
-		<TabItem Header="test">
-			<ScrollViewer>
-				<Button Command="{Binding OpenFormCommand}"></Button>
-			</ScrollViewer>
-		</TabItem>
-	</TabControl>
+        <vm:MainViewModel />
+    </Design.DataContext>
+    <TabControl>
+        <TabItem Header="Home">
+            <views:FormView />
+        </TabItem>
+        <TabItem Header="Examples">
+            <views:ExamplesView />
+        </TabItem>
+        <TabItem Header="XML">
+            <views:XmlExamplesView />
+        </TabItem>
+        <TabItem Header="Source">
+            <views:SourceView />
+        </TabItem>
+        <TabItem Header="test">
+            <ScrollViewer>
+                <Button Command="{Binding OpenFormCommand}" />
+            </ScrollViewer>
+        </TabItem>
+    </TabControl>
 </UserControl>

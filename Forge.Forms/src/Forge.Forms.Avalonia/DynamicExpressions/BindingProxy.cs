@@ -1,71 +1,63 @@
-﻿
-using System;
+﻿using System;
 using Avalonia;
 
-namespace Forge.Forms.AvaloniaUI.DynamicExpressions
+namespace Forge.Forms.AvaloniaUI.DynamicExpressions;
+
+/// <summary>
+///     Encapsulates an object bound to a resource.
+/// </summary>
+public class BindingProxy : AvaloniaObject, IProxy
 {
-    /// <summary>
-    /// Encapsulates an object bound to a resource.
-    /// </summary>
-    public class BindingProxy : AvaloniaObject, IProxy
+    // Define a bindable AvaloniaProperty equivalent to DependencyProperty
+    public static readonly AvaloniaProperty<object> ValueProperty =
+        AvaloniaProperty.Register<BindingProxy, object>(nameof(Value));
+
+    public BindingProxy()
     {
-        // Define a bindable AvaloniaProperty equivalent to DependencyProperty
-        public static readonly AvaloniaProperty<object> ValueProperty =
-            AvaloniaProperty.Register<BindingProxy, object>(nameof(Value));
-
-        // The Key property (not bindable, used internally)
-        public object Key { get; set; }
-
-        // The bindable Value property
-        public object Value
-        {
-            get => GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
-        }
-
-        // Action to invoke when the value changes
-        public Action ValueChanged { get; set; }
-
-        public BindingProxy()
-        {
-            // Observe changes to the Value property
-            this.GetObservable(ValueProperty).Subscribe(_ =>
-            {
-                ValueChanged?.Invoke();
-            });
-        }
+        // Observe changes to the Value property
+        this.GetObservable(ValueProperty).Subscribe(_ => { ValueChanged?.Invoke(); });
     }
 
-    /// <summary>
-    /// Represents a key for a binding proxy.
-    /// </summary>
-    internal struct BindingProxyKey : IEquatable<BindingProxyKey>
+    // The Key property (not bindable, used internally)
+    public object Key { get; set; }
+
+    // The bindable Value property
+    public object Value
     {
-        public BindingProxyKey(string key)
-        {
-            Key = key;
-        }
+        get => GetValue(ValueProperty);
+        set => SetValue(ValueProperty, value);
+    }
 
-        public string Key { get; }
+    // Action to invoke when the value changes
+    public Action ValueChanged { get; set; }
+}
 
-        public bool Equals(BindingProxyKey other)
-        {
-            return Key == other.Key;
-        }
+/// <summary>
+///     Represents a key for a binding proxy.
+/// </summary>
+internal struct BindingProxyKey : IEquatable<BindingProxyKey>
+{
+    public BindingProxyKey(string key)
+    {
+        Key = key;
+    }
 
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+    public string Key { get; }
 
-            return obj is BindingProxyKey key && Equals(key);
-        }
+    public bool Equals(BindingProxyKey other)
+    {
+        return Key == other.Key;
+    }
 
-        public override int GetHashCode()
-        {
-            return Key?.GetHashCode() ?? 0;
-        }
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+
+        return obj is BindingProxyKey key && Equals(key);
+    }
+
+    public override int GetHashCode()
+    {
+        return Key?.GetHashCode() ?? 0;
     }
 }

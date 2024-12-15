@@ -1,9 +1,8 @@
-﻿namespace Forge.Forms.Avalonia.Demo.Models
-{
-    public class CustomContent
-    {
-        public string FirstName { get; set; }
+﻿namespace Forge.Forms.Avalonia.Demo.Models;
 
-        public string LastName { get; set; }
-    }
+public class CustomContent
+{
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
 }

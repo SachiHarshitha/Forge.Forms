@@ -77,13 +77,16 @@ public sealed class ImageAttribute : FormContentAttribute
             Source = Utilities.GetResource<object>(Source, null, x => x),
             Width = Utilities.GetResource<double>(Width, double.NaN, SizeDeserializer),
             Height = Utilities.GetResource<double>(Height, double.NaN, SizeDeserializer),
-            HorizontalAlignment = Utilities.GetResource<HorizontalAlignment>(HorizontalAlignment, global::Avalonia.Layout.HorizontalAlignment.Stretch,
+            HorizontalAlignment = Utilities.GetResource<HorizontalAlignment>(HorizontalAlignment,
+                Avalonia.Layout.HorizontalAlignment.Stretch,
                 Deserializers.Enum<HorizontalAlignment>()),
             VerticalAlignment =
-                Utilities.GetResource<VerticalAlignment>(VerticalAlignment, global::Avalonia.Layout.VerticalAlignment.Center, Deserializers.Enum<VerticalAlignment>()),
-            Stretch = Utilities.GetResource<Stretch>(Stretch, global::Avalonia.Media.Stretch.Uniform, Deserializers.Enum<Stretch>()),
+                Utilities.GetResource<VerticalAlignment>(VerticalAlignment, Avalonia.Layout.VerticalAlignment.Center,
+                    Deserializers.Enum<VerticalAlignment>()),
+            Stretch = Utilities.GetResource<Stretch>(Stretch, Avalonia.Media.Stretch.Uniform,
+                Deserializers.Enum<Stretch>()),
             StretchDirection = Utilities.GetResource<StretchDirection>(StretchDirection,
-                global::Avalonia.Media.StretchDirection.DownOnly, Deserializers.Enum<StretchDirection>())
+                Avalonia.Media.StretchDirection.DownOnly, Deserializers.Enum<StretchDirection>())
         };
     }
 

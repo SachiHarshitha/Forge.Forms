@@ -27,11 +27,8 @@ public class TimeField : DataFormField
 
 public class TimePresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(TimePresenter);
-
     static TimePresenter()
     {
-   
     }
 
     public TimePresenter(IResourceContext context,
@@ -40,4 +37,6 @@ public class TimePresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(TimePresenter);
 }

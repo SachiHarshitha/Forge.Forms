@@ -11,9 +11,9 @@ public partial class Dialog : Window
     {
         this.options = options;
         DataContext = options;
-        this.WindowStartupLocation = options.WindowStartupLocation;
+        WindowStartupLocation = options.WindowStartupLocation;
         if (options.WindowStartupLocation == WindowStartupLocation.CenterOwner)
-            this.Owner = options.Owner;
+            Owner = options.Owner;
 
         InitializeComponent();
 
@@ -27,8 +27,8 @@ public partial class Dialog : Window
     {
         if (options.BringToFront)
         {
-            this.Activate();
-            this.Focus();
+            Activate();
+            Focus();
         }
 
         //MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));

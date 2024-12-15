@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 
 namespace Forge.Forms.AvaloniaUI.FormBuilding.Defaults;
@@ -38,11 +37,8 @@ public sealed class ConvertedField : DataFormField
 
 public class ConvertedPresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(ConvertedPresenter);
-
     static ConvertedPresenter()
     {
-
     }
 
     public ConvertedPresenter(IResourceContext context,
@@ -51,4 +47,6 @@ public class ConvertedPresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(ConvertedPresenter);
 }

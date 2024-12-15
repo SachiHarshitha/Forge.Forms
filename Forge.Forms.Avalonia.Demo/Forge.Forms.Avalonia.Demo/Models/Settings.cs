@@ -3,187 +3,177 @@ using System.Runtime.CompilerServices;
 using Forge.Forms.AvaloniaUI.Annotations;
 using MaterialDesign.Avalonia.PackIcon;
 
-namespace Forge.Forms.Avalonia.Demo.Models
+namespace Forge.Forms.Avalonia.Demo.Models;
+
+public class Settings : INotifyPropertyChanged
 {
-    public class Settings : INotifyPropertyChanged
+    private bool bluetooth;
+    private string deviceName;
+
+    private bool facebook;
+    private string hotspotName;
+    private bool instagram;
+    private bool mobileData;
+    private bool personalHotspot;
+    private bool sendAnonymousData;
+    private bool twitter;
+    private double volume;
+    private bool wiFi;
+
+    [Title("Settings")]
+    [Heading("Connectivity", Icon = "Signal")]
+    [Field(Name = "Wi-Fi", Icon = "Wifi")]
+    [Toggle]
+    public bool WiFi
     {
-        private bool bluetooth;
-        private string deviceName;
-
-        private bool facebook;
-        private string hotspotName;
-        private bool instagram;
-        private bool mobileData;
-        private bool personalHotspot;
-        private bool sendAnonymousData;
-        private bool twitter;
-        private double volume;
-        private bool wiFi;
-
-        [Title("Settings")]
-        [Heading("Connectivity", Icon = "Signal")]
-        [Field(Name = "Wi-Fi", Icon = "Wifi")]
-        [Toggle]
-        public bool WiFi
+        get => wiFi;
+        set
         {
-            get => wiFi;
-            set
-            {
-                wiFi = value;
-                OnPropertyChanged();
-            }
+            wiFi = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Field(Icon = "Signal")]
-        [Toggle]
-        public bool MobileData
+    [Field(Icon = "Signal")]
+    [Toggle]
+    public bool MobileData
+    {
+        get => mobileData;
+        set
         {
-            get => mobileData;
-            set
-            {
-                mobileData = value;
-                OnPropertyChanged();
-            }
+            mobileData = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Field(Icon = "AccessPoint")]
-        [Toggle]
-        public bool PersonalHotspot
+    [Field(Icon = "AccessPoint")]
+    [Toggle]
+    public bool PersonalHotspot
+    {
+        get => personalHotspot;
+        set
         {
-            get => personalHotspot;
-            set
-            {
-                personalHotspot = value;
-                OnPropertyChanged();
-            }
+            personalHotspot = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Field(IsVisible = "{Binding PersonalHotspot}")]
-        public string HotspotName
+    [Field(IsVisible = "{Binding PersonalHotspot}")]
+    public string HotspotName
+    {
+        get => hotspotName;
+        set
         {
-            get => hotspotName;
-            set
-            {
-                hotspotName = value;
-                OnPropertyChanged();
-            }
+            hotspotName = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Field(Icon = "Bluetooth")]
-        [Toggle]
-        public bool Bluetooth
+    [Field(Icon = "Bluetooth")]
+    [Toggle]
+    public bool Bluetooth
+    {
+        get => bluetooth;
+        set
         {
-            get => bluetooth;
-            set
-            {
-                bluetooth = value;
-                OnPropertyChanged();
-            }
+            bluetooth = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Divider]
-        [Heading("Notifications", Icon = PackIconKind.MessageOutline)]
-        [Field(Icon = "Twitter")]
-        [Toggle]
-        public bool Twitter
+    [Divider]
+    [Heading("Notifications", Icon = PackIconKind.MessageOutline)]
+    [Field(Icon = "Twitter")]
+    [Toggle]
+    public bool Twitter
+    {
+        get => twitter;
+        set
         {
-            get => twitter;
-            set
-            {
-                twitter = value;
-                OnPropertyChanged();
-            }
+            twitter = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Field(Icon = "Facebook")]
-        [Toggle]
-        public bool Facebook
+    [Field(Icon = "Facebook")]
+    [Toggle]
+    public bool Facebook
+    {
+        get => facebook;
+        set
         {
-            get => facebook;
-            set
-            {
-                facebook = value;
-                OnPropertyChanged();
-            }
+            facebook = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Field(Icon = "Instagram")]
-        [Toggle]
-        public bool Instagram
+    [Field(Icon = "Instagram")]
+    [Toggle]
+    public bool Instagram
+    {
+        get => instagram;
+        set
         {
-            get => instagram;
-            set
-            {
-                instagram = value;
-                OnPropertyChanged();
-            }
+            instagram = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Divider]
-        [Heading("Device", Icon = PackIconKind.Cellphone)]
+    [Divider]
+    [Heading("Device", Icon = PackIconKind.Cellphone)]
 
-        public string DeviceName
+    public string DeviceName
+    {
+        get => deviceName;
+        set
         {
-            get => deviceName;
-            set
-            {
-                deviceName = value;
-                OnPropertyChanged();
-            }
+            deviceName = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Slider(Minimum = 0d, Maximum = 100d)]
-        [Field(Icon = "{Binding VolumeIcon}")]
-        public double Volume
+    [Slider(Minimum = 0d, Maximum = 100d)]
+    [Field(Icon = "{Binding VolumeIcon}")]
+    public double Volume
+    {
+        get => volume;
+        set
         {
-            get => volume;
-            set
-            {
-                volume = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(VolumeIcon));
-            }
+            volume = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(VolumeIcon));
         }
+    }
 
-        public PackIconKind VolumeIcon
+    public PackIconKind VolumeIcon
+    {
+        get
         {
-            get
-            {
-                if (volume <= 0d)
-                {
-                    return PackIconKind.VolumeOff;
-                }
+            if (volume <= 0d) return PackIconKind.VolumeOff;
 
-                if (volume < 33d)
-                {
-                    return PackIconKind.VolumeLow;
-                }
+            if (volume < 33d) return PackIconKind.VolumeLow;
 
-                if (volume > 66d)
-                {
-                    return PackIconKind.VolumeHigh;
-                }
+            if (volume > 66d) return PackIconKind.VolumeHigh;
 
-                return PackIconKind.VolumeMedium;
-            }
+            return PackIconKind.VolumeMedium;
         }
+    }
 
-        [Toggle]
-        public bool SendAnonymousData
+    [Toggle]
+    public bool SendAnonymousData
+    {
+        get => sendAnonymousData;
+        set
         {
-            get => sendAnonymousData;
-            set
-            {
-                sendAnonymousData = value;
-                OnPropertyChanged();
-            }
+            sendAnonymousData = value;
+            OnPropertyChanged();
         }
+    }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

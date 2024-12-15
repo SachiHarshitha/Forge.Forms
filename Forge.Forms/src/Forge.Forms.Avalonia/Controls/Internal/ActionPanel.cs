@@ -10,14 +10,14 @@ namespace Forge.Forms.AvaloniaUI.Controls.Internal;
 internal class ActionPanel : Panel
 {
     public static readonly AttachedProperty<Position> PositionProperty =
-        AvaloniaProperty.RegisterAttached<ActionPanel,Panel,Position>(
+        AvaloniaProperty.RegisterAttached<ActionPanel, Panel, Position>(
             "Position",
             Position.Right,
             true);
 
     public static Position GetPosition(Control element)
     {
-        return (Position)element.GetValue(PositionProperty);
+        return element.GetValue(PositionProperty);
     }
 
     public static void SetPosition(Control element, Position value)

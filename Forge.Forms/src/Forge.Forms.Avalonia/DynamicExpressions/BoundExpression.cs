@@ -5,745 +5,542 @@ using System.Text;
 using Avalonia.Data;
 using Forge.Forms.AvaloniaUI.FormBuilding;
 
-namespace Forge.Forms.AvaloniaUI.DynamicExpressions
+namespace Forge.Forms.AvaloniaUI.DynamicExpressions;
+
+public class BoundExpression : IValueProvider
 {
-    public class BoundExpression : IValueProvider
+    public BoundExpression(string value)
     {
-        public BoundExpression(string value)
-        {
-            StringFormat = value ?? throw new ArgumentNullException(nameof(value));
-            Resources = new List<IValueProvider>(0);
-            IsPlainString = true;
-        }
+        StringFormat = value ?? throw new ArgumentNullException(nameof(value));
+        Resources = new List<IValueProvider>(0);
+        IsPlainString = true;
+    }
 
-        public BoundExpression(IValueProvider resource) : this(resource, null)
-        {
-        }
+    public BoundExpression(IValueProvider resource) : this(resource, null)
+    {
+    }
 
-        public BoundExpression(IValueProvider resource, string stringFormat)
-        {
-            Resources = new List<IValueProvider>(1) { resource ?? throw new ArgumentNullException(nameof(resource)) };
+    public BoundExpression(IValueProvider resource, string stringFormat)
+    {
+        Resources = new List<IValueProvider>(1) { resource ?? throw new ArgumentNullException(nameof(resource)) };
+        StringFormat = stringFormat;
+    }
+
+    public BoundExpression(IEnumerable<IValueProvider> resources, string stringFormat)
+    {
+        Resources = resources?.ToList() ?? throw new ArgumentNullException(nameof(resources));
+        if (Resources.Count != 1)
+            StringFormat = stringFormat ?? throw new ArgumentNullException(nameof(stringFormat));
+        else
             StringFormat = stringFormat;
+
+        if (Resources.Count == 0) IsPlainString = true;
+    }
+
+    public string StringFormat { get; }
+
+    public IReadOnlyList<IValueProvider> Resources { get; }
+
+    public bool IsPlainString { get; }
+
+    public bool IsSingleResource => StringFormat == null && Resources != null && Resources.Count == 1;
+
+    public IBinding ProvideBinding(IResourceContext context)
+    {
+        if (Resources == null || Resources.Count == 0) return new LiteralValue(StringFormat).ProvideBinding(context);
+
+        if (Resources.Count == 1)
+        {
+            var resource = Resources[0];
+            var binding = resource.ProvideBinding(context) as BindingBase;
+            if (StringFormat != null) binding.StringFormat = StringFormat;
+
+            return binding;
         }
 
-        public BoundExpression(IEnumerable<IValueProvider> resources, string stringFormat)
+        var multiBinding = new Avalonia.Data.MultiBinding
         {
-            Resources = resources?.ToList() ?? throw new ArgumentNullException(nameof(resources));
-            if (Resources.Count != 1)
-            {
-                StringFormat = stringFormat ?? throw new ArgumentNullException(nameof(stringFormat));
-            }
-            else
-            {
-                StringFormat = stringFormat;
-            }
+            StringFormat = StringFormat
+        };
 
-            if (Resources.Count == 0)
-            {
-                IsPlainString = true;
-            }
-        }
+        foreach (var binding in Resources.Select(resource => resource.ProvideBinding(context)))
+            multiBinding.Bindings.Add(binding);
 
-        public string StringFormat { get; }
+        return multiBinding;
+    }
 
-        public IReadOnlyList<IValueProvider> Resources { get; }
+    public object ProvideValue(IResourceContext context)
+    {
+        if (Resources == null || Resources.Count == 0) return UnescapedStringFormat();
 
-        public bool IsPlainString { get; }
+        return ProvideBinding(context);
+    }
 
-        public bool IsSingleResource => StringFormat == null && Resources != null && Resources.Count == 1;
+    internal IProxy GetProxy(IResourceContext context)
+    {
+        if (IsPlainString) return new PlainObject(StringFormat);
 
-        public IBinding ProvideBinding(IResourceContext context)
+        if (IsSingleResource) return Resources[0].GetValue(context);
+
+        if (StringFormat != null) return this.GetStringValue(context);
+
+        return this.GetValue(context);
+    }
+
+    public IValueProvider GetValueProvider()
+    {
+        if (IsPlainString) return new LiteralValue(StringFormat);
+
+        if (IsSingleResource) return Resources[0];
+
+        return this;
+    }
+
+    public IValueProvider Simplified()
+    {
+        if (IsPlainString) return new LiteralValue(UnescapedStringFormat());
+
+        if (IsSingleResource) return Resources[0];
+
+        return this;
+    }
+
+    public string UnescapedStringFormat()
+    {
+        return StringFormat?.Replace("{{", "{").Replace("}}", "}");
+    }
+
+    public static IValueProvider ParseSimplified(string expression)
+    {
+        return Parse(expression).Simplified();
+    }
+
+    public static BoundExpression Parse(string expression)
+    {
+        return Parse(expression, contextualResource: null);
+    }
+
+    public static BoundExpression Parse(string expression, IDictionary<string, object> contextualResources)
+    {
+        IValueProvider Factory(string name, bool oneTimeBinding, string converter)
         {
-            if (Resources == null || Resources.Count == 0)
+            if (!contextualResources.TryGetValue(name, out var value))
             {
-                return new LiteralValue(StringFormat).ProvideBinding(context);
-            }
-
-            if (Resources.Count == 1)
-            {
-                var resource = Resources[0];
-                var binding = resource.ProvideBinding(context) as BindingBase;
-                if (StringFormat != null)
+                var index = name.IndexOf('.');
+                var indexBracket = name.IndexOf('[');
+                var increment = 1;
+                if (index == -1 || (indexBracket != -1 && indexBracket < index))
                 {
-                    binding.StringFormat = StringFormat;
+                    increment = 0;
+                    index = indexBracket;
                 }
 
-                return binding;
-            }
+                if (index == -1) return null;
 
-            var multiBinding = new Avalonia.Data.MultiBinding
-            {
-                StringFormat = StringFormat
-            };
+                var source = name.Substring(0, index);
+                if (!contextualResources.TryGetValue(source, out value)) return null;
 
-            foreach (var binding in Resources.Select(resource => resource.ProvideBinding(context)))
-            {
-                multiBinding.Bindings.Add(binding);
-            }
-
-            return multiBinding;
-        }
-
-        public object ProvideValue(IResourceContext context)
-        {
-            if (Resources == null || Resources.Count == 0)
-            {
-                return UnescapedStringFormat();
-            }
-
-            return ProvideBinding(context);
-        }
-
-        internal IProxy GetProxy(IResourceContext context)
-        {
-            if (IsPlainString)
-            {
-                return new PlainObject(StringFormat);
-            }
-
-            if (IsSingleResource)
-            {
-                return Resources[0].GetValue(context);
-            }
-
-            if (StringFormat != null)
-            {
-                return this.GetStringValue(context);
-            }
-
-            return this.GetValue(context);
-        }
-
-        public IValueProvider GetValueProvider()
-        {
-            if (IsPlainString)
-            {
-                return new LiteralValue(StringFormat);
-            }
-
-            if (IsSingleResource)
-            {
-                return Resources[0];
-            }
-
-            return this;
-        }
-
-        public IValueProvider Simplified()
-        {
-            if (IsPlainString)
-            {
-                return new LiteralValue(UnescapedStringFormat());
-            }
-
-            if (IsSingleResource)
-            {
-                return Resources[0];
-            }
-
-            return this;
-        }
-
-        public string UnescapedStringFormat()
-        {
-            return StringFormat?.Replace("{{", "{").Replace("}}", "}");
-        }
-
-        public static IValueProvider ParseSimplified(string expression)
-        {
-            return Parse(expression).Simplified();
-        }
-
-        public static BoundExpression Parse(string expression)
-        {
-            return Parse(expression, contextualResource: null);
-        }
-
-        public static BoundExpression Parse(string expression, IDictionary<string, object> contextualResources)
-        {
-            IValueProvider Factory(string name, bool oneTimeBinding, string converter)
-            {
-                if (!contextualResources.TryGetValue(name, out var value))
-                {
-                    var index = name.IndexOf('.');
-                    var indexBracket = name.IndexOf('[');
-                    var increment = 1;
-                    if (index == -1 || indexBracket != -1 && indexBracket < index)
-                    {
-                        increment = 0;
-                        index = indexBracket;
-                    }
-
-                    if (index == -1)
-                    {
-                        return null;
-                    }
-
-                    var source = name.Substring(0, index);
-                    if (!contextualResources.TryGetValue(source, out value))
-                    {
-                        return null;
-                    }
-
-                    var path = name.Substring(index + increment);
-                    switch (value)
-                    {
-                        case IProxy proxy:
-                            return new ProxyResource(proxy, path, oneTimeBinding, converter);
-                        case Func<IResourceContext, IProxy> lazyProxy:
-                            return new DeferredProxyResource(lazyProxy, path, oneTimeBinding, converter);
-                        case IValueProvider _:
-                            throw new InvalidOperationException("Cannot use nested paths for a resource.");
-                        default:
-                            return new BoundValue(value, path, oneTimeBinding, converter);
-                    }
-                }
-
+                var path = name.Substring(index + increment);
                 switch (value)
                 {
                     case IProxy proxy:
-                        return new ProxyResource(proxy, null, oneTimeBinding, converter);
+                        return new ProxyResource(proxy, path, oneTimeBinding, converter);
                     case Func<IResourceContext, IProxy> lazyProxy:
-                        return new DeferredProxyResource(lazyProxy, null, oneTimeBinding, converter);
-                    case IValueProvider valueProvider:
-                        return valueProvider.Wrap(converter);
+                        return new DeferredProxyResource(lazyProxy, path, oneTimeBinding, converter);
+                    case IValueProvider _:
+                        throw new InvalidOperationException("Cannot use nested paths for a resource.");
                     default:
-                        return new LiteralValue(value, converter);
+                        return new BoundValue(value, path, oneTimeBinding, converter);
                 }
             }
 
-            return Parse(expression, Factory);
+            switch (value)
+            {
+                case IProxy proxy:
+                    return new ProxyResource(proxy, null, oneTimeBinding, converter);
+                case Func<IResourceContext, IProxy> lazyProxy:
+                    return new DeferredProxyResource(lazyProxy, null, oneTimeBinding, converter);
+                case IValueProvider valueProvider:
+                    return valueProvider.Wrap(converter);
+                default:
+                    return new LiteralValue(value, converter);
+            }
         }
 
-        public static BoundExpression Parse(string expression,
-            Func<string, bool, string, IValueProvider> contextualResource)
+        return Parse(expression, Factory);
+    }
+
+    public static BoundExpression Parse(string expression,
+        Func<string, bool, string, IValueProvider> contextualResource)
+    {
+        if (expression == null) throw new ArgumentNullException(nameof(expression));
+
+        var i = 0;
+        if (expression.StartsWith("\\"))
+            i = 1;
+        else if (expression.StartsWith("@")) return new BoundExpression(expression.Substring(1));
+
+        var resources = new List<IValueProvider>();
+        var stringFormat = new StringBuilder();
+        var resourceType = new StringBuilder();
+        var resourceName = new StringBuilder();
+        var resourceConverter = new StringBuilder();
+        var resourceFormat = new StringBuilder();
+        var oneTimeBind = false;
+        var isInMultiBinding = false;
+        var multiBindingOneTimeBind = false;
+        var multiBindingResources = new List<Resource>();
+        var length = expression.Length;
+        char c;
+        outside:
+        if (i == length)
         {
-            if (expression == null)
+            var format = stringFormat.ToString();
+            return new BoundExpression(resources, format == "{0}" ? null : format);
+        }
+
+        c = expression[i];
+        if (c == '{')
+        {
+            stringFormat.Append('{');
+            if (++i == expression.Length) throw new FormatException("Invalid unescaped '{' at end of input.");
+
+            if (expression[i] == '{')
             {
-                throw new ArgumentNullException(nameof(expression));
+                i++;
+                stringFormat.Append('{');
+                goto outside;
             }
 
-            var i = 0;
-            if (expression.StartsWith("\\"))
+            goto readResource;
+        }
+
+        if (c == '}')
+        {
+            stringFormat.Append('}');
+            if (++i == expression.Length) throw new FormatException("Invalid unescaped '}' at end of input.");
+
+            if (expression[i] == '}')
             {
-                i = 1;
-            }
-            else if (expression.StartsWith("@"))
-            {
-                return new BoundExpression(expression.Substring(1));
+                i++;
+                stringFormat.Append('}');
+                goto outside;
             }
 
-            var resources = new List<IValueProvider>();
-            var stringFormat = new StringBuilder();
-            var resourceType = new StringBuilder();
-            var resourceName = new StringBuilder();
-            var resourceConverter = new StringBuilder();
-            var resourceFormat = new StringBuilder();
-            var oneTimeBind = false;
-            bool isInMultiBinding = false;
-            var multiBindingOneTimeBind = false;
-            var multiBindingResources = new List<Resource>();
-            var length = expression.Length;
-            char c;
-            outside:
-            if (i == length)
-            {
-                var format = stringFormat.ToString();
-                return new BoundExpression(resources, format == "{0}" ? null : format);
-            }
+            throw new FormatException("Invalid unescaped '}'.");
+        }
 
+        stringFormat.Append(c);
+        i++;
+        goto outside;
+
+        readResource:
+        // A leading ^ indicates one time binding for contextual resources.
+        if (expression[i] == '^')
+        {
+            if (++i == length) throw new FormatException("Unexpected end of input.");
+
+            oneTimeBind = true;
+        }
+
+        // Resource type.
+        while (char.IsLetter(c = expression[i]))
+        {
+            resourceType.Append(c);
+            if (++i == length) throw new FormatException("Unexpected end of input.");
+        }
+
+        // Skip whitespace.
+        while (char.IsWhiteSpace(expression[i]))
+            if (++i == length)
+                throw new FormatException("Unexpected end of input.");
+
+        if (resourceType.ToString() == "MultiBinding")
+        {
+            // Set a flag that all bindings after this should be added to a multibinding converter's bindings
+            // until the MultiBinding is closed
+            isInMultiBinding = true;
+            multiBindingOneTimeBind = oneTimeBind;
+            multiBindingResources.Clear();
+            resourceType.Clear();
             c = expression[i];
             if (c == '{')
             {
-                stringFormat.Append('{');
-                if (++i == expression.Length)
-                {
-                    throw new FormatException("Invalid unescaped '{' at end of input.");
-                }
-
-                if (expression[i] == '{')
-                {
-                    i++;
-                    stringFormat.Append('{');
-                    goto outside;
-                }
-
+                i++;
                 goto readResource;
             }
 
-            if (c == '}')
-            {
-                stringFormat.Append('}');
-                if (++i == expression.Length)
-                {
-                    throw new FormatException("Invalid unescaped '}' at end of input.");
-                }
+            throw new FormatException("MultiBinding must contain at least one resource.");
+        }
 
-                if (expression[i] == '}')
-                {
-                    i++;
-                    stringFormat.Append('}');
-                    goto outside;
-                }
-
-                throw new FormatException("Invalid unescaped '}'.");
-            }
-
-            stringFormat.Append(c);
+        // Resource name.
+        if (expression[i] == '\'')
+        {
             i++;
-            goto outside;
+            if (i == length) throw new FormatException("Unexpected end of input.");
 
-            readResource:
-            // A leading ^ indicates one time binding for contextual resources.
-            if (expression[i] == '^')
+            while ((c = expression[i]) != '\'')
             {
-                if (++i == length)
-                {
-                    throw new FormatException("Unexpected end of input.");
-                }
-
-                oneTimeBind = true;
+                resourceName.Append(c);
+                if (++i == length) throw new FormatException("Unexpected end of input.");
             }
 
-            // Resource type.
-            while (char.IsLetter(c = expression[i]))
+            i++;
+            if (i == length) throw new FormatException("Unexpected end of input.");
+        }
+        else
+        {
+            while ((c = expression[i]) != ',' && c != ':' && c != '|')
             {
-                resourceType.Append(c);
-                if (++i == length)
-                {
-                    throw new FormatException("Unexpected end of input.");
-                }
-            }
-
-            // Skip whitespace.
-            while (char.IsWhiteSpace(expression[i]))
-            {
-                if (++i == length)
-                {
-                    throw new FormatException("Unexpected end of input.");
-                }
-            }
-
-            if (resourceType.ToString() == "MultiBinding")
-            {
-                // Set a flag that all bindings after this should be added to a multibinding converter's bindings
-                // until the MultiBinding is closed
-                isInMultiBinding = true;
-                multiBindingOneTimeBind = oneTimeBind;
-                multiBindingResources.Clear();
-                resourceType.Clear();
-                c = expression[i];
                 if (c == '{')
                 {
-                    i++;
-                    goto readResource;
-                }
-                else
-                {
-                    throw new FormatException("MultiBinding must contain at least one resource.");
-                }
-            }
+                    if (++i == length) throw new FormatException("Unexpected end of input.");
 
-            // Resource name.
-            if (expression[i] == '\'')
+                    if (expression[i] != '{') throw new FormatException("Invalid unescaped '{'.");
+                }
+                else if (c == '}')
+                {
+                    if (++i == length) goto addResource;
+
+                    if (expression[i] != '}') goto addResource;
+                }
+
+                resourceName.Append(c);
+                if (++i == length) throw new FormatException("Unexpected end of input.");
+            }
+        }
+
+        endOfMultiBinding:
+        // Skip whitespace between name and converter/format/end.
+        while (char.IsWhiteSpace(expression[i]))
+            if (++i == length)
+                throw new FormatException("Unexpected end of input.");
+
+        c = expression[i];
+        if (c == '}')
+        {
+            // Resource can close at this point assuming no converter and no string format.
+            if (++i == length) goto addResource;
+
+            if (expression[i] != '}') goto addResource;
+
+            throw new FormatException("Invalid '}}' sequence.");
+        }
+
+        // Value converter, read while character is letter.
+        if (c == '|')
+        {
+            if (++i == length) throw new FormatException("Unexpected end of input.");
+
+            while (char.IsLetter(c = expression[i]))
             {
-                i++;
-                if (i == length)
-                {
-                    throw new FormatException("Unexpected end of input.");
-                }
-
-                while ((c = expression[i]) != '\'')
-                {
-                    resourceName.Append(c);
-                    if (++i == length)
-                    {
-                        throw new FormatException("Unexpected end of input.");
-                    }
-                }
-
-                i++;
-                if (i == length)
-                {
-                    throw new FormatException("Unexpected end of input.");
-                }
-            }
-            else
-            {
-                while ((c = expression[i]) != ',' && c != ':' && c != '|')
-                {
-                    if (c == '{')
-                    {
-                        if (++i == length)
-                        {
-                            throw new FormatException("Unexpected end of input.");
-                        }
-
-                        if (expression[i] != '{')
-                        {
-                            throw new FormatException("Invalid unescaped '{'.");
-                        }
-                    }
-                    else if (c == '}')
-                    {
-                        if (++i == length)
-                        {
-                            goto addResource;
-                        }
-
-                        if (expression[i] != '}')
-                        {
-                            goto addResource;
-                        }
-                    }
-
-                    resourceName.Append(c);
-                    if (++i == length)
-                    {
-                        throw new FormatException("Unexpected end of input.");
-                    }
-                }
+                resourceConverter.Append(c);
+                if (++i == length) throw new FormatException("Unexpected end of input.");
             }
 
-            endOfMultiBinding:
-            // Skip whitespace between name and converter/format/end.
+            // Skip whitespace between converter to parameter/format/end.
             while (char.IsWhiteSpace(expression[i]))
-            {
                 if (++i == length)
-                {
                     throw new FormatException("Unexpected end of input.");
-                }
-            }
 
-            c = expression[i];
-            if (c == '}')
+            // Check for value converter parameter.
+            if (c == '(')
             {
-                // Resource can close at this point assuming no converter and no string format.
-                if (++i == length)
+                do
                 {
-                    goto addResource;
-                }
+                    if (++i == length) throw new FormatException("Unexpected end of input.");
+                } while (char.IsWhiteSpace(expression[i]));
 
-                if (expression[i] != '}')
+                c = expression[i];
+                if (c == '\'')
                 {
-                    goto addResource;
-                }
-
-                throw new FormatException("Invalid '}}' sequence.");
-            }
-
-            // Value converter, read while character is letter.
-            if (c == '|')
-            {
-                if (++i == length)
-                {
-                    throw new FormatException("Unexpected end of input.");
-                }
-
-                while (char.IsLetter(c = expression[i]))
-                {
-                    resourceConverter.Append(c);
-                    if (++i == length)
+                    resourceConverter.Append(':');
+                    var converterParameter = new StringBuilder();
+                    while (true)
                     {
-                        throw new FormatException("Unexpected end of input.");
-                    }
-                }
+                        if (++i == length) throw new FormatException("Unexpected end of input.");
 
-                // Skip whitespace between converter to parameter/format/end.
-                while (char.IsWhiteSpace(expression[i]))
-                {
-                    if (++i == length)
-                    {
-                        throw new FormatException("Unexpected end of input.");
-                    }
-                }
-
-                // Check for value converter parameter.
-                if (c == '(')
-                {
-                    do
-                    {
-                        if (++i == length)
+                        c = expression[i];
+                        if (c != '\'')
                         {
-                            throw new FormatException("Unexpected end of input.");
+                            converterParameter.Append(c);
                         }
-                    } while (char.IsWhiteSpace(expression[i]));
-
-                    c = expression[i];
-                    if (c == '\'')
-                    {
-                        resourceConverter.Append(':');
-                        var converterParameter = new StringBuilder();
-                        while (true)
+                        else
                         {
-                            if (++i == length)
-                            {
-                                throw new FormatException("Unexpected end of input.");
-                            }
+                            if (++i == length) throw new FormatException("Unexpected end of input.");
 
                             c = expression[i];
-                            if (c != '\'')
+                            if (c == '\'')
                             {
-                                converterParameter.Append(c);
+                                converterParameter.Append('\'');
                             }
                             else
                             {
-                                if (++i == length)
-                                {
-                                    throw new FormatException("Unexpected end of input.");
-                                }
-
-                                c = expression[i];
-                                if (c == '\'')
-                                {
-                                    converterParameter.Append('\'');
-                                }
-                                else
-                                {
-                                    // End of string
-                                    while (char.IsWhiteSpace(expression[i]))
-                                    {
-                                        if (++i == length)
-                                        {
-                                            throw new FormatException("Unexpected end of input.");
-                                        }
-                                    }
-
-                                    c = expression[i];
-                                    if (c != ')')
-                                    {
-                                        throw new FormatException(
-                                            "Expected closing parenthesis after converter parameter.");
-                                    }
-
+                                // End of string
+                                while (char.IsWhiteSpace(expression[i]))
                                     if (++i == length)
-                                    {
                                         throw new FormatException("Unexpected end of input.");
-                                    }
-
-                                    c = expression[i];
-                                    break;
-                                }
-                            }
-                        }
-
-                        resourceConverter
-                            .Append('\'')
-                            .Append(converterParameter);
-                    }
-                    else if (c != ')')
-                    {
-                        resourceConverter.Append(':');
-                        var converterParameter = new StringBuilder();
-                        converterParameter.Append(c);
-                        while (true)
-                        {
-                            if (++i == length)
-                            {
-                                throw new FormatException("Unexpected end of input.");
-                            }
-
-                            c = expression[i];
-                            if (char.IsWhiteSpace(c))
-                            {
-                                do
-                                {
-                                    if (++i == length)
-                                    {
-                                        throw new FormatException("Unexpected end of input.");
-                                    }
-                                } while (char.IsWhiteSpace(expression[i]));
 
                                 c = expression[i];
                                 if (c != ')')
-                                {
-                                    throw new FormatException("Expected closing parenthesis after converter parameter.");
-                                }
-                            }
+                                    throw new FormatException(
+                                        "Expected closing parenthesis after converter parameter.");
 
-                            if (c == ')')
-                            {
-                                if (++i == length)
-                                {
-                                    throw new FormatException("Unexpected end of input.");
-                                }
+                                if (++i == length) throw new FormatException("Unexpected end of input.");
 
                                 c = expression[i];
                                 break;
                             }
-
-                            converterParameter.Append(c);
                         }
-
-                        resourceConverter.Append(converterParameter.ToString().ToLowerInvariant());
                     }
+
+                    resourceConverter
+                        .Append('\'')
+                        .Append(converterParameter);
                 }
-
-                // Skip whitespace between converter/parameter to format/end.
-                while (char.IsWhiteSpace(expression[i]))
+                else if (c != ')')
                 {
-                    if (++i == length)
+                    resourceConverter.Append(':');
+                    var converterParameter = new StringBuilder();
+                    converterParameter.Append(c);
+                    while (true)
                     {
-                        throw new FormatException("Unexpected end of input.");
-                    }
-                }
+                        if (++i == length) throw new FormatException("Unexpected end of input.");
 
-                if (c == '}')
-                {
-                    if (++i == length)
-                    {
-                        goto addResource;
-                    }
-
-                    if (expression[i] != '}')
-                    {
-                        goto addResource;
-                    }
-
-                    throw new FormatException("Converter name cannot contain braces.");
-                }
-            }
-
-            // String format, read until single '}'.
-            if (c == ',' || c == ':')
-            {
-                resourceFormat.Append(c);
-                while (true)
-                {
-                    if (++i == length)
-                    {
-                        throw new FormatException("Unexpected end of input.");
-                    }
-
-                    c = expression[i];
-                    if (c == '}')
-                    {
-                        if (++i == length)
+                        c = expression[i];
+                        if (char.IsWhiteSpace(c))
                         {
-                            goto addResource;
+                            do
+                            {
+                                if (++i == length) throw new FormatException("Unexpected end of input.");
+                            } while (char.IsWhiteSpace(expression[i]));
+
+                            c = expression[i];
+                            if (c != ')')
+                                throw new FormatException("Expected closing parenthesis after converter parameter.");
                         }
 
-                        if (expression[i] != '}')
+                        if (c == ')')
                         {
-                            goto addResource;
+                            if (++i == length) throw new FormatException("Unexpected end of input.");
+
+                            c = expression[i];
+                            break;
                         }
 
-                        resourceFormat.Append('}');
+                        converterParameter.Append(c);
                     }
 
-                    resourceFormat.Append(c);
+                    resourceConverter.Append(converterParameter.ToString().ToLowerInvariant());
                 }
             }
 
-            throw new FormatException($"Invalid character '{c}'");
+            // Skip whitespace between converter/parameter to format/end.
+            while (char.IsWhiteSpace(expression[i]))
+                if (++i == length)
+                    throw new FormatException("Unexpected end of input.");
 
-            addResource:
-            var key = resourceName.ToString();
-            IValueProvider resource;
-            var converter = resourceConverter.ToString();
-            var resourceTypeString = resourceType.ToString();
-            switch (resourceTypeString)
+            if (c == '}')
             {
-                case "Binding":
-                    resource = new PropertyBinding(key, false, converter);
-                    break;
-                case "Property":
-                    resource = new PropertyBinding(key, true, converter);
-                    break;
-                case "StaticResource":
-                    resource = new StaticResource(key, converter);
-                    break;
-                case "DynamicResource":
-                    resource = new DynamicResource(key, converter);
-                    break;
-                case "ContextBinding":
-                    resource = new ContextPropertyBinding(key, false, converter);
-                    break;
-                case "ContextProperty":
-                    resource = new ContextPropertyBinding(key, true, converter);
-                    break;
-                case "Env":
-                    resource = new EnvironmentBinding(key, oneTimeBind, converter);
-                    break;
-                case "FileBinding":
-                    resource = new FileBinding(key, true, converter);
-                    break;
-                case "File":
-                    resource = new FileBinding(key, false, converter);
-                    break;
-                case "MultiBinding":
-                    resource = new MultiBinding(multiBindingResources.ToArray(), false, converter);
-                    isInMultiBinding = false;
-                    break;
-                default:
-                    resource = contextualResource?.Invoke(resourceTypeString + key, oneTimeBind, converter);
-                    if (resource != null)
-                    {
-                        break;
-                    }
+                if (++i == length) goto addResource;
 
-                    throw new FormatException("Invalid resource type.");
+                if (expression[i] != '}') goto addResource;
+
+                throw new FormatException("Converter name cannot contain braces.");
             }
+        }
 
-            if (isInMultiBinding)
+        // String format, read until single '}'.
+        if (c == ',' || c == ':')
+        {
+            resourceFormat.Append(c);
+            while (true)
             {
-                if (resource is Resource r)
-                {
-                    multiBindingResources.Add(r);
-                }
-                else
-                {
-                    throw new FormatException("Only resources can be added to a MultiBinding.");
-                }
-
-                // Skip whitespace.
-                while (char.IsWhiteSpace(expression[i]))
-                {
-                    if (++i == length)
-                    {
-                        throw new FormatException("Unexpected end of input.");
-                    }
-                }
+                if (++i == length) throw new FormatException("Unexpected end of input.");
 
                 c = expression[i];
-                if (c == '{')
+                if (c == '}')
                 {
-                    i++;
-                    resourceType.Clear();
-                    resourceName.Clear();
-                    resourceFormat.Clear();
-                    resourceConverter.Clear();
-                    oneTimeBind = false;
-                    goto readResource;
+                    if (++i == length) goto addResource;
+
+                    if (expression[i] != '}') goto addResource;
+
+                    resourceFormat.Append('}');
                 }
-                else
-                {
-                    resourceType.Clear();
-                    resourceName.Clear();
-                    resourceFormat.Clear();
-                    resourceConverter.Clear();
-                    oneTimeBind = false;
-                    resourceType.Append("MultiBinding");
-                    goto endOfMultiBinding;
-                }
+
+                resourceFormat.Append(c);
             }
+        }
+
+        throw new FormatException($"Invalid character '{c}'");
+
+        addResource:
+        var key = resourceName.ToString();
+        IValueProvider resource;
+        var converter = resourceConverter.ToString();
+        var resourceTypeString = resourceType.ToString();
+        switch (resourceTypeString)
+        {
+            case "Binding":
+                resource = new PropertyBinding(key, false, converter);
+                break;
+            case "Property":
+                resource = new PropertyBinding(key, true, converter);
+                break;
+            case "StaticResource":
+                resource = new StaticResource(key, converter);
+                break;
+            case "DynamicResource":
+                resource = new DynamicResource(key, converter);
+                break;
+            case "ContextBinding":
+                resource = new ContextPropertyBinding(key, false, converter);
+                break;
+            case "ContextProperty":
+                resource = new ContextPropertyBinding(key, true, converter);
+                break;
+            case "Env":
+                resource = new EnvironmentBinding(key, oneTimeBind, converter);
+                break;
+            case "FileBinding":
+                resource = new FileBinding(key, true, converter);
+                break;
+            case "File":
+                resource = new FileBinding(key, false, converter);
+                break;
+            case "MultiBinding":
+                resource = new MultiBinding(multiBindingResources.ToArray(), false, converter);
+                isInMultiBinding = false;
+                break;
+            default:
+                resource = contextualResource?.Invoke(resourceTypeString + key, oneTimeBind, converter);
+                if (resource != null) break;
+
+                throw new FormatException("Invalid resource type.");
+        }
+
+        if (isInMultiBinding)
+        {
+            if (resource is Resource r)
+                multiBindingResources.Add(r);
             else
+                throw new FormatException("Only resources can be added to a MultiBinding.");
+
+            // Skip whitespace.
+            while (char.IsWhiteSpace(expression[i]))
+                if (++i == length)
+                    throw new FormatException("Unexpected end of input.");
+
+            c = expression[i];
+            if (c == '{')
             {
-                var index = resources.IndexOf(resource);
-                if (index == -1)
-                {
-                    index = resources.Count;
-                    resources.Add(resource);
-                }
-
-                stringFormat.Append(index);
-                if (resourceFormat.Length != 0)
-                {
-                    stringFormat.Append(resourceFormat);
-                }
-
-
-                stringFormat.Append('}');
+                i++;
+                resourceType.Clear();
+                resourceName.Clear();
+                resourceFormat.Clear();
+                resourceConverter.Clear();
+                oneTimeBind = false;
+                goto readResource;
             }
 
             resourceType.Clear();
@@ -751,14 +548,35 @@ namespace Forge.Forms.AvaloniaUI.DynamicExpressions
             resourceFormat.Clear();
             resourceConverter.Clear();
             oneTimeBind = false;
-            multiBindingOneTimeBind = false;
-            multiBindingResources.Clear();
-            goto outside;
+            resourceType.Append("MultiBinding");
+            goto endOfMultiBinding;
         }
 
-        public static implicit operator BoundExpression(string expression)
+        var index = resources.IndexOf(resource);
+        if (index == -1)
         {
-            return Parse(expression);
+            index = resources.Count;
+            resources.Add(resource);
         }
+
+        stringFormat.Append(index);
+        if (resourceFormat.Length != 0) stringFormat.Append(resourceFormat);
+
+
+        stringFormat.Append('}');
+
+        resourceType.Clear();
+        resourceName.Clear();
+        resourceFormat.Clear();
+        resourceConverter.Clear();
+        oneTimeBind = false;
+        multiBindingOneTimeBind = false;
+        multiBindingResources.Clear();
+        goto outside;
+    }
+
+    public static implicit operator BoundExpression(string expression)
+    {
+        return Parse(expression);
     }
 }

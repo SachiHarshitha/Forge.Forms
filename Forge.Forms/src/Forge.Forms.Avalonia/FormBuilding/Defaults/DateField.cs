@@ -22,11 +22,8 @@ public class DateField : DataFormField
 
 public class DatePresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(DatePresenter);
-
     static DatePresenter()
     {
-
     }
 
     public DatePresenter(IResourceContext context,
@@ -35,4 +32,6 @@ public class DatePresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(DatePresenter);
 }

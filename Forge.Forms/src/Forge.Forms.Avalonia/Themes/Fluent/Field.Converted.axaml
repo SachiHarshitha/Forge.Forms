@@ -6,17 +6,17 @@
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
-	<ControlTemplate x:Key="WpfConvertedPresenterTemplate" TargetType="{x:Type defaults:ConvertedPresenter}">
-		<Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition />
-			</Grid.RowDefinitions>
-			<packIcon:PackIcon
+    <ControlTemplate x:Key="WpfConvertedPresenterTemplate" TargetType="{x:Type defaults:ConvertedPresenter}">
+        <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <packIcon:PackIcon
                 Grid.Row="1"
                 Grid.Column="0"
                 Width="24"
@@ -26,13 +26,13 @@
                 VerticalAlignment="Center"
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
-			<TextBlock
+            <TextBlock
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="0,0,0,4"
                 FontSize="12"
                 Text="{formBuilding:FormBinding Name}" />
-			<TextBox
+            <TextBox
                 Name="ValueHolderControl"
                 Grid.Row="1"
                 Grid.Column="1"
@@ -42,6 +42,6 @@
                 IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
                 Text="{Binding Value}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
-		</Grid>
-	</ControlTemplate>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

@@ -1,12 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using AvaloniaEdit;
-using AvaloniaEdit.Folding;
-using AvaloniaEdit.Indentation.CSharp;
-using AvaloniaEdit.TextMate;
-using Forge.Forms.Avalonia.Demo.ViewModels;
-using TextMateSharp.Grammars;
+﻿using Avalonia.Controls;
 
 namespace Forge.Forms.Avalonia.Demo.Views;
 

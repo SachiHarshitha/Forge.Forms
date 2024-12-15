@@ -6,13 +6,13 @@
                     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal">
 
 
-	<ControlTemplate x:Key="WpfCheckBoxPresenterTemplate" TargetType="{x:Type defaults:CheckBoxPresenter}">
-		<Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<packIcon:PackIcon
+    <ControlTemplate x:Key="WpfCheckBoxPresenterTemplate" TargetType="{x:Type defaults:CheckBoxPresenter}">
+        <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <packIcon:PackIcon
                 Grid.Column="0"
                 Width="24"
                 Height="24"
@@ -21,7 +21,7 @@
                 VerticalAlignment="Center"
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
-			<CheckBox
+            <CheckBox
                 Name="ValueHolderControl"
                 Grid.Column="1"
                 HorizontalAlignment="Left"
@@ -33,6 +33,6 @@
                 IsChecked="{Binding Value}"
                 IsEnabled="{formBuilding:FormBinding IsEnabled}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
-		</Grid>
-	</ControlTemplate>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

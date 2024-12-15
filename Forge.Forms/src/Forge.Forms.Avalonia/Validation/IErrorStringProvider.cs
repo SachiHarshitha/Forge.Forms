@@ -1,58 +1,57 @@
 ﻿using Forge.Forms.AvaloniaUI.DynamicExpressions;
 
-namespace Forge.Forms.AvaloniaUI.Validation
+namespace Forge.Forms.AvaloniaUI.Validation;
+
+public interface IErrorStringProvider
 {
-    public interface IErrorStringProvider
+    string GetErrorMessage(object value);
+}
+
+public class ValueErrorStringProvider : IErrorStringProvider
+{
+    private readonly StringProxy messageProxy;
+
+    private readonly BindingProxy valueProxy;
+
+    public ValueErrorStringProvider(StringProxy messageProxy, BindingProxy valueProxy)
     {
-        string GetErrorMessage(object value);
+        this.messageProxy = messageProxy;
+        this.valueProxy = valueProxy;
     }
 
-    public class ValueErrorStringProvider : IErrorStringProvider
+    public string GetErrorMessage(object value)
     {
-        private readonly StringProxy messageProxy;
+        valueProxy.SetCurrentValue(BindingProxy.ValueProperty, value);
+        return messageProxy.Value;
+    }
+}
 
-        private readonly BindingProxy valueProxy;
+public class ErrorStringProvider : IErrorStringProvider
+{
+    private readonly StringProxy messageProxy;
 
-        public ValueErrorStringProvider(StringProxy messageProxy, BindingProxy valueProxy)
-        {
-            this.messageProxy = messageProxy;
-            this.valueProxy = valueProxy;
-        }
-
-        public string GetErrorMessage(object value)
-        {
-            valueProxy.SetCurrentValue(BindingProxy.ValueProperty, value);
-            return messageProxy.Value;
-        }
+    public ErrorStringProvider(StringProxy messageProxy)
+    {
+        this.messageProxy = messageProxy;
     }
 
-    public class ErrorStringProvider : IErrorStringProvider
+    public string GetErrorMessage(object value)
     {
-        private readonly StringProxy messageProxy;
+        return messageProxy.Value;
+    }
+}
 
-        public ErrorStringProvider(StringProxy messageProxy)
-        {
-            this.messageProxy = messageProxy;
-        }
-
-        public string GetErrorMessage(object value)
-        {
-            return messageProxy.Value;
-        }
+public class PlainErrorStringProvider : IErrorStringProvider
+{
+    public PlainErrorStringProvider(string errorMessage)
+    {
+        ErrorMessage = errorMessage;
     }
 
-    public class PlainErrorStringProvider : IErrorStringProvider
+    public string ErrorMessage { get; }
+
+    public string GetErrorMessage(object value)
     {
-        public PlainErrorStringProvider(string errorMessage)
-        {
-            ErrorMessage = errorMessage;
-        }
-
-        public string ErrorMessage { get; }
-
-        public string GetErrorMessage(object value)
-        {
-            return ErrorMessage;
-        }
+        return ErrorMessage;
     }
 }

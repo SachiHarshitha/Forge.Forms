@@ -134,7 +134,7 @@ public class FormBuilder : IFormBuilder
             // Default initializers.
             new MetadataInitializer(),
             new FieldInitializer(),
-            new BindingInitializer(),
+            new BindingInitializer()
         };
 
         TypeNames = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
@@ -595,11 +595,11 @@ public class FormBuilder : IFormBuilder
         {
             return new TabLayout(
                 element.Elements().Select(TabItem),
-                Utilities.TryParse<Dock>(element.TryGetAttribute("tabStripPlacement"), Dock.Top),
+                Utilities.TryParse(element.TryGetAttribute("tabStripPlacement"), Dock.Top),
                 Utilities.ParseNullableDouble(element.TryGetAttribute("minHeight")),
                 Utilities.ParseNullableDouble(element.TryGetAttribute("maxHeight")),
                 element.TryGetAttribute("tabHeaderMargin"),
-                Utilities.TryParse<HorizontalAlignment>(element.TryGetAttribute("tabHeaderHorizontalAlignment"),
+                Utilities.TryParse(element.TryGetAttribute("tabHeaderHorizontalAlignment"),
                     HorizontalAlignment.Left),
                 Utilities.ParseNullableDouble(element.TryGetAttribute("tabHeaderFontSize")));
         }
@@ -682,7 +682,7 @@ public class FormBuilder : IFormBuilder
             {
                 case ResourceAttribute resource:
                     formDefinition.Resources.Add(resource.Name, resource.Value is string expr
-                            ? (IValueProvider)BoundExpression.Parse(expr)
+                        ? BoundExpression.Parse(expr)
                         : new LiteralValue(resource.Value));
                     break;
                 case FormAttribute form:

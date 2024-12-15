@@ -14,11 +14,8 @@ public class TextElement : ContentElement
 
 public class TextPresenter : BindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(TextPresenter);
-
     static TextPresenter()
     {
-       
     }
 
     public TextPresenter(IResourceContext context, IDictionary<string, IValueProvider> fieldResources,
@@ -26,4 +23,6 @@ public class TextPresenter : BindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(TextPresenter);
 }

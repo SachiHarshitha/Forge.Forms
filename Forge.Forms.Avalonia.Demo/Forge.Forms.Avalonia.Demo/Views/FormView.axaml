@@ -12,7 +12,7 @@
     Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModels:HomeViewModel/>
+        <viewModels:HomeViewModel />
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>

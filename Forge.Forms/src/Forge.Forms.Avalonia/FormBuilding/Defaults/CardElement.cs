@@ -14,11 +14,8 @@ public class CardElement : FormElement
 
 public class CardPresenter : BindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(CardPresenter);
-
     static CardPresenter()
     {
-
     }
 
     public CardPresenter(IResourceContext context, IDictionary<string, IValueProvider> fieldResources,
@@ -26,4 +23,6 @@ public class CardPresenter : BindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(CardPresenter);
 }

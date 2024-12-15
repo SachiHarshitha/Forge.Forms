@@ -10,18 +10,10 @@ public class StringField : DataFormField
     {
     }
 
-    #region Properties
-
-    public bool IsPassword { get; set; }
-
-    public bool IsMultiline { get; set; }
-
-    #endregion Properties
-
     #region Methods
 
     protected internal override IBindingProvider CreateBindingProvider(IResourceContext context,
-          IDictionary<string, IValueProvider> formResources)
+        IDictionary<string, IValueProvider> formResources)
     {
         if (IsMultiline) return new MultiLineStringPresenter(context, Resources, formResources);
 
@@ -31,12 +23,18 @@ public class StringField : DataFormField
     }
 
     #endregion Methods
+
+    #region Properties
+
+    public bool IsPassword { get; set; }
+
+    public bool IsMultiline { get; set; }
+
+    #endregion Properties
 }
 
 public class StringPresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(StringPresenter);
-
     static StringPresenter()
     {
     }
@@ -47,12 +45,12 @@ public class StringPresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(StringPresenter);
 }
 
 public class PasswordPresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(PasswordPresenter);
-
     static PasswordPresenter()
     {
     }
@@ -63,12 +61,12 @@ public class PasswordPresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(PasswordPresenter);
 }
 
 public class MultiLineStringPresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(MultiLineStringPresenter);
-
     static MultiLineStringPresenter()
     {
     }
@@ -79,4 +77,6 @@ public class MultiLineStringPresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(MultiLineStringPresenter);
 }

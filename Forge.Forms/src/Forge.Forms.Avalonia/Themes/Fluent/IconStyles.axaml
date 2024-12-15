@@ -10,7 +10,7 @@
                 <ChangePropertyAction PropertyName="Foreground" Value="#FFDB000C" />
             </DataTriggerBehavior>
         </Interaction.Behaviors>
-        
+
     </ControlTheme>
 
 </ResourceDictionary>

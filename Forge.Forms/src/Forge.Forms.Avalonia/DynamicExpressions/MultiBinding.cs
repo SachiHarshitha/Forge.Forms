@@ -30,7 +30,7 @@ public sealed class MultiBinding : Resource
         foreach (var resource in Resources) multiBinding.Bindings.Add(resource.ProvideBinding(context));
 
         multiBinding.Mode = OneTimeBinding ? BindingMode.OneTime : BindingMode.OneWay;
-        return multiBinding;    
+        return multiBinding;
     }
 
     public override bool Equals(Resource other)

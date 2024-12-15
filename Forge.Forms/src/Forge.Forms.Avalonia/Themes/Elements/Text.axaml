@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
@@ -20,12 +19,13 @@
                 Margin="0,0,8,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                Foreground="{TemplateBinding Foreground}"
                 Kind="{formBuilding:FormBinding Icon}"
-                IsVisible="{formBuilding:FormBinding IconVisibility}" >
+                IsVisible="{formBuilding:FormBinding IconVisibility}">
                 <Interaction.Behaviors>
                     <DataTriggerBehavior Binding="{Binding IconPadding}" Value="True">
                         <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
-                    </DataTriggerBehavior>        
+                    </DataTriggerBehavior>
                 </Interaction.Behaviors>
             </packIcon:PackIcon>
             <TextBlock
@@ -52,12 +52,13 @@
                 Margin="0,0,8,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                Foreground="{TemplateBinding Foreground}"
                 Kind="{formBuilding:FormBinding Icon}"
-                IsVisible="{formBuilding:FormBinding IconVisibility}" >
+                IsVisible="{formBuilding:FormBinding IconVisibility}">
                 <Interaction.Behaviors>
                     <DataTriggerBehavior Binding="{Binding IconPadding}" Value="True">
                         <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
-                    </DataTriggerBehavior>        
+                    </DataTriggerBehavior>
                 </Interaction.Behaviors>
             </packIcon:PackIcon>
             <TextBlock
@@ -68,22 +69,29 @@
                 Text="{formBuilding:FormBinding Content}"
                 TextWrapping="Wrap" />
         </Grid>
-       
+
     </ControlTemplate>
 
     <ControlTemplate x:Key="TextPresenterTemplate">
         <TextBlock Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                    FontSize="{TemplateBinding controls:TextProperties.TextFontSize}"
                    Text="{formBuilding:FormBinding Content}"
-                   TextWrapping="Wrap" >
+                   TextWrapping="Wrap">
             <Interaction.Behaviors>
                 <DataTriggerBehavior Binding="{Binding IconPadding}" Value="True">
                     <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
-                </DataTriggerBehavior>        
+                </DataTriggerBehavior>
             </Interaction.Behaviors>
         </TextBlock>
 
     </ControlTemplate>
 
 
+    <ControlTemplate x:Key="ErrorTextPresenterTemplate" TargetType="{x:Type defaults:ErrorTextPresenter}">
+        <TextBlock
+            Margin="{TemplateBinding Padding}"
+            FontSize="{TemplateBinding controls:TextProperties.TextFontSize}"
+            Text="{formBuilding:FormBinding Content}"
+            TextWrapping="Wrap" />
+    </ControlTemplate>
 </ResourceDictionary>

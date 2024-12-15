@@ -11,15 +11,18 @@ namespace Forge.Forms.AvaloniaUI.FormBuilding;
 public abstract class FormElement
 {
     #region Constructor
+
     protected FormElement()
     {
         Resources = new Dictionary<string, IValueProvider>();
         Metadata = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     }
+
     #endregion
 
 
     #region Properties
+
     protected internal Position LinePosition { get; set; }
 
     public IDictionary<string, IValueProvider> Resources { get; set; }
@@ -40,9 +43,11 @@ public abstract class FormElement
     ///     Gets or sets the bool resource that determines whether this element will receive initial focus.
     /// </summary>
     public IValueProvider InitialFocus { get; set; }
+
     #endregion
 
     #region Methods
+
     protected internal virtual void Freeze()
     {
         Resources.Add(nameof(IsVisible), IsVisible ?? LiteralValue.True);
@@ -59,8 +64,6 @@ public abstract class FormElement
     protected internal abstract IBindingProvider CreateBindingProvider(
         IResourceContext context,
         IDictionary<string, IValueProvider> formResources);
+
     #endregion
-
-
-
 }

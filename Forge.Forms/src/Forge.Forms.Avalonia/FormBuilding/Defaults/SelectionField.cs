@@ -39,11 +39,8 @@ public class SelectionField : DataFormField
 
 public class SelectionPresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(SelectionPresenter);
-
     static SelectionPresenter()
     {
-
     }
 
     public SelectionPresenter(IResourceContext context,
@@ -52,4 +49,6 @@ public class SelectionPresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(SelectionPresenter);
 }

@@ -6,22 +6,22 @@
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
-	<formBuilding:FormBindingConverter x:Key="FormBindingConverter"/>
-	
-	<ControlTemplate x:Key="WpfComboBoxSelectionPresenterTemplate">
-		<Grid
+    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
+
+    <ControlTemplate x:Key="WpfComboBoxSelectionPresenterTemplate">
+        <Grid
             Margin="8"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition />
-			</Grid.RowDefinitions>
-			<packIcon:PackIcon
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <packIcon:PackIcon
                 Grid.Row="1"
                 Grid.Column="0"
                 Width="24"
@@ -31,13 +31,13 @@
                 VerticalAlignment="Center"
                 IsVisible="{formBuilding:FormBinding IconVisibility}"
                 Kind="{formBuilding:FormBinding Icon}" />
-			<TextBlock
+            <TextBlock
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="0,0,0,4"
                 FontSize="12"
                 Text="{formBuilding:FormBinding Name}" />
-			<ComboBox
+            <ComboBox
                 Name="ValueHolderControl"
                 Grid.Row="1"
                 Grid.Column="1"
@@ -48,29 +48,29 @@
                 SelectedValue="{formBuilding:FormBinding Value}"
                 SelectedValueBinding="{formBuilding:FormBinding ValuePath}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}">
-				<ComboBox.ItemsPanel>
-					<ItemsPanelTemplate>
-						<VirtualizingStackPanel />
-					</ItemsPanelTemplate>
-				</ComboBox.ItemsPanel>
-			</ComboBox>
-		</Grid>
-	</ControlTemplate>
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+        </Grid>
+    </ControlTemplate>
 
-	<ControlTemplate x:Key="WpfEditableComboBoxSelectionPresenterTemplate">
-		<Grid
+    <ControlTemplate x:Key="WpfEditableComboBoxSelectionPresenterTemplate">
+        <Grid
             Margin="8"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition />
-			</Grid.RowDefinitions>
-			<packIcon:PackIcon
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <packIcon:PackIcon
                 Grid.Row="1"
                 Grid.Column="0"
                 Width="24"
@@ -80,13 +80,13 @@
                 VerticalAlignment="Center"
                 IsVisible="{formBuilding:FormBinding IconVisibility}"
                 Kind="{formBuilding:FormBinding Icon}" />
-			<TextBlock
+            <TextBlock
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="0,0,0,4"
                 FontSize="12"
                 Text="{formBuilding:FormBinding Name}" />
-			<ComboBox
+            <ComboBox
                 Name="ValueHolderControl"
                 Grid.Row="1"
                 Grid.Column="1"
@@ -96,29 +96,30 @@
                 ItemsSource="{Binding DataContext,Converter={StaticResource FormBindingConverter}, ConverterParameter= ItemsSource}"
                 SelectedValue="{formBuilding:FormBinding Value}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}">
-				<ComboBox.ItemsPanel>
-					<ItemsPanelTemplate>
-						<VirtualizingStackPanel />
-					</ItemsPanelTemplate>
-				</ComboBox.ItemsPanel>
-			</ComboBox>
-		</Grid>
-	</ControlTemplate>
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+        </Grid>
+    </ControlTemplate>
 
-	<ControlTemplate x:Key="WpfRadioButtonsSelectionPresenterTemplate" TargetType="{x:Type defaults:SelectionPresenter}">
-		<Grid
+    <ControlTemplate x:Key="WpfRadioButtonsSelectionPresenterTemplate"
+                     TargetType="{x:Type defaults:SelectionPresenter}">
+        <Grid
             Margin="8"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
-			<packIcon:PackIcon
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <packIcon:PackIcon
                 Grid.Row="0"
                 Grid.Column="0"
                 Width="24"
@@ -128,7 +129,7 @@
                 VerticalAlignment="Center"
                 IsVisible="{formBuilding:FormBinding IconVisibility}"
                 Kind="{formBuilding:FormBinding Icon}" />
-			<TextBlock
+            <TextBlock
                 Name="HintText"
                 Grid.Row="0"
                 Grid.Column="1"
@@ -136,7 +137,7 @@
                 FontSize="12"
                 Text="{formBuilding:FormBinding Name}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
-			<ListBox
+            <ListBox
                 Name="ValueHolderControl"
                 Grid.Row="1"
                 Grid.Column="0"
@@ -148,38 +149,40 @@
                 ItemsSource="{formBuilding:FormBinding ItemsSource}"
                 SelectedValue="{Binding Value}"
                 SelectedValueBinding="{Binding ValuePath}">
-				<ListBox.ItemContainerTheme>
-					<ControlTheme TargetType="ListBoxItem">
-						<Setter Property="Margin" Value="2,6,0,6" />
-						<Setter Property="Template">
-							<Setter.Value>
-								<ControlTemplate TargetType="ListBoxItem">
-									<RadioButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}">
-										<ContentPresenter />
-									</RadioButton>
-								</ControlTemplate>
-							</Setter.Value>
-						</Setter>
-					</ControlTheme>
-				</ListBox.ItemContainerTheme>
-			</ListBox>
-		</Grid>
-	</ControlTemplate>
+                <ListBox.ItemContainerTheme>
+                    <ControlTheme TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="2,6,0,6" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <RadioButton
+                                        IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}">
+                                        <ContentPresenter />
+                                    </RadioButton>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </ControlTheme>
+                </ListBox.ItemContainerTheme>
+            </ListBox>
+        </Grid>
+    </ControlTemplate>
 
-	<ControlTemplate x:Key="WpfRadioButtonsInlineSelectionPresenterTemplate" TargetType="{x:Type defaults:SelectionPresenter}">
-		<Grid
+    <ControlTemplate x:Key="WpfRadioButtonsInlineSelectionPresenterTemplate"
+                     TargetType="{x:Type defaults:SelectionPresenter}">
+        <Grid
             Margin="8"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
-			<packIcon:PackIcon
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <packIcon:PackIcon
                 Grid.Row="0"
                 Grid.Column="0"
                 Width="24"
@@ -189,7 +192,7 @@
                 VerticalAlignment="Center"
                 IsVisible="{formBuilding:FormBinding IconVisibility}"
                 Kind="{formBuilding:FormBinding Icon}" />
-			<TextBlock
+            <TextBlock
                 Name="HintText"
                 Grid.Row="0"
                 Grid.Column="1"
@@ -197,7 +200,7 @@
                 FontSize="12"
                 Text="{formBuilding:FormBinding Name}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
-			<ListBox
+            <ListBox
                 Name="ValueHolderControl"
                 Grid.Row="1"
                 Grid.Column="0"
@@ -209,26 +212,27 @@
                 ItemsSource="{formBuilding:FormBinding ItemsSource}"
                 SelectedValue="{Binding Value}"
                 SelectedValueBinding="{Binding ValuePath}">
-				<ListBox.ItemsPanel>
-					<ItemsPanelTemplate>
-						<WrapPanel />
-					</ItemsPanelTemplate>
-				</ListBox.ItemsPanel>
-				<ListBox.ItemContainerTheme>
-					<ControlTheme TargetType="ListBoxItem">
-						<Setter Property="Margin" Value="2,6,12,6" />
-						<Setter Property="Template">
-							<Setter.Value>
-								<ControlTemplate TargetType="ListBoxItem">
-									<RadioButton Padding="4,0,0,0" IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}">
-										<ContentPresenter />
-									</RadioButton>
-								</ControlTemplate>
-							</Setter.Value>
-						</Setter>
-					</ControlTheme>
-				</ListBox.ItemContainerTheme>
-			</ListBox>
-		</Grid>
-	</ControlTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerTheme>
+                    <ControlTheme TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="2,6,12,6" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <RadioButton Padding="4,0,0,0"
+                                                 IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}">
+                                        <ContentPresenter />
+                                    </RadioButton>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </ControlTheme>
+                </ListBox.ItemContainerTheme>
+            </ListBox>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

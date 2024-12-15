@@ -1,52 +1,49 @@
-﻿using Avalonia;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Layout;
+using Avalonia.VisualTree;
 using Forge.Forms.AvaloniaUI.Controls.Internal;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using Forge.Forms.AvaloniaUI.FormBuilding;
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Avalonia.Controls.Primitives;
-using Avalonia.VisualTree;
-using System.Linq;
 
 namespace Forge.Forms.AvaloniaUI.Controls;
 
 [TemplatePart(Name = "PART_ItemsGrid", Type = typeof(Grid))]
 public sealed partial class DynamicForm : ContentControl, IDynamicForm
 {
-    protected override Type StyleKeyOverride => typeof(DynamicForm);
-
     public static readonly AvaloniaProperty ModelProperty =
         AvaloniaProperty.Register<DynamicForm, object>(
             "Model");
 
     internal static readonly AvaloniaProperty ValuePropertyKey =
         AvaloniaProperty.Register<DynamicForm, object>(
-        "Value");
+            "Value");
 
     //TODO: Maybe Inherits?
     public static readonly AvaloniaProperty ContextProperty =
         AvaloniaProperty.Register<DynamicForm, object>(
-        "Context");
+            "Context");
 
     public static readonly AvaloniaProperty FormBuilderProperty =
         AvaloniaProperty.Register<DynamicForm, IFormBuilder>(
-        "FormBuilder",
-        FormBuilding.FormBuilder.Default);
+            "FormBuilder",
+            FormBuilding.FormBuilder.Default);
 
     public static readonly AvaloniaProperty ModelInterceptorProperty =
         AvaloniaProperty.Register<DynamicForm, IModelInterceptor>(
-        "ModelInterceptor");
+            "ModelInterceptor");
 
     public static readonly AvaloniaProperty EnvironmentProperty =
         AvaloniaProperty.Register<DynamicForm, IEnvironment>(
-        "Environment");
+            "Environment");
 
     public static readonly AvaloniaProperty ValueProperty = ValuePropertyKey;
 
@@ -89,6 +86,8 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         Loaded += (s, e) => { ActiveForms.Add(this); };
         Unloaded += (s, e) => { ActiveForms.Remove(this); };
     }
+
+    protected override Type StyleKeyOverride => typeof(DynamicForm);
 
     /// <summary>
     ///     Gets or sets the environment flags for this control.
@@ -364,7 +363,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
             DataFields[field.Key] = field;
         }
 
-        ContentPresenter? contentPresenter = provider as ContentPresenter ?? new ContentPresenter
+        var contentPresenter = provider as ContentPresenter ?? new ContentPresenter
         {
             Content = provider,
             VerticalAlignment = VerticalAlignment.Center
@@ -413,7 +412,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         foreach (var key in keys)
             if (key is DynamicResourceKey)
             {
-                 var proxy = (BindingProxy)resources[key];
+                var proxy = (BindingProxy)resources[key];
                 proxy.Value = null;
                 resources.Remove(key);
             }

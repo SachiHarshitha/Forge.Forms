@@ -44,4 +44,5 @@
             VerticalAlignment="Stretch"
             ZIndex="-1"
             Mode="PrimaryMid" />
-    </Grid></UserControl>
+    </Grid>
+</UserControl>

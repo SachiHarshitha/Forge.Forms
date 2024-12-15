@@ -1,17 +1,22 @@
-﻿using System.Runtime.Versioning;
-using System.Threading.Tasks;
-
+﻿using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Browser;
-
 using Forge.Forms.Avalonia.Demo;
 
-internal sealed partial class Program
+internal sealed class Program
 {
-    private static Task Main(string[] args) => BuildAvaloniaApp()
+    //Trace.Listeners.Add(new ConsoleTraceListener());
+
+    private static Task Main(string[] args)
+    {
+        return BuildAvaloniaApp()
+            .LogToTrace()
             .WithInterFont()
             .StartBrowserAppAsync("out");
+    }
 
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>();
+    {
+        return AppBuilder.Configure<App>();
+    }
 }

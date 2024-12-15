@@ -3,70 +3,70 @@ using System.Runtime.CompilerServices;
 using Avalonia.Data;
 using Forge.Forms.AvaloniaUI.Annotations;
 
-namespace Forge.Forms.Avalonia.Demo.Models
+namespace Forge.Forms.Avalonia.Demo.Models;
+
+[Title("Boolean Operators")]
+[Text("A message will appear when you set the right configuration.")]
+[Text("Toggle one must be switched ON, the text box must not be empty, and toggle two must be switched OFF.")]
+[Heading("Congratulations, you got the right combination!",
+    IsVisible =
+        "{Binding GivenUp} || ({Binding ToggleOne} && {Binding TypeSomething|IsNotEmpty} && !{Binding ToggleTwo})")]
+[Divider]
+public class BooleanLogic : INotifyPropertyChanged
 {
-    [Title("Boolean Operators")]
-    [Text("A message will appear when you set the right configuration.")]
-    [Text("Toggle one must be switched ON, the text box must not be empty, and toggle two must be switched OFF.")]
-    [Heading("Congratulations, you got the right combination!",
-        IsVisible = "{Binding GivenUp} || ({Binding ToggleOne} && {Binding TypeSomething|IsNotEmpty} && !{Binding ToggleTwo})")]
-    [Divider]
-    public class BooleanLogic : INotifyPropertyChanged
+    private bool givenUp;
+    private bool toggleOne;
+    private bool toggleTwo;
+    private string typeSomething;
+
+    [Toggle]
+    public bool ToggleOne
     {
-        private bool toggleOne;
-        private bool toggleTwo;
-        private string typeSomething;
-        private bool givenUp;
-
-        [Toggle]
-        public bool ToggleOne
+        get => toggleOne;
+        set
         {
-            get => toggleOne;
-            set
-            {
-                toggleOne = value;
-                OnPropertyChanged();
-            }
+            toggleOne = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Binding(UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged)]
-        public string TypeSomething
+    [Binding(UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged)]
+    public string TypeSomething
+    {
+        get => typeSomething;
+        set
         {
-            get => typeSomething;
-            set
-            {
-                typeSomething = value;
-                OnPropertyChanged();
-            }
+            typeSomething = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Toggle]
-        public bool ToggleTwo
+    [Toggle]
+    public bool ToggleTwo
+    {
+        get => toggleTwo;
+        set
         {
-            get => toggleTwo;
-            set
-            {
-                toggleTwo = value;
-                OnPropertyChanged();
-            }
+            toggleTwo = value;
+            OnPropertyChanged();
         }
+    }
 
-        [Field(Name = "I give up, just show it already!")]
-        public bool GivenUp
+    [Field(Name = "I give up, just show it already!")]
+    public bool GivenUp
+    {
+        get => givenUp;
+        set
         {
-            get => givenUp;
-            set
-            {
-                givenUp = value;
-                OnPropertyChanged();
-            }
+            givenUp = value;
+            OnPropertyChanged();
         }
+    }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

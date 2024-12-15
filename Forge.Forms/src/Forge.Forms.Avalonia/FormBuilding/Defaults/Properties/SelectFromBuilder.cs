@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Forge.Forms.AvaloniaUI.Annotations;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
-
 using Humanizer;
 
 namespace Forge.Forms.AvaloniaUI.FormBuilding.Defaults.Properties;
@@ -18,10 +16,10 @@ internal class SelectFromBuilder : IFieldBuilder
 
         var type = property.PropertyType;
         var field = new SelectionField(property.Name, property.PropertyType);
-        if (selectFrom.DisplayPath != null) 
+        if (selectFrom.DisplayPath != null)
             field.DisplayPath = BoundExpression.Parse(selectFrom.DisplayPath);
 
-        if (selectFrom.ValuePath != null) 
+        if (selectFrom.ValuePath != null)
             field.ValuePath = BoundExpression.Parse(selectFrom.ValuePath);
 
         if (selectFrom.ItemStringFormat != null)

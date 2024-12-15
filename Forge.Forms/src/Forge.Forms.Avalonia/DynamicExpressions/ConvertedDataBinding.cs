@@ -1,22 +1,20 @@
-﻿using Avalonia.Data;
-
+﻿using System;
+using Avalonia.Data;
 using Forge.Forms.AvaloniaUI.FormBuilding;
-
-using System;
 
 namespace Forge.Forms.AvaloniaUI.DynamicExpressions;
 
 public sealed class ConvertedDataBinding : IValueProvider
 {
     public ConvertedDataBinding(string propertyPath, BindingOptions bindingOptions,
-         ReplacementPipe replacementPipe)
+        ReplacementPipe replacementPipe)
         : this(propertyPath, bindingOptions,
             replacementPipe, false)
     {
     }
 
     public ConvertedDataBinding(string propertyPath, BindingOptions bindingOptions,
-         ReplacementPipe replacementPipe, bool oneWay)
+        ReplacementPipe replacementPipe, bool oneWay)
     {
         PropertyPath = propertyPath;
         BindingOptions = bindingOptions ?? throw new ArgumentNullException(nameof(bindingOptions));

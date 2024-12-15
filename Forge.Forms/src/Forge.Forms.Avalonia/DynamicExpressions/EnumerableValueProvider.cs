@@ -34,7 +34,7 @@ public class EnumerableKeyValueProvider : IValueProvider
             proxy.Key = e.Key;
             return proxy;
         }).ToList();
-        
+
         if (addNull) list.Insert(0, new StringProxy { Key = null, Value = "" });
 
         return list;

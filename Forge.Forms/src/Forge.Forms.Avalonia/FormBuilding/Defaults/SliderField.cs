@@ -35,11 +35,8 @@ public class SliderField : DataFormField
 
 public class SliderPresenter : ValueBindingProvider
 {
-    protected override Type StyleKeyOverride => typeof(SliderPresenter);
-
     static SliderPresenter()
     {
-
     }
 
     public SliderPresenter(IResourceContext context,
@@ -48,4 +45,6 @@ public class SliderPresenter : ValueBindingProvider
         : base(context, fieldResources, formResources, true)
     {
     }
+
+    protected override Type StyleKeyOverride => typeof(SliderPresenter);
 }

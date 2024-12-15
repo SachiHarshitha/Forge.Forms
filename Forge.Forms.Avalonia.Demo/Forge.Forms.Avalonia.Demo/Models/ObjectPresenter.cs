@@ -1,28 +1,30 @@
-﻿namespace Forge.Forms.Avalonia.Demo.Models
+﻿namespace Forge.Forms.Avalonia.Demo.Models;
+
+public class ObjectPresenter
 {
-    public class ObjectPresenter
+    public ObjectPresenter(object instance, string displayString)
     {
-        public ObjectPresenter(object instance, string displayString)
-        {
-            this.Object = instance;
-            this.DisplayString = displayString;
-        }
-
-        public object Object { get; }
-
-        public string DisplayString { get; }
-
-        public override string ToString() => this.DisplayString;
+        Object = instance;
+        DisplayString = displayString;
     }
 
-    public class ObjectPresenter<T> : ObjectPresenter
-    {
-        public ObjectPresenter(T instance, string displayString)
-            : base(instance, displayString)
-        {
-            this.Object = instance;
-        }
+    public object Object { get; }
 
-        public new T Object { get; }
+    public string DisplayString { get; }
+
+    public override string ToString()
+    {
+        return DisplayString;
     }
+}
+
+public class ObjectPresenter<T> : ObjectPresenter
+{
+    public ObjectPresenter(T instance, string displayString)
+        : base(instance, displayString)
+    {
+        Object = instance;
+    }
+
+    public new T Object { get; }
 }

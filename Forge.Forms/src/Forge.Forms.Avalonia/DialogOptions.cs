@@ -19,7 +19,7 @@ public class DialogOptions : INotifyPropertyChanged
 
     private double headingFontSize = 15d;
     private double height = double.NaN;
-    private Thickness padding = new Thickness(16d, 16d, 16d, 8d);
+    private Thickness padding = new(16d, 16d, 16d, 8d);
     private double textFontSize = 15d;
     private double titleFontSize = 20d;
     private double width = 350d;

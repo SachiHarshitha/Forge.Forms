@@ -10,10 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="11.2.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.2"/>
+    <PackageReference Include="Humanizer.Core" Version="3.0.0-beta.54"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Forge.Forms.Avalonia.Demo\Forge.Forms.Avalonia.Demo.csproj" />
+    <ProjectReference Include="..\Forge.Forms.Avalonia.Demo\Forge.Forms.Avalonia.Demo.csproj"/>
   </ItemGroup>
 </Project>

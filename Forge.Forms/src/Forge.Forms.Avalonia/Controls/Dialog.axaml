@@ -2,29 +2,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" 
-		xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
+        mc:Ignorable="d"
+        xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
         x:Class="Forge.Forms.AvaloniaUI.Controls.Dialog"
-        Title="{Binding Title}"    
+        Title="{Binding Title}"
         MinWidth="200"
-        BorderThickness="0"  
+        BorderThickness="0"
         FontSize="{Binding TextFontSize}"
-        Width="{Binding Width}" 
+        Width="{Binding Width}"
         SizeToContent="Height"
         Height="{Binding Height}">
-	<ScrollViewer>
-		<controls:DynamicForm
-			x:Name="Form"
-			Margin="{Binding Padding}"
-			controls:TextProperties.HeadingFontSize="{Binding HeadingFontSize}"
-			controls:TextProperties.TextFontSize="{Binding TextFontSize}"
-			controls:TextProperties.TitleFontSize="{Binding TitleFontSize}"
-			FormBuilder="{Binding FormBuilder}" >
-			<controls:DynamicForm.Styles>
-				<Style Selector="#Form">
-				</Style>
-			</controls:DynamicForm.Styles>
-		</controls:DynamicForm>
-	</ScrollViewer>
-	
+    <ScrollViewer>
+        <controls:DynamicForm
+            x:Name="Form"
+            Margin="{Binding Padding}"
+            controls:TextProperties.HeadingFontSize="{Binding HeadingFontSize}"
+            controls:TextProperties.TextFontSize="{Binding TextFontSize}"
+            controls:TextProperties.TitleFontSize="{Binding TitleFontSize}"
+            FormBuilder="{Binding FormBuilder}">
+            <controls:DynamicForm.Styles>
+                <Style Selector="#Form" />
+            </controls:DynamicForm.Styles>
+        </controls:DynamicForm>
+    </ScrollViewer>
+
 </Window>
