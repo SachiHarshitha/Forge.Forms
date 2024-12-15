@@ -2,8 +2,10 @@
     x:Class="Forge.Forms.Avalonia.Demo.App"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    RequestedThemeVariant="Default">
+    xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+    RequestedThemeVariant="Light">
 	<Application.Resources>
+
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 			</ResourceDictionary.MergedDictionaries>
@@ -12,6 +14,7 @@
 
 	<Application.Styles>
 		<FluentTheme />
+		<StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 		<StyleInclude Source="avares://MaterialDesign.Avalonia.PackIcon/Assets/Generic.xaml" />
 		<StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />
 	</Application.Styles>

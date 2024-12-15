@@ -24,40 +24,29 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
 
     public static readonly AvaloniaProperty ModelProperty =
         AvaloniaProperty.Register<DynamicForm, object>(
-            "Model",
-            typeof(object),
-            true);
+            "Model");
 
-    //TODO: Maybe Inherits?
     internal static readonly AvaloniaProperty ValuePropertyKey =
         AvaloniaProperty.Register<DynamicForm, object>(
-        "Value",
-        typeof(object),
-        false);
+        "Value");
 
     //TODO: Maybe Inherits?
     public static readonly AvaloniaProperty ContextProperty =
         AvaloniaProperty.Register<DynamicForm, object>(
-        "Context",
-        typeof(object),
-        false);
+        "Context");
 
     public static readonly AvaloniaProperty FormBuilderProperty =
         AvaloniaProperty.Register<DynamicForm, IFormBuilder>(
         "FormBuilder",
-        FormBuilding.FormBuilder.Default,
-        false);
+        FormBuilding.FormBuilder.Default);
 
     public static readonly AvaloniaProperty ModelInterceptorProperty =
         AvaloniaProperty.Register<DynamicForm, IModelInterceptor>(
-        "ModelInterceptor",
-        null,
-        false);
+        "ModelInterceptor");
 
     public static readonly AvaloniaProperty EnvironmentProperty =
         AvaloniaProperty.Register<DynamicForm, IEnvironment>(
-        "Environment",
-        null);
+        "Environment");
 
     public static readonly AvaloniaProperty ValueProperty = ValuePropertyKey;
 
@@ -424,9 +413,9 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         foreach (var key in keys)
             if (key is DynamicResourceKey)
             {
-                // var proxy = (BindingProxy)resources[key];
-                // proxy.Value = null;
-                // resources.Remove(key);
+                 var proxy = (BindingProxy)resources[key];
+                proxy.Value = null;
+                resources.Remove(key);
             }
     }
 

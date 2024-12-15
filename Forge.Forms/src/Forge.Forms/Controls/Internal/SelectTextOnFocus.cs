@@ -6,6 +6,7 @@ using System.Windows.Media;
 namespace Forge.Forms.Controls.Internal
 {
     // Source: https://stackoverflow.com/questions/660554/how-to-automatically-select-all-text-on-focus-in-wpf-textbox
+    //TODO: Port to AvaloniaUI Project??
     internal class SelectTextOnFocus : DependencyObject
     {
         public static readonly DependencyProperty ActiveProperty = DependencyProperty.RegisterAttached(

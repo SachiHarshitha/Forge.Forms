@@ -5,12 +5,16 @@ using Avalonia.Controls;
 namespace Forge.Forms.AvaloniaUI.Controls.Internal;
 
 // Source: https://stackoverflow.com/questions/817610/wpf-and-initial-focus
-internal static class FocusHelper
+internal class FocusHelper : AvaloniaObject
 {
-    public static readonly AvaloniaProperty InitialFocusProperty =
-        AvaloniaProperty.RegisterAttached<Control,bool>(
+    static FocusHelper()
+    {
+        InitialFocusProperty.Changed.AddClassHandler<DynamicForm>(OnInitialFocusPropertyChanged);
+    }
+    
+    public static readonly AttachedProperty<bool> InitialFocusProperty =
+        AvaloniaProperty.RegisterAttached<FocusHelper,Control,bool>(
             "InitialFocus",
-            typeof(bool),
             false);
 
     public static bool GetInitialFocus(Control control)

@@ -112,7 +112,7 @@ public static class Show
         {
             object lastAction = null;
             object lastActionParameter = null;
-            var window = new Dialog(model, context, options);
+            var window = new Controls.Dialog(model, context, options);
             if (options.TopMost) window.Topmost = true;
 
             window.Form.OnAction += (s, e) =>
@@ -159,7 +159,7 @@ public static class Show
         {
             object lastAction = null;
             object lastActionParameter = null;
-            var wrapper = new DynamicFormWrap(model, context, options);
+            var wrapper = new Controls.DynamicFormWrap(model, context, options);
             wrapper.Form.OnAction += (s, e) =>
             {
                 lastAction = e.ActionContext.Action;

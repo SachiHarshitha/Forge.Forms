@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace Forge.Forms.AvaloniaUI;
+namespace Forge.Forms.AvaloniaUI.Controls;
 
 public partial class Dialog : Window
 {

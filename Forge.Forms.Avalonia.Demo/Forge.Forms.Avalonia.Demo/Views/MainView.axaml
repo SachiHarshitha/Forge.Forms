@@ -5,7 +5,6 @@
              xmlns:vm="clr-namespace:Forge.Forms.Avalonia.Demo.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Forge.Forms.Avalonia.Demo.Views.MainView"
-			 xmlns:forms="clr-namespace:Forge.Forms.AvaloniaUI.Controls;assembly=Forge.Forms.AvaloniaUI"
 			 xmlns:views="clr-namespace:Forge.Forms.Avalonia.Demo.Views"
 			 x:DataType="vm:MainViewModel">
 	<Design.DataContext>
@@ -15,24 +14,21 @@
 	</Design.DataContext>
 	<TabControl>
 		<TabItem Header="Home">
-			<ScrollViewer>
-				<views:FormView/>
-			</ScrollViewer>
+			<views:FormView/>
 		</TabItem>
 		<TabItem Header="Examples">
-			<ScrollViewer>
 				<views:ExamplesView/>
-			</ScrollViewer>			
 		</TabItem>
 		<TabItem Header="XML">
-			<ScrollViewer>
-				<views:XmlExamplesView/>
-			</ScrollViewer>					
+			<views:XmlExamplesView/>
 		</TabItem>
 		<TabItem Header="Source">
+			<views:SourceView/>
+		</TabItem>
+		<TabItem Header="test">
 			<ScrollViewer>
-				<views:SourceView/>
-			</ScrollViewer>					
+				<Button Command="{Binding OpenFormCommand}"></Button>
+			</ScrollViewer>
 		</TabItem>
 	</TabControl>
 </UserControl>

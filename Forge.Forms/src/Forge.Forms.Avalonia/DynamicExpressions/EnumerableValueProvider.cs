@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Data;
 using Forge.Forms.AvaloniaUI.FormBuilding;
 
@@ -27,15 +28,15 @@ public class EnumerableKeyValueProvider : IValueProvider
 
     public object ProvideValue(IResourceContext context)
     {
-        // var list = elements.Select(e =>
-        // {
-        //     var proxy = e.Value.GetStringValue(context);
-        //     proxy.Key = e.Key;
-        //     return proxy;
-        // }).ToList();
-        //
-        // if (addNull) list.Insert(0, new StringProxy { Key = null, Value = "" });
+        var list = elements.Select(e =>
+        {
+            var proxy = e.Value.GetStringValue(context);
+            proxy.Key = e.Key;
+            return proxy;
+        }).ToList();
+        
+        if (addNull) list.Insert(0, new StringProxy { Key = null, Value = "" });
 
-        return null;
+        return list;
     }
 }

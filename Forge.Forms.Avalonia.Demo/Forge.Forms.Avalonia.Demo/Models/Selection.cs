@@ -24,6 +24,8 @@ namespace Forge.Forms.Avalonia.Demo.Models
 
     public class Selection
     {
+        public int[] Seats => new[] { 1, 2, 3, 4 };
+
         [SelectFrom(typeof(Gender), SelectionType = SelectionType.RadioButtons)]
         public Gender? Gender { get; set; }
 
@@ -39,9 +41,7 @@ namespace Forge.Forms.Avalonia.Demo.Models
 
         [SelectFrom(typeof(YesNo?))]
         public YesNo? DeselectMe { get; set; } = YesNo.Yes;
-
-        public int[] Seats => new[] { 1, 2, 3, 4 };
-
+        
         [SelectFrom(new[] { "First item", "Second item", "Third item" }, SelectionType = SelectionType.RadioButtonsInline)]
         public string InlineSelection { get; set; } = "First item";
     }

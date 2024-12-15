@@ -18,9 +18,11 @@ internal class SelectFromBuilder : IFieldBuilder
 
         var type = property.PropertyType;
         var field = new SelectionField(property.Name, property.PropertyType);
-        if (selectFrom.DisplayPath != null) field.DisplayPath = BoundExpression.ParseSimplified(selectFrom.DisplayPath);
+        if (selectFrom.DisplayPath != null) 
+            field.DisplayPath = BoundExpression.Parse(selectFrom.DisplayPath);
 
-        if (selectFrom.ValuePath != null) field.ValuePath = BoundExpression.ParseSimplified(selectFrom.ValuePath);
+        if (selectFrom.ValuePath != null) 
+            field.ValuePath = BoundExpression.Parse(selectFrom.ValuePath);
 
         if (selectFrom.ItemStringFormat != null)
             field.ItemStringFormat = BoundExpression.ParseSimplified(selectFrom.ItemStringFormat);
@@ -54,8 +56,8 @@ internal class SelectFromBuilder : IFieldBuilder
                 else
                 {
                     field.ItemsSource = new EnumerableStringValueProvider(elements);
-                    //field.DisplayPath = new LiteralValue(nameof(StringProxy.Value));
-                    //field.ValuePath = new LiteralValue(nameof(StringProxy.Key));
+                    field.DisplayPath = new LiteralValue(nameof(StringProxy.Value));
+                    field.ValuePath = new LiteralValue(nameof(StringProxy.Key));
                 }
 
                 break;

@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace Forge.Forms.AvaloniaUI;
+namespace Forge.Forms.AvaloniaUI.Controls;
 
 public partial class DynamicFormWrap : UserControl
 {

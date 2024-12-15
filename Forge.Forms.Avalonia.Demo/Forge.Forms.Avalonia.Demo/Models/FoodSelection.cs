@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Forge.Forms.AvaloniaUI.Annotations;
 
 namespace Forge.Forms.Avalonia.Demo.Models
 {
-    public class FoodSelection : INotifyPropertyChanged
+    public class FoodSelection : ObservableObject
     {
         private string firstFood = "Pizza";
         private string secondFood = "Steak";
@@ -18,8 +19,7 @@ namespace Forge.Forms.Avalonia.Demo.Models
             get => firstFood;
             set
             {
-                firstFood = value;
-                OnPropertyChanged();
+                SetProperty(ref firstFood, value);
             }
         }
 
@@ -30,8 +30,7 @@ namespace Forge.Forms.Avalonia.Demo.Models
             get => secondFood;
             set
             {
-                secondFood = value;
-                OnPropertyChanged();
+                SetProperty(ref secondFood, value);
             }
         }
 
@@ -42,8 +41,7 @@ namespace Forge.Forms.Avalonia.Demo.Models
             get => thirdFood;
             set
             {
-                thirdFood = value;
-                OnPropertyChanged();
+                SetProperty(ref thirdFood, value);
             }
         }
 
@@ -55,16 +53,8 @@ namespace Forge.Forms.Avalonia.Demo.Models
             get => yourFavoriteFood;
             set
             {
-                yourFavoriteFood = value;
-                OnPropertyChanged();
+                SetProperty(ref yourFavoriteFood, value);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

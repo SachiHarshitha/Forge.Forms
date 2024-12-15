@@ -6,7 +6,6 @@
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
-    <formBuilding:FormBindingConverter x:Key="FormBindingConverter"/>
 
     <ControlTemplate x:Key="TitlePresenterTemplate" TargetType="{x:Type defaults:TitlePresenter}">
         <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -21,8 +20,8 @@
                 Margin="0,0,8,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}"
-                IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}" >
+                Kind="{formBuilding:FormBinding Icon}"
+                IsVisible="{formBuilding:FormBinding IconVisibility}" >
                 <Interaction.Behaviors>
                     <DataTriggerBehavior Binding="{Binding IconPadding}" Value="True">
                         <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
@@ -34,7 +33,7 @@
                 VerticalAlignment="Center"
                 FontWeight="Medium"
                 FontSize="{TemplateBinding controls:TextProperties.TitleFontSize}"
-                Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Content}"
+                Text="{formBuilding:FormBinding Content}"
                 TextWrapping="Wrap" />
         </Grid>
 
@@ -53,8 +52,8 @@
                 Margin="0,0,8,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Kind="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Icon}"
-                IsVisible="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconVisibility}" >
+                Kind="{formBuilding:FormBinding Icon}"
+                IsVisible="{formBuilding:FormBinding IconVisibility}" >
                 <Interaction.Behaviors>
                     <DataTriggerBehavior Binding="{Binding IconPadding}" Value="True">
                         <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
@@ -66,16 +65,16 @@
                 VerticalAlignment="Center"
                 FontWeight="Medium"
                 FontSize="{TemplateBinding controls:TextProperties.HeadingFontSize}"
-                Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Content}"
+                Text="{formBuilding:FormBinding Content}"
                 TextWrapping="Wrap" />
         </Grid>
        
     </ControlTemplate>
 
-    <ControlTemplate x:Key="TextPresenterTemplate" TargetType="{x:Type defaults:TextPresenter}">
+    <ControlTemplate x:Key="TextPresenterTemplate">
         <TextBlock Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                    FontSize="{TemplateBinding controls:TextProperties.TextFontSize}"
-                   Text="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Content}"
+                   Text="{formBuilding:FormBinding Content}"
                    TextWrapping="Wrap" >
             <Interaction.Behaviors>
                 <DataTriggerBehavior Binding="{Binding IconPadding}" Value="True">

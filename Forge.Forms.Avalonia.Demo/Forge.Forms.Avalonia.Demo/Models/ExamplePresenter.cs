@@ -1,6 +1,4 @@
-using Forge.Forms.Avalonia.Demo.Models;
-
-namespace Forge.Forms.Demo.Infrastructure
+namespace Forge.Forms.Avalonia.Demo.Models
 {
     public class ExamplePresenter : ObjectPresenter
     {

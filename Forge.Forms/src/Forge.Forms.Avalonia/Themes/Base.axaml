@@ -12,6 +12,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Text.axaml" />
 				<ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Image.axaml" />
+				<ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Material.Card.axaml" />
 				<ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Element.Action.axaml" />
 				<ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.Password.axaml" />
 				<ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.Converted.axaml" />
@@ -36,9 +37,9 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="defaults:DirectContentPresenter">
 					<ContentControl
-                        internal:FocusHelper.InitialFocus="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=InitialFocus}"
+                        internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                         Content="{formBuilding:FormBinding Value}"
-                        ToolTip.Tip="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=ToolTip}" />
+                        ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
@@ -55,8 +56,10 @@
                         Fill="{TemplateBinding Foreground}"
                         Stroke="{x:Null}">
 						<Interaction.Behaviors>
-							<DataTriggerBehavior Binding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=HasMargin}" Value="True">
+							<DataTriggerBehavior Binding="{formBuilding:FormBinding HasMargin}" Value="True">
+								<!--
 								<ChangePropertyAction PropertyName="Padding" Value="0,8" />
+							-->
 							</DataTriggerBehavior>
 						</Interaction.Behaviors>
 					</Rectangle>
@@ -66,7 +69,7 @@
 	</Style>
 
 	<Style Selector="defaults|BreakPresenter">
-		<Setter Property="Height" Value="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=Height}" />
+		<Setter Property="Height" Value="{formBuilding:FormBinding Height}" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="defaults:BreakPresenter" />
@@ -113,10 +116,10 @@
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="Template" Value="{StaticResource MaterialActionPresenterTemplate}" />
 		<Interaction.Behaviors>
-			<DataTriggerBehavior Binding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsPrimary}" Value="True">
+			<DataTriggerBehavior Binding="{formBuilding:FormBinding IsPrimary}" Value="True">
 				<ChangePropertyAction PropertyName="Template" Value="{StaticResource MaterialPrimaryActionPresenterTemplate}" />
 			</DataTriggerBehavior>
-			<DataTriggerBehavior Binding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IsLoading}" Value="True">
+			<DataTriggerBehavior Binding="{formBuilding:FormBinding IsLoading}" Value="True">
 				<!--
 				<ChangePropertyAction PropertyName="Width" Value="{TemplateBinding ActualWidth}" />
 				-->
@@ -159,15 +162,15 @@
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="Template" Value="{StaticResource WpfComboBoxSelectionPresenterTemplate}" />
 		<Interaction.Behaviors>
-			<DataTriggerBehavior Binding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=SelectionType}" Value="{x:Static annotations:SelectionType.RadioButtons}">
+			<DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}" Value="{x:Static annotations:SelectionType.RadioButtons}">
 				<ChangePropertyAction PropertyName="Margin" Value="8" />
 				<ChangePropertyAction PropertyName="Template" Value="{StaticResource WpfRadioButtonsSelectionPresenterTemplate}" />
 			</DataTriggerBehavior>
-			<DataTriggerBehavior Binding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=SelectionType}" Value="{x:Static annotations:SelectionType.RadioButtonsInline}">
+			<DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}" Value="{x:Static annotations:SelectionType.RadioButtonsInline}">
 				<ChangePropertyAction PropertyName="Margin" Value="8" />
 				<ChangePropertyAction PropertyName="Template" Value="{StaticResource WpfRadioButtonsInlineSelectionPresenterTemplate}" />
 			</DataTriggerBehavior>
-			<DataTriggerBehavior Binding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=SelectionType}" Value="{x:Static annotations:SelectionType.ComboBoxEditable}">
+			<DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}" Value="{x:Static annotations:SelectionType.ComboBoxEditable}">
 				<ChangePropertyAction PropertyName="Margin" Value="8" />
 				<ChangePropertyAction PropertyName="Template" Value="{StaticResource WpfEditableComboBoxSelectionPresenterTemplate}" />
 			</DataTriggerBehavior>
@@ -202,7 +205,7 @@
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="Template" Value="{StaticResource TitlePresenterTemplate}" />
 		<Interaction.Behaviors>
-			<DataTriggerBehavior Binding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconPadding}" Value="True">
+			<DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
 				<ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
 			</DataTriggerBehavior>
 		</Interaction.Behaviors>
@@ -215,7 +218,7 @@
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="Template" Value="{StaticResource HeadingPresenterTemplate}" />
 		<Interaction.Behaviors>
-			<DataTriggerBehavior Binding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconPadding}" Value="True">
+			<DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
 				<ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
 			</DataTriggerBehavior>
 		</Interaction.Behaviors>
@@ -227,7 +230,7 @@
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="Template" Value="{StaticResource TextPresenterTemplate}" />
 		<Interaction.Behaviors>
-			<DataTriggerBehavior Binding="{Binding DataContext ,Converter={StaticResource FormBindingConverter},ConverterParameter=IconPadding}" Value="True">
+			<DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
 				<ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
 			</DataTriggerBehavior>
 		</Interaction.Behaviors>

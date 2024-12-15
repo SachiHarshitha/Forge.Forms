@@ -1,17 +1,31 @@
-﻿using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Avalonia.Controls;
+using Avalonia.Data;
+using Forge.Forms.AvaloniaUI.DynamicExpressions;
 
 namespace Forge.Forms.AvaloniaUI.FormBuilding
 {
     /// <summary>
     /// Default implementation of <see cref="IBindingProvider" />.
     /// </summary>
-    public abstract class BindingProvider : TemplatedControl, IBindingProvider
+    public abstract class BindingProvider : ContentControl, IBindingProvider
     {
-        #region Properties
+        private readonly Dictionary<string, BindingProxy> proxyCache;
+
+        protected BindingProvider(IResourceContext context,
+            IDictionary<string, IValueProvider> fieldResources,
+            IDictionary<string, IValueProvider> formResources,
+            bool throwOnNotFound)
+        {
+            IsTabStop = false;
+            DataContext = this;
+            Context = context;
+            FieldResources = fieldResources;
+            FormResources = formResources;
+            ThrowOnNotFound = throwOnNotFound;
+            proxyCache = new Dictionary<string, BindingProxy>();
+        }
 
         /// <summary>
         /// Gets the context associated with the form control.
@@ -33,21 +47,34 @@ namespace Forge.Forms.AvaloniaUI.FormBuilding
         /// </summary>
         public bool ThrowOnNotFound { get; }
 
-        #endregion Properties
-
-        #region Methoods
-
-        protected BindingProvider(IResourceContext context,
-            IDictionary<string, IValueProvider> fieldResources,
-            IDictionary<string, IValueProvider> formResources,
-            bool throwOnNotFound)
+        /// <summary>
+        /// Returns a <see cref="BindingProxy" /> bound to the value returned by <see cref="ProvideValue" />.
+        /// </summary>
+        /// <param name="name">Resource name. This is not the object property name.</param>
+        /// <returns></returns>
+        public BindingProxy this[string name]
         {
-            IsTabStop = false;
-            DataContext = this;
-            Context = context;
-            FieldResources = fieldResources;
-            FormResources = formResources;
-            ThrowOnNotFound = throwOnNotFound;
+            get
+            {
+                if (proxyCache.TryGetValue(name, out var proxy))
+                {
+                    return proxy;
+                }
+
+                proxy = new BindingProxy();
+                proxyCache[name] = proxy;
+                var value = ProvideValue(name);
+                if (value is InstancedBinding binding)
+                {
+                    BindingOperations.Apply(proxy, BindingProxy.ValueProperty, binding);
+                }
+                else
+                {
+                    proxy.Value = value;
+                }
+
+                return proxy;
+            }
         }
 
         /// <summary>
@@ -78,7 +105,5 @@ namespace Forge.Forms.AvaloniaUI.FormBuilding
         public virtual void BindingCreated(BindingExpressionBase expression, string resource)
         {
         }
-
-        #endregion Methoods
     }
 }

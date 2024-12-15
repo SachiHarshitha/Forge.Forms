@@ -4,22 +4,25 @@ namespace Forge.Forms.AvaloniaUI.Controls;
 
 public static class TextProperties
 {
-    public static readonly StyledProperty<double> TitleFontSizeProperty =
-        AvaloniaProperty.Register<AvaloniaObject,double>(
+    public static readonly AttachedProperty<double> TitleFontSizeProperty =
+        AvaloniaProperty.RegisterAttached<AvaloniaObject,double>(
             "TitleFontSize",
+            typeof(TextProperties),
             20d,
             true);
 
-    public static readonly AvaloniaProperty<double> HeadingFontSizeProperty =
-        AvaloniaProperty.Register<AvaloniaObject,double>(
+    public static readonly AttachedProperty<double> HeadingFontSizeProperty =
+        AvaloniaProperty.RegisterAttached<AvaloniaObject,double>(
             "HeadingFontSize",
+            typeof(TextProperties),
             15d,
             true);
-       
 
-    public static readonly AvaloniaProperty<double> TextFontSizeProperty =
-        AvaloniaProperty.Register<AvaloniaObject,double>(
+
+    public static readonly AttachedProperty<double> TextFontSizeProperty =
+        AvaloniaProperty.RegisterAttached<AvaloniaObject,double>(
             "TextFontSize",
+            typeof(TextProperties),
             13d,
             true);
     

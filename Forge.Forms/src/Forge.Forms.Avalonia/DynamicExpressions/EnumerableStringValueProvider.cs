@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Data;
 using Forge.Forms.AvaloniaUI.FormBuilding;
 
@@ -25,7 +26,6 @@ public class EnumerableStringValueProvider : IValueProvider
 
     public object ProvideValue(IResourceContext context)
     {
-        //return elements.Select(e => e.GetStringValue(context, true)).ToList();
-        return null;
+        return elements.Select(e => e.GetStringValue(context, true)).ToList();
     }
 }

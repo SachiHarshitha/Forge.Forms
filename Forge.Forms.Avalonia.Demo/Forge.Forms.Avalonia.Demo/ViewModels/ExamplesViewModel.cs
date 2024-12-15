@@ -6,7 +6,6 @@ using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Forge.Forms.Avalonia.Demo.Models;
 using Forge.Forms.AvaloniaUI;
-using Forge.Forms.Demo.Infrastructure;
 
 namespace Forge.Forms.Avalonia.Demo.ViewModels;
 

@@ -24,7 +24,7 @@ public sealed class ConvertedDirectBinding : IValueProvider
         var binding = context.CreateDirectModelBinding();
         BindingOptions.Apply(binding);
         var deserializer = ReplacementPipe.CreateDeserializer(context);
-        // binding.Converter = new StringTypeConverter(deserializer);
+        binding.Converter = new StringTypeConverter(deserializer);
         // binding.ValidationRules.Add(new ConversionValidator(deserializer, ConversionErrorStringProvider(context),
         //     binding.ConverterCulture));
         // var pipe = new ValidationPipe();

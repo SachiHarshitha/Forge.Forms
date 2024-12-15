@@ -12,12 +12,12 @@ public partial class MainViewModel : ViewModelBase
 {
     public string Greeting => "Welcome to Avalonia!";
     public ICommand _openFormCommand;
-    public object Model => new User();
+    public object Model => new User() { FirstName = "A", LastName = "B" };
 
     public ICommand OpenFormCommand => _openFormCommand ??= new RelayCommand(OpenForm_Clicked);
 
     private async void OpenForm_Clicked()
     {
-        await Show.Window().For(Model);
+       var result = await Show.Window().For(Model);
     }
 }

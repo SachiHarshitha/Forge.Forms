@@ -4,13 +4,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls;assembly=Forge.Forms.AvaloniaUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls1="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+    xmlns:materialDesign="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+    xmlns:viewModels="clr-namespace:Forge.Forms.Avalonia.Demo.ViewModels"
+    xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit"
+    xmlns:behaviors="clr-namespace:Forge.Forms.Avalonia.Demo.Behaviors"
     d:DesignHeight="600"
     d:DesignWidth="800"
     Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
+    <UserControl.DataContext>
+        <viewModels:XmlExampleViewModel></viewModels:XmlExampleViewModel>
+    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="160" />
@@ -20,31 +25,37 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <controls1:Card
+        <materialDesign:Card
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="1"
+            Margin="8"
             VerticalAlignment="Stretch">
             <Grid Margin="8">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBox
-                    VerticalAlignment="Stretch"
-                    VerticalContentAlignment="Top"
-                    AcceptsReturn="True"
+                <avaloniaEdit:TextEditor
+                    Name="Editor"
+                    Grid.Row="0"
+                    VerticalAlignment="Top"
+                    SyntaxHighlighting="XML"
+                    ShowLineNumbers="True"
                     FontFamily="Consolas"
-                    Text="{Binding XmlString}"
-                    TextWrapping="Wrap"/>
+                    WordWrap="True">
+                    <Interaction.Behaviors>
+                        <behaviors:DocumentTextBindingBehavior Text="{Binding XmlString, Mode=TwoWay}"/>
+                    </Interaction.Behaviors>
+                </avaloniaEdit:TextEditor>
                 <Button
                     Grid.Row="1"
                     Margin="0,8,0,0"
                     Command="{Binding BuildDefinitionCommand}"
                     Content="BUILD FORM" />
             </Grid>
-        </controls1:Card>
-        <controls1:Card
+        </materialDesign:Card>
+        <materialDesign:Card
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="0"
@@ -59,8 +70,8 @@
                   
                 </controls:DynamicForm>
             </ScrollViewer>
-        </controls1:Card>
-        <controls1:ColorZone
+        </materialDesign:Card>
+        <materialDesign:ColorZone
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
