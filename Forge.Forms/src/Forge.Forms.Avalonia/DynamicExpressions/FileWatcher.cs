@@ -82,7 +82,9 @@ public sealed class FileWatcher : IStringProxy, IProxy, IDisposable, INotifyProp
     private class Watcher : IDisposable
     {
         private readonly string filePath;
+#if !BROWSER
         private readonly FileSystemWatcher fileSystemWatcher;
+#endif
         private readonly List<FileWatcher> listeners;
 
         private bool isLatestValue;
@@ -92,18 +94,20 @@ public sealed class FileWatcher : IStringProxy, IProxy, IDisposable, INotifyProp
         {
             filePath = initialListener.filePath;
             listeners = new List<FileWatcher> { initialListener };
+
+#if !BROWSER
             fileSystemWatcher = new FileSystemWatcher
             {
                 Path = Path.GetDirectoryName(filePath),
                 Filter = Path.GetFileName(filePath),
                 EnableRaisingEvents = true
             };
-
             fileSystemWatcher.Created += (s, e) => Update();
             fileSystemWatcher.Changed += (s, e) => Update();
             fileSystemWatcher.Deleted += (s, e) => Update();
             fileSystemWatcher.Renamed += (s, e) => Update();
             fileSystemWatcher.Error += (s, e) => Update();
+#endif
         }
 
         public string Value
@@ -128,7 +132,9 @@ public sealed class FileWatcher : IStringProxy, IProxy, IDisposable, INotifyProp
 
         public void Dispose()
         {
+#if !BROWSER
             fileSystemWatcher.Dispose();
+#endif
         }
 
         public void AddListener(FileWatcher listener)
@@ -143,6 +149,7 @@ public sealed class FileWatcher : IStringProxy, IProxy, IDisposable, INotifyProp
 
         private void Update()
         {
+#if !BROWSER
             try
             {
                 fileSystemWatcher.EnableRaisingEvents = false;
@@ -153,6 +160,7 @@ public sealed class FileWatcher : IStringProxy, IProxy, IDisposable, INotifyProp
             {
                 fileSystemWatcher.EnableRaisingEvents = true;
             }
+#endif
         }
     }
 }

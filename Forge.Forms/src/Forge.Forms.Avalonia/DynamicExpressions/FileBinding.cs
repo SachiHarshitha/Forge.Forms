@@ -19,6 +19,7 @@ public sealed class FileBinding : Resource
 
     public override IBinding ProvideBinding(IResourceContext context)
     {
+#if !BROWSER
         return new Binding(nameof(IProxy.Value))
         {
             Source = IsDynamic
@@ -27,6 +28,15 @@ public sealed class FileBinding : Resource
             Converter = GetValueConverter(context),
             Mode = BindingMode.OneWay
         };
+#else
+    Console.WriteLine("File Binding is not currently supported. Due to the incompatibility of FileSystemWatcher.    ");
+         return new Binding(nameof(IProxy.Value))
+        {
+            Source = new PlainString(Utilities.TryReadFile(FilePath)),
+            Converter = GetValueConverter(context),
+            Mode = BindingMode.OneWay
+        };
+#endif
     }
 
     public override bool Equals(Resource other)
