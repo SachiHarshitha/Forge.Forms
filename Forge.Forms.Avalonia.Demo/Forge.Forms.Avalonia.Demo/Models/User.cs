@@ -12,7 +12,7 @@ public class User : ObservableObject
 {
     private bool agreeToLicense;
     private string confirmPassword;
-    private DateTime? dateOfBirth;
+    private DateTimeOffset? dateOfBirth;
     private string firstName;
     private string lastName;
     private string password;
@@ -42,7 +42,7 @@ public class User : ObservableObject
     [Field(Icon = PackIconKind.Calendar)]
     [Value(Must.BeLessThan, "2020-01-01",
         Message = "You said you are born in the year {Value:yyyy}. Are you really from the future?")]
-    public DateTime? DateOfBirth
+    public DateTimeOffset? DateOfBirth
     {
         get => dateOfBirth;
         set => SetProperty(ref dateOfBirth, value);

@@ -63,12 +63,20 @@ public class FormBindingExtension : MarkupExtension
                 var targetProperty = pvt.TargetProperty as AvaloniaProperty;
                 if (targetProperty != null)
                 {
+                    if (Nullable.GetUnderlyingType(targetProperty?.PropertyType) != null)
+                    {
+                        return null;
+                    }
+
                     if (targetProperty?.PropertyType.IsEnum ?? false)
                         return Enum.GetValues(targetProperty?.PropertyType).GetValue(0);
                     if (targetProperty?.PropertyType == typeof(bool))
                         return false;
-                    // if (targetProperty?.PropertyType == typeof(string))
-                    //     return string.Empty;
+                    if (targetProperty?.PropertyType == typeof(string))
+                        return string.Empty;
+                    if (targetProperty?.PropertyType == typeof(double))
+                        return double.NaN;
+
                     // if (targetProperty?.PropertyType is IBinding)
                     //return new FormBindingExtension(Name);
                 }
@@ -126,7 +134,24 @@ public class FormBindingExtension : MarkupExtension
                 return value;
             }
 
-            if (value is MultiBinding multiBinding) return multiBinding;
+            if (value is MultiBinding multiBinding)
+            {
+                var avaProp = GetDependencyProperty(styledElement.GetType(), _targetPropertyName);
+                if (avaProp?.PropertyType == typeof(BindingBase)) return value;
+                var prop = GetPropInfoProperty(styledElement.GetType(), _targetPropertyName);
+                if (prop?.PropertyType == typeof(BindingBase)) return value;
+
+                if (avaProp != null)
+                {
+                    var expression = styledElement.Bind(avaProp, multiBinding);
+                    if (expression != null) field.BindingCreated(expression, Name);
+                    return expression;
+                }
+
+                return value;
+            }
+
+            ;
 
             // Apply the literal value directly
             ApplyLiteralValueViaReflection(styledElement, value);

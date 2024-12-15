@@ -52,8 +52,7 @@ public class FormBuilder : IFormBuilder
         Primitives = new Dictionary<Type, IFormDefinition>
         {
             [typeof(string)] = Primitive.String(),
-
-            [typeof(DateTime)] = Primitive.DateTime(),
+            [typeof(DateTimeOffset)] = Primitive.DateTime(),
             [typeof(bool)] = Primitive.Boolean(),
             [typeof(char)] = Primitive.Char(),
             [typeof(byte)] = Primitive.Byte(),
@@ -69,7 +68,7 @@ public class FormBuilder : IFormBuilder
             [typeof(decimal)] = Primitive.Decimal(),
 
             // Nullables will default to non-nullable,
-            [typeof(DateTime?)] = Primitive.DateTime(),
+            [typeof(DateTimeOffset?)] = Primitive.DateTime(),
             [typeof(bool?)] = Primitive.Boolean(),
             [typeof(char?)] = Primitive.Char(),
             [typeof(byte?)] = Primitive.Byte(),
@@ -93,8 +92,8 @@ public class FormBuilder : IFormBuilder
             [typeof(string)] = AsList(new StringFieldBuilder()),
 
             // Temporarily converted.
-            [typeof(DateTime)] = AsList(new DateTimeFieldBuilder()),
-            [typeof(DateTime?)] = AsList(new DateTimeFieldBuilder()),
+            [typeof(DateTimeOffset)] = AsList(new DateTimeFieldBuilder()),
+            [typeof(DateTimeOffset?)] = AsList(new DateTimeFieldBuilder()),
 
             // Boolean
             [typeof(bool)] = AsList(new BooleanFieldBuilder()),
@@ -140,8 +139,8 @@ public class FormBuilder : IFormBuilder
         TypeNames = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
         {
             ["string"] = typeof(string),
-            ["datetime"] = typeof(DateTime),
-            ["time"] = typeof(DateTime),
+            ["datetime"] = typeof(DateTimeOffset),
+            ["time"] = typeof(DateTimeOffset),
             ["bool"] = typeof(bool),
             ["char"] = typeof(char),
             ["byte"] = typeof(byte),
@@ -155,8 +154,8 @@ public class FormBuilder : IFormBuilder
             ["float"] = typeof(float),
             ["double"] = typeof(double),
             ["decimal"] = typeof(decimal),
-            ["datetime?"] = typeof(DateTime?),
-            ["time?"] = typeof(DateTime?),
+            ["datetime?"] = typeof(DateTimeOffset?),
+            ["time?"] = typeof(DateTimeOffset?),
             ["bool?"] = typeof(bool?),
             ["char?"] = typeof(char?),
             ["byte?"] = typeof(byte?),
@@ -179,7 +178,7 @@ public class FormBuilder : IFormBuilder
                 ["text"] = _ => typeof(string),
                 ["textarea"] = _ => new TypeConstructor(typeof(string), new MultiLineAttribute()),
                 ["password"] = _ => new TypeConstructor(typeof(string), new PasswordAttribute()),
-                ["datetime"] = _ => typeof(DateTime),
+                ["datetime"] = _ => typeof(DateTimeOffset),
                 ["time"] = DefaultTypeConstructors.Time,
                 ["bool"] = _ => typeof(bool),
                 ["toggle"] = _ => new TypeConstructor(typeof(bool), new ToggleAttribute()),
@@ -195,7 +194,7 @@ public class FormBuilder : IFormBuilder
                 ["float"] = _ => typeof(float),
                 ["double"] = _ => typeof(double),
                 ["decimal"] = _ => typeof(decimal),
-                ["datetime?"] = _ => typeof(DateTime?),
+                ["datetime?"] = _ => typeof(DateTimeOffset?),
                 ["time?"] = DefaultTypeConstructors.NullableTime,
                 ["bool?"] = _ => typeof(bool?),
                 ["char?"] = _ => typeof(char?),
@@ -217,7 +216,7 @@ public class FormBuilder : IFormBuilder
             // Default deserializers - culture invariant.
             [typeof(object)] = Deserializers.String,
             [typeof(string)] = Deserializers.String,
-            [typeof(DateTime)] = Deserializers.DateTime,
+            [typeof(DateTimeOffset)] = Deserializers.DateTime,
             [typeof(bool)] = Deserializers.Boolean,
             [typeof(char)] = Deserializers.Char,
             [typeof(byte)] = Deserializers.Byte,
@@ -231,7 +230,7 @@ public class FormBuilder : IFormBuilder
             [typeof(float)] = Deserializers.Single,
             [typeof(double)] = Deserializers.Double,
             [typeof(decimal)] = Deserializers.Decimal,
-            [typeof(DateTime?)] = Deserializers.NullableDateTime,
+            [typeof(DateTimeOffset?)] = Deserializers.NullableDateTime,
             [typeof(bool?)] = Deserializers.NullableBoolean,
             [typeof(char?)] = Deserializers.NullableChar,
             [typeof(byte?)] = Deserializers.NullableByte,

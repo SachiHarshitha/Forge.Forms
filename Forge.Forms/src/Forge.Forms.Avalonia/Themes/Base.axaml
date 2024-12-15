@@ -31,6 +31,8 @@
         </Border>
     </Design.PreviewWith>
 
+    <StyleInclude Source="avares://MaterialDesign.Avalonia.PackIcon/Assets/Generic.xaml" />
+
     <!--  Add Styles Here  -->
     <Style Selector="defaults|DirectContentPresenter">
         <Setter Property="Template">

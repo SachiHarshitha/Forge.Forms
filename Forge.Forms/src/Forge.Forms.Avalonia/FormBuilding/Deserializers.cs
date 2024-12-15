@@ -14,14 +14,14 @@ public static class Deserializers
 
     public static object DateTime(string expression)
     {
-        return System.DateTime.Parse(expression, CultureInfo.InvariantCulture);
+        return DateTimeOffset.Parse(expression, CultureInfo.InvariantCulture);
     }
 
     public static object NullableDateTime(string expression)
     {
         if (string.IsNullOrEmpty(expression)) return null;
 
-        return System.DateTime.Parse(expression, CultureInfo.InvariantCulture);
+        return DateTimeOffset.Parse(expression, CultureInfo.InvariantCulture);
     }
 
     public static object Boolean(string expression)
@@ -190,14 +190,14 @@ public static class Deserializers
 
     public static object CultureInvariantDateTime(string expression, CultureInfo culture)
     {
-        return System.DateTime.Parse(expression, CultureInfo.InvariantCulture);
+        return DateTimeOffset.Parse(expression, CultureInfo.InvariantCulture);
     }
 
     public static object CultureInvariantNullableDateTime(string expression, CultureInfo culture)
     {
         if (string.IsNullOrEmpty(expression)) return null;
 
-        return System.DateTime.Parse(expression, CultureInfo.InvariantCulture);
+        return DateTimeOffset.Parse(expression, CultureInfo.InvariantCulture);
     }
 
     public static object CultureInvariantBoolean(string expression, CultureInfo culture)
@@ -366,14 +366,14 @@ public static class Deserializers
 
     public static object DateTime(string expression, CultureInfo culture)
     {
-        return System.DateTime.Parse(expression, culture);
+        return DateTimeOffset.Parse(expression, culture);
     }
 
     public static object NullableDateTime(string expression, CultureInfo culture)
     {
         if (string.IsNullOrEmpty(expression)) return null;
 
-        return System.DateTime.Parse(expression, culture);
+        return DateTimeOffset.Parse(expression, culture);
     }
 
     public static object Boolean(string expression, CultureInfo culture)

@@ -33,7 +33,7 @@ public class StringProxy : AvaloniaObject, IStringProxy, IProxy
 
     public string Value
     {
-        get => (string)GetValue(ValueProperty);
+        get => GetValue(ValueProperty).ToString();
         set => SetValue(ValueProperty, value);
     }
 

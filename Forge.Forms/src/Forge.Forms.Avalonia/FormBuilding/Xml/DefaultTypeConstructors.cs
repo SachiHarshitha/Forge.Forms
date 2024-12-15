@@ -25,7 +25,7 @@ internal static class DefaultTypeConstructors
         }
 
         return new TypeConstructor(
-            nullable ? typeof(DateTime?) : typeof(DateTime),
+            nullable ? typeof(DateTimeOffset?) : typeof(DateTimeOffset),
             new TimeAttribute
             {
                 Is24Hours = is24Hours

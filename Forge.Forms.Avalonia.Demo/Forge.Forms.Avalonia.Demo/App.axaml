@@ -2,17 +2,62 @@
     x:Class="Forge.Forms.Avalonia.Demo.App"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:models="clr-namespace:Forge.Forms.Avalonia.Demo.Models"
     RequestedThemeVariant="Light">
+    <Application.DataTemplates>
+        <DataTemplate DataType="{x:Type models:CustomContent}">
+            <Grid Background="LightBlue">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="8"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Text="Person info:"
+                    TextWrapping="Wrap" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="8"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Text="{Binding FirstName}" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="8"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Text="{Binding LastName}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="2"
+                    Margin="8"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Text="This is a custom DataTemplate for type CustomContent. See App.xaml for the declaration."
+                    TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+    </Application.DataTemplates>
     <Application.Resources>
-
-        <ResourceDictionary>
-        </ResourceDictionary>
+        <system:Double x:Key="MaxCardWidth">640</system:Double>
     </Application.Resources>
 
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
-        <StyleInclude Source="avares://MaterialDesign.Avalonia.PackIcon/Assets/Generic.xaml" />
         <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />
     </Application.Styles>
 </Application>

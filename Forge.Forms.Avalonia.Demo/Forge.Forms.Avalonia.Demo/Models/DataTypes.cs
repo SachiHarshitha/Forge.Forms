@@ -10,8 +10,8 @@ public class DataTypes
     [Field(Row = "1", ToolTip = "@public string String { get; set; }")]
     public string String { get; set; }
 
-    [Field(Row = "1", ToolTip = "@public DateTime DateTime { get; set; }")]
-    public DateTime DateTime { get; set; }
+    [Field(Row = "1", ToolTip = "@public DateTimeOffset DateTime { get; set; }")]
+    public DateTimeOffset DateTime { get; set; }
 
     [Field(Row = "1", ToolTip = "@public bool Bool { get; set; }")]
     public bool Bool { get; set; }
@@ -52,8 +52,8 @@ public class DataTypes
     [Field(Row = "5", ToolTip = "@public decimal Decimal { get; set; }")]
     public decimal Decimal { get; set; }
 
-    [Field(Row = "6", ToolTip = "@public DateTime? NullableDateTime { get; set; }")]
-    public DateTime? NullableDateTime { get; set; }
+    [Field(Row = "6", ToolTip = "@public DateTimeOffset? NullableDateTime { get; set; }")]
+    public DateTimeOffset? NullableDateTime { get; set; }
 
     [Field(Row = "6", ToolTip = "@public bool? NullableBool { get; set; }")]
     public bool? NullableBool { get; set; }
@@ -95,6 +95,6 @@ public class DataTypes
     public decimal? NullableDecimal { get; set; }
 
     [Time]
-    [Field(Row = "10", ToolTip = "@public DateTime Time { get; set; }")]
-    public DateTime Time { get; set; }
+    [Field(Row = "10", ToolTip = "@public DateTimeOffset Time { get; set; }")]
+    public DateTimeOffset Time { get; set; }
 }

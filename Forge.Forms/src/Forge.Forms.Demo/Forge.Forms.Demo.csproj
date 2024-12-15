@@ -42,4 +42,13 @@
     <ProjectReference Include="..\Forge.Forms\Forge.Forms.aalex675.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<None Update="example.txt">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="captcha.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 </Project>

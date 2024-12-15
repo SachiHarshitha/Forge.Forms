@@ -10,6 +10,10 @@
         <Authors>Forge.Forms.AvaloniaUI</Authors>
         <Company>Forge.Forms.AvaloniaUI</Company>
         <Product>Forge.Forms.AvaloniaUI</Product>
+        <Authors>SachiHarshitha</Authors>
+        <Copyright>Portions Copyright © SachiHarshitha 2024 ,Portions Copyright © aalex675 2021, Portions Copyright © WPF-Forge 2018</Copyright>
+        <Description>Dynamically generated forms and dialogs for Avalonia Framework, ported by Sachith Liyanagama</Description>
+        <PackageTags>Avalonia dynamic forms</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>

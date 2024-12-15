@@ -8,9 +8,9 @@ public class Introduction : ObservableObject
 {
     private string yourName;
 
-    [Title("Forge.Forms")]
+    [Title("Forge.Forms.AvaloniaUI")]
     [Heading("Introduction")]
-    [Text("Welcome to Forge.Forms, a library for building dynamic forms.")]
+    [Text("Welcome to Forge.Forms.AvaloniaUI, a library for building dynamic forms.")]
     [Text("This library offers a declarative and MVVM friendly approach " +
           "to consistent forms with minimal boilerplate.")]
     [Text("The control you are currently seeing is a dynamic form, " +

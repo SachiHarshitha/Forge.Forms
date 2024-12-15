@@ -8,7 +8,7 @@ public class DateField : DataFormField
     /// <summary>
     /// </summary>
     /// <param name="key"></param>
-    public DateField(string key) : base(key, typeof(DateTime))
+    public DateField(string key) : base(key, typeof(DateTimeOffset))
     {
     }
 

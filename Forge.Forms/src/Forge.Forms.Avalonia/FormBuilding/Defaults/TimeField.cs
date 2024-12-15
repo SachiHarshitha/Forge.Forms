@@ -6,7 +6,7 @@ namespace Forge.Forms.AvaloniaUI.FormBuilding.Defaults;
 
 public class TimeField : DataFormField
 {
-    public TimeField(string key) : base(key, typeof(DateTime))
+    public TimeField(string key) : base(key, typeof(DateTimeOffset))
     {
     }
 
