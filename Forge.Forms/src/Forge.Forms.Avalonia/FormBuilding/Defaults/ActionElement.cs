@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Layout;
+using Avalonia.LogicalTree;
+using DialogHostAvalonia;
 using Forge.Forms.AvaloniaUI.Annotations;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 
@@ -158,7 +161,17 @@ internal class ActionElementCommand : ICommand
                 var frameworkElement = fwContext.GetOwningElement();
                 if (frameworkElement != null && frameworkElement.CheckAccess())
                 {
-                    //DialogHost.CloseDialogCommand.Execute(arg, frameworkElement);
+                    // Close if the DialogHost based window is open.
+                    if (DialogHost.IsDialogOpen(null))
+                    {
+                        DialogHost.Close(null);
+                    }
+                    else
+                    {
+                        // Else find the window and close it.
+                        var window = frameworkElement.FindLogicalAncestorOfType<Window>();
+                        if (window != null) window.Close();
+                    }
                 }
             }
 

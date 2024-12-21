@@ -4,9 +4,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
-        x:Class="Forge.Forms.AvaloniaUI.Controls.Dialog"
+        x:Class="Forge.Forms.AvaloniaUI.Controls.DialogWindow"
         Title="{Binding Title}"
         MinWidth="200"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="-1"
         BorderThickness="0"
         FontSize="{Binding TextFontSize}"
         Width="{Binding Width}"
@@ -25,5 +27,4 @@
             </controls:DynamicForm.Styles>
         </controls:DynamicForm>
     </ScrollViewer>
-
 </Window>

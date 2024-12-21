@@ -5,6 +5,7 @@
     xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
     xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:materialDesign="clr-namespace:Material.Styles.Controls;assembly=Material.Styles">
     <Styles.Resources>
@@ -31,7 +32,11 @@
         </Border>
     </Design.PreviewWith>
 
+    <!-- Packicon Styles  -->
     <StyleInclude Source="avares://MaterialDesign.Avalonia.PackIcon/Assets/Generic.xaml" />
+
+    <!-- Dialog Hoat Styles -->
+    <dialogHostAvalonia:DialogHostStyles />
 
     <!--  Add Styles Here  -->
     <Style Selector="defaults|DirectContentPresenter">

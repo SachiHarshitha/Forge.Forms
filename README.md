@@ -63,7 +63,7 @@ THEMES.
 |       Attributes        | :zzz: Ported     | Mostly working, other than dynamic property bindings for Selection.                                                                                                        |
 | Form Binding Extension  | :zzz: Incomplete | Given that the DataContext setting is not set mostly during initialization, had to optimize logic and seperate certain Bindings to use a converter (FormBindingConverter). |
 | Freezable Proxy Objects | :construction:   | Given Avalonia do not provide Freezable objects, need to rewrite persisted value extraction logic.                                                                         |
-|         Dialogs         | :construction:   | Need to reconstruct using Avalonia.DialogHost.                                                                                                                             |
+|         Dialogs         | :zzz: Ported     | Need more testing and style optimization.                                                                                                                                  |
 |      File Binding       | :zzz: Incomplete | FileWatcher only works on Desktop. Need to find an alternative.                                                                                                            |
 |     Data Validation     | :construction:   | Need to rewrite the whole Validation logic. Because there is no **ValidationRule** in Avalonia.                                                                            |
 

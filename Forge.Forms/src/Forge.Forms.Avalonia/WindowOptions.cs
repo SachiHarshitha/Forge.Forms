@@ -7,9 +7,7 @@ public class WindowOptions : DialogOptions
     public new static WindowOptions Default = new();
     private bool canResize;
     private Window owner;
-    private bool showCloseButton;
-    private bool showMaxRestoreButton = true;
-    private bool showMinButton;
+    private bool showCaptionButtons = true;
 
     private string title = "Dialog";
     private WindowStartupLocation windowStartupLocation;
@@ -25,9 +23,7 @@ public class WindowOptions : DialogOptions
         if (defaults == null) return;
 
         title = defaults.title;
-        showMinButton = defaults.showMinButton;
-        showMaxRestoreButton = defaults.showMaxRestoreButton;
-        showCloseButton = defaults.showCloseButton;
+        showCaptionButtons = defaults.showCaptionButtons;
         canResize = defaults.canResize;
         windowStartupLocation = defaults.windowStartupLocation;
         owner = defaults.owner;
@@ -49,38 +45,14 @@ public class WindowOptions : DialogOptions
         }
     }
 
-    public bool ShowMinButton
+    public bool ShowCaptionButtons
     {
-        get => showMinButton;
+        get => showCaptionButtons;
         set
         {
-            if (value == showMinButton) return;
+            if (value == showCaptionButtons) return;
 
-            showMinButton = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool ShowMaxRestoreButton
-    {
-        get => showMaxRestoreButton;
-        set
-        {
-            if (value == showMaxRestoreButton) return;
-
-            showMaxRestoreButton = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool ShowCloseButton
-    {
-        get => showCloseButton;
-        set
-        {
-            if (value == showCloseButton) return;
-
-            showCloseButton = value;
+            showCaptionButtons = value;
             OnPropertyChanged();
         }
     }

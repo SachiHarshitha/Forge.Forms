@@ -52,6 +52,8 @@
         </DataTemplate>
     </Application.DataTemplates>
     <Application.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
         <system:Double x:Key="MaxCardWidth">640</system:Double>
     </Application.Resources>
 

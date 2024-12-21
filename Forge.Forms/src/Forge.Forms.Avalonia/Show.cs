@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DialogHostAvalonia;
 using Forge.Forms.AvaloniaUI.Controls;
 using Forge.Forms.AvaloniaUI.FormBuilding;
 using Type = System.Type;
@@ -52,32 +53,32 @@ public static class Show
         return new DialogModelHost(null, null, new DialogOptions { Width = width });
     }
 
-    public static IModelHost Dialog(object dialogIdentifier)
+    public static IModelHost Dialog(string dialogIdentifier)
     {
         return new DialogModelHost(dialogIdentifier, null, DialogOptions.Default);
     }
 
-    public static IModelHost Dialog(object dialogIdentifier, object context)
+    public static IModelHost Dialog(string dialogIdentifier, object context)
     {
         return new DialogModelHost(dialogIdentifier, context, DialogOptions.Default);
     }
 
-    public static IModelHost Dialog(object dialogIdentifier, DialogOptions options)
+    public static IModelHost Dialog(string dialogIdentifier, DialogOptions options)
     {
         return new DialogModelHost(dialogIdentifier, null, options);
     }
 
-    public static IModelHost Dialog(object dialogIdentifier, double width)
+    public static IModelHost Dialog(string dialogIdentifier, double width)
     {
         return new DialogModelHost(dialogIdentifier, null, new DialogOptions { Width = width });
     }
 
-    public static IModelHost Dialog(object dialogIdentifier, object context, DialogOptions options)
+    public static IModelHost Dialog(string dialogIdentifier, object context, DialogOptions options)
     {
         return new DialogModelHost(dialogIdentifier, context, options);
     }
 
-    public static IModelHost Dialog(object dialogIdentifier, object context, double width)
+    public static IModelHost Dialog(string dialogIdentifier, object context, double width)
     {
         return new DialogModelHost(dialogIdentifier, context, new DialogOptions { Width = width });
     }
@@ -112,7 +113,7 @@ public static class Show
         {
             object lastAction = null;
             object lastActionParameter = null;
-            var window = new Dialog(model, context, options);
+            var window = new DialogWindow(model, context, options);
             if (options.TopMost) window.Topmost = true;
 
             window.Form.OnAction += (s, e) =>
@@ -122,7 +123,6 @@ public static class Show
             };
 
             window.Show();
-
             return new DialogResult(window.Form.Value, lastAction, lastActionParameter);
         }
     }
@@ -130,14 +130,14 @@ public static class Show
     private class DialogModelHost : IModelHost
     {
         private readonly object context;
-        private readonly object dialogIdentifier;
+        private readonly string dialogIdentifier;
         private readonly DialogOptions options;
 
-        public DialogModelHost(object dialogIdentifier, object context, DialogOptions options)
+        public DialogModelHost(string dialogIdentifier, object context, DialogOptions options)
         {
             this.context = context;
             this.options = options;
-            this.dialogIdentifier = dialogIdentifier;
+            this.dialogIdentifier = dialogIdentifier ?? "MainDialogHost";
         }
 
         public async Task<DialogResult<T>> For<T>(T model)
@@ -166,7 +166,7 @@ public static class Show
                 lastActionParameter = e.ActionContext.ActionParameter;
             };
 
-            //await DialogHost.Show(wrapper, dialogIdentifier);
+            await DialogHost.Show(wrapper, dialogIdentifier);
             return new DialogResult(wrapper.Form.Value, lastAction, lastActionParameter);
         }
     }
