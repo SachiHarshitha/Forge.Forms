@@ -12,10 +12,9 @@ public class BindingProxy : AvaloniaObject, IProxy
     public static readonly AvaloniaProperty<object> ValueProperty =
         AvaloniaProperty.Register<BindingProxy, object>(nameof(Value));
 
-    public BindingProxy()
+    static BindingProxy()
     {
-        // Observe changes to the Value property
-        this.GetObservable(ValueProperty).Subscribe(_ => { ValueChanged?.Invoke(); });
+        ValueProperty.Changed.AddClassHandler<BindingProxy>(PropertyChangedCallback);
     }
 
     // The Key property (not bindable, used internally)
@@ -30,6 +29,12 @@ public class BindingProxy : AvaloniaObject, IProxy
 
     // Action to invoke when the value changes
     public Action ValueChanged { get; set; }
+
+    private static void PropertyChangedCallback(AvaloniaObject dependencyObject,
+        AvaloniaPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        ((BindingProxy)dependencyObject).ValueChanged?.Invoke();
+    }
 }
 
 /// <summary>

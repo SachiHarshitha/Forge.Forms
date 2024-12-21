@@ -67,7 +67,9 @@ internal class FormResourceContext : IFrameworkResourceContext, INotifyPropertyC
 
     public object? TryFindResource(object key)
     {
-        return Form.FindResource(key);
+        if (Form.TryFindResource(key, out var resource))
+            return resource;
+        return null;
     }
 
     public object? FindResource(object key)

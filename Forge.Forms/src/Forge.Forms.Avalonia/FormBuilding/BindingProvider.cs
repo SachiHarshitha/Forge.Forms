@@ -61,8 +61,10 @@ public abstract class BindingProvider : ContentControl, IBindingProvider
             proxy = new BindingProxy();
             proxyCache[name] = proxy;
             var value = ProvideValue(name);
-            if (value is InstancedBinding binding)
-                BindingOperations.Apply(proxy, BindingProxy.ValueProperty, binding);
+            if (value is BindingBase binding)
+            {
+                proxy.Bind(BindingProxy.ValueProperty, binding);
+            }
             else
                 proxy.Value = value;
 

@@ -1,4 +1,6 @@
-﻿using Forge.Forms.AvaloniaUI;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Forge.Forms.AvaloniaUI;
 using Forge.Forms.AvaloniaUI.Annotations;
 
 namespace Forge.Forms.Avalonia.Demo.Models;
@@ -11,13 +13,18 @@ namespace Forge.Forms.Avalonia.Demo.Models;
 [Action("login", "LOGIN", Placement = Placement.Before)]
 [Divider]
 [Title("Windows")]
-[Action("alert", "ALERT", Parameter = "window", Placement = Placement.Before)]
-[Action("confirm", "CONFIRM", Parameter = "window", Placement = Placement.Before)]
-[Action("long_confirm", "LONG CONFIRM", Parameter = "window", Placement = Placement.Before)]
-[Action("prompt", "PROMPT", Parameter = "window", Placement = Placement.Before)]
-[Action("login", "LOGIN", Parameter = "window", Placement = Placement.Before)]
-public class Dialogs : IActionHandler
+[Text("Windowing is not supported on Browser platform.", IsVisible = "{Binding IsBrowser}")]
+[Action("alert", "ALERT", Parameter = "window", Placement = Placement.Before, IsEnabled = "{Binding IsNotBrowser}")]
+[Action("confirm", "CONFIRM", Parameter = "window", Placement = Placement.Before, IsEnabled = "{Binding IsNotBrowser}")]
+[Action("long_confirm", "LONG CONFIRM", Parameter = "window", Placement = Placement.Before,
+    IsEnabled = "{Binding IsNotBrowser}")]
+[Action("prompt", "PROMPT", Parameter = "window", Placement = Placement.Before, IsEnabled = "{Binding IsNotBrowser}")]
+[Action("login", "LOGIN", Parameter = "window", Placement = Placement.Before, IsEnabled = "{Binding IsNotBrowser}")]
+public class Dialogs : ObservableObject, IActionHandler
 {
+    public bool IsBrowser => OperatingSystem.IsBrowser();
+    public bool IsNotBrowser => !OperatingSystem.IsBrowser();
+
     public async void HandleAction(IActionContext actionContext)
     {
         var parameter = actionContext.ActionParameter;
@@ -27,6 +34,7 @@ public class Dialogs : IActionHandler
             "Use Google's location service?", "TURN ON SPEED BOOST", "NO THANKS");
 
         if (parameter is "window")
+        {
             switch (action)
             {
                 case "alert":
@@ -50,6 +58,7 @@ public class Dialogs : IActionHandler
                 default:
                     return;
             }
+        }
         else
             switch (action)
             {

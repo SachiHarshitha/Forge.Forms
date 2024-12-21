@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
+using Forge.Forms.AvaloniaUI.Validation;
 
 namespace Forge.Forms.AvaloniaUI.FormBuilding.Defaults;
 
@@ -15,17 +16,28 @@ public sealed class ConvertedField : DataFormField
 
     public ReplacementPipe ReplacementPipe { get; }
 
+    public Func<IResourceContext, IErrorStringProvider> ConversionErrorMessage { get; set; }
+
     protected internal override void Freeze()
     {
         base.Freeze();
         if (IsDirectBinding)
+        {
             Resources.Add("Value",
-                new ConvertedDirectBinding(BindingOptions, ReplacementPipe));
+                new ConvertedDirectBinding(BindingOptions, Validators, ReplacementPipe,
+                    ConversionErrorMessage ?? (ctx => new PlainErrorStringProvider("Invalid value."))));
+        }
         else if (string.IsNullOrEmpty(Key))
+        {
             Resources.Add("Value", LiteralValue.Null);
+        }
         else
+        {
             Resources.Add("Value",
-                new ConvertedDataBinding(Key, BindingOptions, ReplacementPipe, StrictlyReadOnly));
+                new ConvertedDataBinding(Key, BindingOptions, Validators, ReplacementPipe,
+                    ConversionErrorMessage ?? (ctx => new PlainErrorStringProvider("Invalid value.")),
+                    StrictlyReadOnly));
+        }
     }
 
     protected internal override IBindingProvider CreateBindingProvider(IResourceContext context,

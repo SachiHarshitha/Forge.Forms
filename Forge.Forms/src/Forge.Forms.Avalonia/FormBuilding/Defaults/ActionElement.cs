@@ -128,7 +128,7 @@ internal class ActionElementCommand : ICommand
             : new PlainBool(false);
 
         this.actionParameter = actionParameter?.GetBestMatchingProxy(context) ?? new PlainObject(null);
-        this.actionInterceptor = /*(IProxy)actionInterceptor?.GetValue(context) ??*/ new PlainObject(null);
+        this.actionInterceptor = (IProxy)actionInterceptor?.GetValue(context) ?? new PlainObject(null);
     }
 
     public void Execute(object parameter)
@@ -163,9 +163,7 @@ internal class ActionElementCommand : ICommand
                 {
                     // Close if the DialogHost based window is open.
                     if (DialogHost.IsDialogOpen(null))
-                    {
                         DialogHost.Close(null);
-                    }
                     else
                     {
                         // Else find the window and close it.

@@ -117,7 +117,7 @@ public class FormBindingExtension : MarkupExtension
             Console.WriteLine($"Provided value for {Name}: {value}");
 
             // If the value is a BindingBase (e.g., Binding), apply it
-            if (value is BindingBase binding)
+            if (value is Binding binding)
             {
                 var avaProp = GetDependencyProperty(styledElement.GetType(), _targetPropertyName);
                 if (avaProp?.PropertyType == typeof(BindingBase)) return value;
@@ -175,7 +175,7 @@ public class FormBindingExtension : MarkupExtension
             try
             {
                 if (targetPropertyInfo.PropertyType.FullName.Contains(nameof(IBinding)) && value is string expr)
-                    targetPropertyInfo.SetValue(styledElement, new DataBinding(expr, new BindingOptions()));
+                    targetPropertyInfo.SetValue(styledElement, new Binding(expr));
                 else
                     targetPropertyInfo.SetValue(styledElement, value);
                 Console.WriteLine($"Literal value set via reflection to {_targetPropertyName}");

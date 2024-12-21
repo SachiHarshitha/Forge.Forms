@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
+using Forge.Forms.AvaloniaUI.Controls;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters;
 
@@ -32,8 +33,10 @@ public static class ValueProviderExtensions
     {
         var proxy = new BindingProxy();
         var value = valueProvider.ProvideValue(context);
-        if (value is InstancedBinding binding)
-            BindingOperations.Apply(proxy, BindingProxy.ValueProperty, binding);
+        if (value is BindingBase binding)
+        {
+            proxy.Bind(BindingProxy.ValueProperty, binding);
+        }
         else
             proxy.Value = value;
 
@@ -50,11 +53,11 @@ public static class ValueProviderExtensions
     {
         var proxy = new StringProxy();
         var value = valueProvider.ProvideValue(context);
-        if (value is BindingBase binding)
+        if (value is Binding binding && binding.Source is DynamicForm form)
         {
-            var instance = InstancedBinding.OneTime(binding);
-            BindingOperations.Apply(proxy, StringProxy.ValueProperty, instance);
-            if (setKey) BindingOperations.Apply(proxy, StringProxy.KeyProperty, instance);
+            proxy.Bind(StringProxy.ValueProperty, binding);
+            if (setKey)
+                proxy.Bind(StringProxy.KeyProperty, binding);
         }
         else
         {
@@ -69,8 +72,11 @@ public static class ValueProviderExtensions
     {
         var proxy = new BoolProxy();
         var value = valueProvider.ProvideValue(context);
-        if (value is InstancedBinding binding)
-            BindingOperations.Apply(proxy, BoolProxy.ValueProperty, binding);
+
+        if (value is BindingBase bindingBase)
+        {
+            proxy.Bind(BoolProxy.ValueProperty, bindingBase);
+        }
         else
             proxy.Value = value is bool b && b;
 

@@ -23,7 +23,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         AvaloniaProperty.Register<DynamicForm, object>(
             "Model");
 
-    internal static readonly AvaloniaProperty ValuePropertyKey =
+    internal static readonly AvaloniaProperty ValueProperty =
         AvaloniaProperty.Register<DynamicForm, object>(
             "Value");
 
@@ -44,8 +44,6 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
     public static readonly AvaloniaProperty EnvironmentProperty =
         AvaloniaProperty.Register<DynamicForm, IEnvironment>(
             "Environment");
-
-    public static readonly AvaloniaProperty ValueProperty = ValuePropertyKey;
 
     public static HashSet<DynamicForm> ActiveForms = new();
 
@@ -78,10 +76,15 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         DataBindingProviders = new Dictionary<string, IDataBindingProvider>();
         Environment = new FormEnvironment();
 
-        var context = this.GetObservable(DataContextProperty);
-
         // TODO: Need to find a way for BindingOperations.SetBindign
-        BindingOperations.Apply(this, ContextProperty, InstancedBinding.OneWay(context));
+        var binding = new Binding
+        {
+            Source = this,
+            Path = "DataContext",
+            Mode = BindingMode.OneWay
+        };
+        Bind(ContextProperty, binding);
+        //BindingOperations.Apply(this, ContextProperty, InstancedBinding.OneWay(context));
 
         Loaded += (s, e) => { ActiveForms.Add(this); };
         Unloaded += (s, e) => { ActiveForms.Remove(this); };
@@ -206,7 +209,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         {
             // null -> Clear Form
             ClearForm();
-            SetValue(ValuePropertyKey, null);
+            SetValue(ValueProperty, null);
             currentDefinition = null;
             newValue = null;
         }
@@ -214,15 +217,15 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         {
             // IFormDefinition -> Build form
             var instance = formDefinition.CreateInstance(ResourceContext);
+            SetValue(ValueProperty, instance);
             RebuildForm(formDefinition);
-            SetValue(ValuePropertyKey, instance);
             currentDefinition = formDefinition;
             newValue = instance;
         }
         else if (oldModel != null && oldModel.GetType() == newModel.GetType())
         {
             // Same type -> update values only.
-            SetValue(ValuePropertyKey, newModel);
+            SetValue(ValueProperty, newModel);
             newValue = newModel;
         }
         else if (newModel is Type type)
@@ -232,14 +235,14 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
             if (formDefinition == null)
             {
                 ClearForm();
-                SetValue(ValuePropertyKey, null);
+                SetValue(ValueProperty, null);
                 newValue = null;
             }
             else
             {
                 var instance = formDefinition.CreateInstance(ResourceContext);
+                SetValue(ValueProperty, instance);
                 RebuildForm(formDefinition);
-                SetValue(ValuePropertyKey, instance);
                 newValue = instance;
             }
 
@@ -252,13 +255,13 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
             if (formDefinition == null)
             {
                 ClearForm();
-                SetValue(ValuePropertyKey, null);
+                SetValue(ValueProperty, null);
                 newValue = null;
             }
             else
             {
+                SetValue(ValueProperty, newModel);
                 RebuildForm(formDefinition);
-                SetValue(ValuePropertyKey, newModel);
                 newValue = newModel;
             }
 
@@ -410,7 +413,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         var resources = Resources;
         var keys = resources.Keys;
         foreach (var key in keys)
-            if (key is DynamicResourceKey)
+            if (key is DynamicResourceKey || key is BindingProxyKey)
             {
                 var proxy = (BindingProxy)resources[key];
                 proxy.Value = null;

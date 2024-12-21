@@ -93,6 +93,10 @@ internal class SelectFromBuilder : IFieldBuilder
                 }
 
                 field.ItemsSource = new EnumerableKeyValueProvider(collection, addNull);
+                field.DisplayPath = new LiteralValue(nameof(StringProxy.Value));
+                field.ValuePath = new LiteralValue(type == typeof(string)
+                    ? nameof(StringProxy.Value)
+                    : nameof(StringProxy.Key));
                 break;
         }
 

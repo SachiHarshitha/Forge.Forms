@@ -15,8 +15,8 @@ internal class BindingInitializer : IFieldInitializer
         attr.Apply(field.BindingOptions);
         if (attr.ConversionErrorMessage != null && element is ConvertedField convertedField)
         {
-            //var errorProvider = Utilities.GetErrorProvider(attr.ConversionErrorMessage, property.Name);
-            //convertedField.ConversionErrorMessage = errorProvider;
+            var errorProvider = Utilities.GetErrorProvider(attr.ConversionErrorMessage, property.Name);
+            convertedField.ConversionErrorMessage = errorProvider;
         }
     }
 }

@@ -85,11 +85,12 @@ public static class ModelState
                     if (field.DefaultValue is LiteralValue literal)
                     {
                         value = literal.Value == null && accessor[property] is string ? string.Empty : literal.Value;
-                        accessor[property] = value;
                     }
-                    // else
-                    // Get proxied value.
-                    // value = field.DefaultValue.GetValue(context).Value;
+                    else
+                        // Get proxied value.
+                        value = field.DefaultValue.GetValue(context).Value;
+
+                    accessor[property] = value;
                 }
             }
             catch
@@ -123,6 +124,7 @@ public static class ModelState
     {
         foreach (var expression in GetBindings(model))
         {
+            //TODO: Validation
             //Avalonia.Controls.Validation.ClearInvalid(expression);
         }
     }
@@ -134,6 +136,7 @@ public static class ModelState
     {
         foreach (var expression in GetBindings(model, properties))
         {
+            //TODO: Validation
             //Avalonia.Controls.Validation.ClearInvalid(expression);
         }
     }
@@ -147,6 +150,7 @@ public static class ModelState
         var hasErrors = false;
         foreach (var expression in GetBindings(model))
         {
+            //TODO: Validation
             //expression.ValidateWithoutUpdate();
             //hasErrors = hasErrors || expression.HasValidationError;
         }
@@ -163,6 +167,7 @@ public static class ModelState
         var hasErrors = false;
         foreach (var expression in GetBindings(model, properties))
         {
+            //TODO: Validation
             // The only way to validate is to attempt a write-through,
             // otherwise non-strict validation won't fire.
             //expression.ValidateWithoutUpdate();
@@ -195,6 +200,107 @@ public static class ModelState
             expression.UpdateSource();
         //hasErrors = hasErrors || expression.HasValidationError;
         return !hasErrors;
+    }
+
+    /// <summary>
+    ///     Checks source validation state without performing any action.
+    ///     To access error messages use <see cref="GetValidationErrors(object)" />.
+    /// </summary>
+    public static bool IsValid(object model)
+    {
+        foreach (var expression in GetBindings(model))
+        {
+            // if (expression.HasValidationError)
+            // {
+            //     return false;
+            // }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Checks source properties' validation states without performing any action.
+    ///     To access error messages use <see cref="GetValidationErrors(object, string[])" />.
+    /// </summary>
+    public static bool IsValid(object model, params string[] properties)
+    {
+        foreach (var expression in GetBindings(model, properties))
+        {
+            // if (expression.HasValidationError)
+            // {
+            //     return false;
+            // }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Retrieves all validation errors for model.
+    /// </summary>
+    public static string[] GetValidationErrors(object model)
+    {
+        var errors = new List<string>();
+        foreach (var expression in GetBindings(model))
+        {
+            // if (!expression.HasValidationError)
+            // {
+            //     continue;
+            // }
+
+            // foreach (var error in expression.ValidationErrors)
+            // {
+            //     if (error.ErrorContent is string str)
+            //     {
+            //         errors.Add(str);
+            //     }
+            // }
+        }
+
+        return errors.ToArray();
+    }
+
+    /// <summary>
+    ///     Retrieves validation errors for given properties.
+    /// </summary>
+    public static string[] GetValidationErrors(object model, params string[] properties)
+    {
+        var errors = new List<string>();
+        foreach (var expression in GetBindings(model, properties))
+        {
+            /*if (!expression.HasValidationError)
+            {
+                continue;
+            }
+
+            foreach (var error in expression.ValidationErrors)
+            {
+                if (error.ErrorContent is string str)
+                {
+                    errors.Add(str);
+                }
+            }*/
+        }
+
+        return errors.ToArray();
+    }
+
+    /// <summary>
+    ///     Manually invalidates a property with a specified error message.
+    ///     The error will disappear if <see cref="Validate(object)" /> or <see cref="ValidateWithoutUpdate(object)" /> is
+    ///     called.
+    /// </summary>
+    public static void Invalidate(object model, string property, string message)
+    {
+        foreach (var expression in GetBindings(model, new[] { property }))
+        {
+            /*
+            System.Windows.Controls.Validation.MarkInvalid(
+                expression,
+                new ValidationError(HiddenValidationRule.Instance, expression, message, null));
+        */
+        }
     }
 
     internal static bool IsModel(object value)
@@ -239,7 +345,7 @@ public static class ModelState
                 && ReferenceEquals(f.Value, model));
     }
 
-    private class HiddenValidationRule
+    private class HiddenValidationRule //: ValidationRule
     {
         public static readonly HiddenValidationRule Instance = new();
 
