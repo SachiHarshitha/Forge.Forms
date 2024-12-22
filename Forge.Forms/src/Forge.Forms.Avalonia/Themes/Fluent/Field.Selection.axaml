@@ -4,10 +4,10 @@
     xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
-    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
-
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters">
+    <valueConverters:ItemStringFormatter x:Key="ItemFormatter" />
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
-
     <ControlTemplate x:Key="WpfComboBoxSelectionPresenterTemplate">
         <Grid
             Margin="8"
@@ -43,8 +43,8 @@
                 Grid.Column="1"
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                 DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
-                IsEnabled="{Binding DataContext,Converter={StaticResource FormBindingConverter}, ConverterParameter=IsNotReadOnly}"
-                ItemsSource="{Binding DataContext,Converter={StaticResource FormBindingConverter}, ConverterParameter=ItemsSource}"
+                IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
+                ItemsSource="{formBuilding:FormBinding ItemsSource}"
                 SelectedValue="{formBuilding:FormBinding Value}"
                 SelectedValueBinding="{formBuilding:FormBinding ValuePath}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}">
@@ -53,6 +53,11 @@
                         <VirtualizingStackPanel />
                     </ItemsPanelTemplate>
                 </ComboBox.ItemsPanel>
+                <ComboBox.ItemTemplate>
+                    <!--<DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource ItemFormatter}, ConverterParameter={Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}}}" />
+                    </DataTemplate>-->
+                </ComboBox.ItemTemplate>
             </ComboBox>
         </Grid>
     </ControlTemplate>
@@ -92,8 +97,8 @@
                 Grid.Column="1"
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                 DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
-                IsEnabled="{Binding DataContext,Converter={StaticResource FormBindingConverter}, ConverterParameter=IsNotReadOnly}"
-                ItemsSource="{Binding DataContext,Converter={StaticResource FormBindingConverter}, ConverterParameter= ItemsSource}"
+                IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
+                ItemsSource="{formBuilding:FormBinding ItemsSource}"
                 SelectedValue="{formBuilding:FormBinding Value}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}">
                 <ComboBox.ItemsPanel>
@@ -101,6 +106,11 @@
                         <VirtualizingStackPanel />
                     </ItemsPanelTemplate>
                 </ComboBox.ItemsPanel>
+                <ComboBox.ItemTemplate>
+                    <!--<DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource ItemFormatter} ,ConverterParameter={formBuilding:FormBinding ItemStringFormat}}" />
+                    </DataTemplate>-->
+                </ComboBox.ItemTemplate>
             </ComboBox>
         </Grid>
     </ControlTemplate>
@@ -145,10 +155,10 @@
                 Padding="0,8,0,0"
                 BorderThickness="0"
                 DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
-                IsEnabled="{Binding DataContext,Converter={StaticResource FormBindingConverter}, ConverterParameter=IsNotReadOnly}"
+                IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
                 ItemsSource="{formBuilding:FormBinding ItemsSource}"
-                SelectedValue="{Binding Value}"
-                SelectedValueBinding="{Binding ValuePath}">
+                SelectedValue="{formBuilding:FormBinding Value}"
+                SelectedValueBinding="{formBuilding:FormBinding ValuePath}">
                 <ListBox.ItemContainerTheme>
                     <ControlTheme TargetType="ListBoxItem">
                         <Setter Property="Margin" Value="2,6,0,6" />
@@ -208,10 +218,10 @@
                 Padding="0,8,0,0"
                 BorderThickness="0"
                 DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
-                IsEnabled="{Binding DataContext,Converter={StaticResource FormBindingConverter}, ConverterParameter=IsNotReadOnly}"
+                IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
                 ItemsSource="{formBuilding:FormBinding ItemsSource}"
-                SelectedValue="{Binding Value}"
-                SelectedValueBinding="{Binding ValuePath}">
+                SelectedValue="{formBuilding:FormBinding Value}"
+                SelectedValueBinding="{formBuilding:FormBinding ValuePath}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel />

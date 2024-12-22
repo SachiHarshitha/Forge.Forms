@@ -48,7 +48,7 @@
                 MinLines="3"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                Text="{Binding Value}"
+                Text="{formBuilding:FormBinding Value}"
                 TextWrapping="Wrap"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
         </Grid>

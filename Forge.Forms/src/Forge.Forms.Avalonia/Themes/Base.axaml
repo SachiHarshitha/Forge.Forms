@@ -23,6 +23,8 @@
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.CheckBox.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.Selection.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.DatePicker.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.TimePicker.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.Slider.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
@@ -264,4 +266,19 @@
             </DataTriggerBehavior>
         </Interaction.Behaviors>
     </Style>
+
+    <Style Selector="defaults|TimePresenter">
+        <Setter Property="Margin" Value="8,16" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource TimePickerPresenterTemplate}" />
+    </Style>
+
+    <Style Selector="defaults|SliderPresenter">
+        <Setter Property="Margin" Value="8,16" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource SliderPresenterTemplate}" />
+    </Style>
+
 </Styles>

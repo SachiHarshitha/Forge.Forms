@@ -9,6 +9,7 @@
         <Button
             MinWidth="48"
             MinHeight="36"
+            Padding="{Binding Padding}"
             Command="{Binding Command}"
             IsCancel="{formBuilding:FormBinding IsCancel}"
             IsDefault="{formBuilding:FormBinding IsDefault}">
@@ -30,6 +31,7 @@
         <Button
             MinWidth="48"
             MinHeight="36"
+            Padding="{Binding Padding}"
             Command="{Binding Command}"
             IsCancel="{formBuilding:FormBinding IsCancel}"
             IsDefault="{formBuilding:FormBinding IsDefault}">

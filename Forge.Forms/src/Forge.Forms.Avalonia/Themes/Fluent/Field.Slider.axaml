@@ -6,18 +6,19 @@
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
-    <ControlTemplate x:Key="WpfConvertedPresenterTemplate" TargetType="{x:Type defaults:ConvertedPresenter}">
-        <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+    <ControlTemplate x:Key="SliderPresenterTemplate" TargetType="{x:Type defaults:SliderPresenter}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
             <packIcon:PackIcon
-                Grid.Row="1"
+                Grid.Row="0"
+                Grid.RowSpan="2"
                 Grid.Column="0"
                 Width="24"
                 Height="24"
@@ -30,18 +31,21 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="0,0,0,4"
-                FontSize="12"
                 Text="{formBuilding:FormBinding Name}" />
-            <TextBox
-                Name="ValueHolderControl"
+            <Slider
+                x:Name="ValueHolderControl"
                 Grid.Row="1"
                 Grid.Column="1"
+                Margin="0,4,0,0"
+                VerticalAlignment="Center"
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
-                FontSize="12"
                 IsEnabled="{formBuilding:FormBinding IsEnabled}"
-                IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
-                Text="{formBuilding:FormBinding Value}"
-                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+                Maximum="{formBuilding:FormBinding Maximum}"
+                Minimum="{formBuilding:FormBinding Minimum}"
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}"
+                Value="{formBuilding:FormBinding Value}" />
         </Grid>
     </ControlTemplate>
+
+
 </ResourceDictionary>

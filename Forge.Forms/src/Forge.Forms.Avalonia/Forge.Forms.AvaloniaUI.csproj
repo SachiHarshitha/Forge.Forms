@@ -44,4 +44,17 @@
         </AvaloniaXaml>
     </ItemGroup>
 
+    <ItemGroup>
+        <Page Include="Themes\Fluent\Field.Slider.axaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Include="Themes\Fluent\Field.TimePicker.axaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+    </ItemGroup>
+
 </Project>

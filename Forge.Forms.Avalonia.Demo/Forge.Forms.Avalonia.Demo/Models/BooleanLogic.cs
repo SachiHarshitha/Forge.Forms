@@ -1,6 +1,5 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Avalonia.Data;
+﻿using Avalonia.Data;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Forge.Forms.AvaloniaUI.Annotations;
 
 namespace Forge.Forms.Avalonia.Demo.Models;
@@ -12,61 +11,17 @@ namespace Forge.Forms.Avalonia.Demo.Models;
     IsVisible =
         "{Binding GivenUp} || ({Binding ToggleOne} && {Binding TypeSomething|IsNotEmpty} && !{Binding ToggleTwo})")]
 [Divider]
-public class BooleanLogic : INotifyPropertyChanged
+public partial class BooleanLogic : ObservableObject
 {
+    [ObservableProperty] [property: Field(Name = "I give up, just show it already!")]
     private bool givenUp;
+
+    [ObservableProperty] [property: Toggle]
     private bool toggleOne;
+
+    [ObservableProperty] [property: Toggle]
     private bool toggleTwo;
+
+    [ObservableProperty] [property: Binding(UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged)]
     private string typeSomething;
-
-    [Toggle]
-    public bool ToggleOne
-    {
-        get => toggleOne;
-        set
-        {
-            toggleOne = value;
-            OnPropertyChanged();
-        }
-    }
-
-    [Binding(UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged)]
-    public string TypeSomething
-    {
-        get => typeSomething;
-        set
-        {
-            typeSomething = value;
-            OnPropertyChanged();
-        }
-    }
-
-    [Toggle]
-    public bool ToggleTwo
-    {
-        get => toggleTwo;
-        set
-        {
-            toggleTwo = value;
-            OnPropertyChanged();
-        }
-    }
-
-    [Field(Name = "I give up, just show it already!")]
-    public bool GivenUp
-    {
-        get => givenUp;
-        set
-        {
-            givenUp = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }

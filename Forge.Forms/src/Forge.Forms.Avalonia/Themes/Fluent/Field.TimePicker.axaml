@@ -1,13 +1,13 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
-    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults">
 
-    <ControlTemplate x:Key="WpfConvertedPresenterTemplate" TargetType="{x:Type defaults:ConvertedPresenter}">
-        <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+    <ControlTemplate x:Key="TimePickerPresenterTemplate" TargetType="{x:Type defaults:TimePresenter}">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -17,7 +17,6 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <packIcon:PackIcon
-                Grid.Row="1"
                 Grid.Column="0"
                 Width="24"
                 Height="24"
@@ -27,21 +26,27 @@
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
             <TextBlock
-                Grid.Row="0"
+                Grid.Row="1"
                 Grid.Column="1"
                 Margin="0,0,0,4"
                 FontSize="12"
                 Text="{formBuilding:FormBinding Name}" />
-            <TextBox
+            <TimePicker
                 Name="ValueHolderControl"
                 Grid.Row="1"
                 Grid.Column="1"
+                Margin="0,-2,0,0"
+                VerticalAlignment="Center"
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
-                FontSize="12"
                 IsEnabled="{formBuilding:FormBinding IsEnabled}"
-                IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
-                Text="{formBuilding:FormBinding Value}"
-                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+                SelectedTime="{formBuilding:FormBinding Value}"
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}">
+                <Interaction.Behaviors>
+                    <DataTriggerBehavior Binding="{formBuilding:FormBinding Is24Hours}" Value="True">
+                        <ChangePropertyAction PropertyName="ClockIdentifier" Value="24HourClock" />
+                    </DataTriggerBehavior>
+                </Interaction.Behaviors>
+            </TimePicker>
         </Grid>
     </ControlTemplate>
 </ResourceDictionary>

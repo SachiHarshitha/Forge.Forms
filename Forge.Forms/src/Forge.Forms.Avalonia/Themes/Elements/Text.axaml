@@ -33,6 +33,7 @@
                 VerticalAlignment="Center"
                 FontWeight="Medium"
                 FontSize="{TemplateBinding controls:TextProperties.TitleFontSize}"
+                IsVisible="{formBuilding:FormBinding IsVisible}"
                 Text="{formBuilding:FormBinding Content}"
                 TextWrapping="Wrap" />
         </Grid>
@@ -65,6 +66,7 @@
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 FontWeight="Medium"
+                IsVisible="{formBuilding:FormBinding IsVisible}"
                 FontSize="{TemplateBinding controls:TextProperties.HeadingFontSize}"
                 Text="{formBuilding:FormBinding Content}"
                 TextWrapping="Wrap" />
@@ -75,6 +77,7 @@
     <ControlTemplate x:Key="TextPresenterTemplate">
         <TextBlock Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                    FontSize="{TemplateBinding controls:TextProperties.TextFontSize}"
+                   IsVisible="{formBuilding:FormBinding IsVisible}"
                    Text="{formBuilding:FormBinding Content}"
                    TextWrapping="Wrap">
             <Interaction.Behaviors>

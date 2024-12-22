@@ -29,6 +29,7 @@ public partial class ExamplesViewModel : ObservableObject
     {
         const double small = 320d;
         const double large = 540d;
+        const double xLarge = 720d;
 
         yield return new ExamplePresenter(new Login(), "Login", large);
 
@@ -116,6 +117,6 @@ public partial class ExamplesViewModel : ObservableObject
 };"
         };
 
-        yield return new ExamplePresenter(new DataTypes(), "Data types", large);
+        yield return new ExamplePresenter(new DataTypes(), "Data types", xLarge);
     }
 }

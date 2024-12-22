@@ -38,21 +38,22 @@ THEMES.
 
 |    Control Type    | Status                 | Comment                                                              |
 |:------------------:|------------------------|----------------------------------------------------------------------|
-|   Action Element   | :construction:         |                                                                      |
-|   Boolean Field    | :construction:         |                                                                      |
+|   Action Element   | :zzz: Incomplete       |                                                                      |
+|   Boolean Field    | :zzz: Incomplete       |                                                                      |
 |   Break Element    | :crossed_flags: Ported |                                                                      |
 |    Card Element    | :crossed_flags: Ported | Dependency to Card Component of Material Design                      |
-|  Converted Field   | :construction:         |                                                                      |
+|  Converted Field   | :zzz: Incomplete       |                                                                      |
 |     Date Field     | :crossed_flags: Ported | Must use DateTimeOffset for the bound properties instead of DateTime |
-|     Time Field     | :zzz: Incomplete       | Avalonia Returns DateTime offset. Need to change the Resource type   |
+|     Time Field     | :crossed_flags: Ported | Avalonia Returns DateTime offset. Need to change the Resource type   |
 |  Divider Element   | :crossed_flags: Ported |                                                                      |
 | Error Text Element | :zzz: Incomplete       | Need to rewrite the validation concept.                              |
 |  Heading Element   | :crossed_flags: Ported |                                                                      |
-|   Image Element    | :zzz: Incomplete       |                                                                      |
+|   Image Element    | :zzz: Incomplete       | Handle image source binding need to update.                          |
 |  Selection Field   | :zzz: Ported           | Dynamic Binding not available due to Binding Incompatibilities       |
-|    Slider Field    | :construction:         |                                                                      |
+|    Slider Field    | :crossed_flags: Ported |                                                                      |
 |    Text Element    | :zzz:  Ported          | WASM seems to not handle the MultiBinding Strings.                   |
 |   Title Element    | :crossed_flags: Ported |                                                                      |
+|    Toggle Field    | :crossed_flags: Ported |                                                                      |
 
 ### Logical Components
 
@@ -62,7 +63,7 @@ THEMES.
 |    XML Form Builder     | :zzz: Ported     | Need more testing. Bindings seems not to work.                                                                                                                             |
 |       Attributes        | :zzz: Ported     | Mostly working, other than dynamic property bindings for Selection.                                                                                                        |
 | Form Binding Extension  | :zzz: Incomplete | Given that the DataContext setting is not set mostly during initialization, had to optimize logic and seperate certain Bindings to use a converter (FormBindingConverter). |
-| Freezable Proxy Objects | :construction:   | Given Avalonia do not provide Freezable objects, need to rewrite persisted value extraction logic.                                                                         |
+| Freezable Proxy Objects | :zzz: Incomplete | Replaced Ifreezable with avalonia object and pass binding from control.                                                                                                    |
 |         Dialogs         | :zzz: Ported     | Need more testing and style optimization.                                                                                                                                  |
 |      File Binding       | :zzz: Incomplete | FileWatcher only works on Desktop. Need to find an alternative.                                                                                                            |
 |     Data Validation     | :construction:   | Need to rewrite the whole Validation logic. Because there is no **ValidationRule** in Avalonia.                                                                            |
@@ -84,7 +85,8 @@ For default style sheet, add this to App.axaml
 If you want to use `DynamicForm`, import this namespace in XAML:
 
 ```xml
-xmlns:forms="clr-namespace:Forge.Forms.AvaloniaUI.Controls;assembly=Forge.Forms"
+
+<xmlns:forms="clr-namespace:Forge.Forms.AvaloniaUI.Controls;assembly=Forge.Forms"/>
 ```
 
 And use the control:

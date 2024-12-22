@@ -27,7 +27,7 @@
                 FontSize="12"
                 Text="{formBuilding:FormBinding Name}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
-            <ToggleButton
+            <ToggleSwitch
                 Name="ValueHolderControl"
                 Grid.Column="2"
                 HorizontalAlignment="Center"
@@ -35,7 +35,7 @@
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                 Content="Toggle"
                 FontSize="12"
-                IsChecked="{Binding Value}"
+                IsChecked="{formBuilding:FormBinding Value}"
                 IsEnabled="{formBuilding:FormBinding IsEnabled}" />
         </Grid>
     </ControlTemplate>

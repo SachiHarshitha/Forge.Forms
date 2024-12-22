@@ -21,11 +21,6 @@ internal class BooleanMultiConverter : IMultiValueConverter
 
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
-    }
-
-    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-    {
         var boolResult = Expression.Evaluate(values.Select(c => c is true).ToArray());
         object result = boolResult;
         if (Converter != null) result = Converter.Convert(boolResult, targetType, parameter, culture);

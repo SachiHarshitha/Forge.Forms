@@ -30,7 +30,7 @@
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                 Content="{formBuilding:FormBinding Name}"
                 FontSize="12"
-                IsChecked="{Binding Value}"
+                IsChecked="{formBuilding:FormBinding Value}"
                 IsEnabled="{formBuilding:FormBinding IsEnabled}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
         </Grid>

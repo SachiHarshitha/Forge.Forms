@@ -13,7 +13,7 @@ internal class FocusHelper : AvaloniaObject
 
     static FocusHelper()
     {
-        InitialFocusProperty.Changed.AddClassHandler<DynamicForm>(OnInitialFocusPropertyChanged);
+        InitialFocusProperty.Changed.AddClassHandler<FocusHelper>(OnInitialFocusPropertyChanged);
     }
 
     public static bool GetInitialFocus(Control control)

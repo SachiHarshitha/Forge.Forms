@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
@@ -121,15 +122,17 @@ public class FormBindingExtension : MarkupExtension
             {
                 var avaProp = GetDependencyProperty(styledElement.GetType(), _targetPropertyName);
                 if (avaProp?.PropertyType == typeof(BindingBase)) return value;
-                var prop = GetPropInfoProperty(styledElement.GetType(), _targetPropertyName);
-                if (prop?.PropertyType == typeof(BindingBase)) return value;
-
                 if (avaProp != null)
                 {
                     var expression = styledElement.Bind(avaProp, binding);
                     if (expression != null) field.BindingCreated(expression, Name);
                     return expression;
                 }
+
+                var prop = GetPropInfoProperty(styledElement.GetType(), _targetPropertyName);
+                if (prop != null)
+                    if (prop?.PropertyType == typeof(BindingBase))
+                        return value;
 
                 return value;
             }
@@ -138,8 +141,6 @@ public class FormBindingExtension : MarkupExtension
             {
                 var avaProp = GetDependencyProperty(styledElement.GetType(), _targetPropertyName);
                 if (avaProp?.PropertyType == typeof(BindingBase)) return value;
-                var prop = GetPropInfoProperty(styledElement.GetType(), _targetPropertyName);
-                if (prop?.PropertyType == typeof(BindingBase)) return value;
 
                 if (avaProp != null)
                 {
@@ -148,10 +149,13 @@ public class FormBindingExtension : MarkupExtension
                     return expression;
                 }
 
+                var prop = GetPropInfoProperty(styledElement.GetType(), _targetPropertyName);
+                if (prop != null)
+                    if (prop?.PropertyType == typeof(BindingBase))
+                        return value;
+
                 return value;
             }
-
-            ;
 
             // Apply the literal value directly
             ApplyLiteralValueViaReflection(styledElement, value);
@@ -226,8 +230,9 @@ public class FormBindingExtension : MarkupExtension
     private static AvaloniaProperty? GetDependencyProperty(Type type, string propertyName)
     {
         AvaloniaProperty avaloniaProperty = null;
-        var avaloniaProps = type.GetFields(BindingFlags.Static | BindingFlags.Public)
-            .Where(p => p.FieldType.IsSubclassOf(typeof(AvaloniaProperty)));
+        var avaloniaProps =
+            GetFieldInfosIncludingBaseClasses(type, BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.FieldType.IsSubclassOf(typeof(AvaloniaProperty)));
         var property = avaloniaProps.FirstOrDefault(p => p.Name.Equals($"{propertyName}Property"));
         if (property != null) avaloniaProperty = property.GetValue(null) as AvaloniaProperty;
         return avaloniaProperty;
@@ -237,5 +242,39 @@ public class FormBindingExtension : MarkupExtension
     {
         var props = type.GetProperties(BindingFlags.Static | BindingFlags.Public);
         return props.FirstOrDefault(p => p.Name.Equals($"{propertyName}"));
+    }
+
+    public static FieldInfo[] GetFieldInfosIncludingBaseClasses(Type type, BindingFlags bindingFlags)
+    {
+        FieldInfo[] fieldInfos = type.GetFields(bindingFlags);
+
+        // If this class doesn't have a base, don't waste any time
+        if (type.BaseType == typeof(object)) return fieldInfos;
+
+        // Otherwise, collect all types up to the furthest base class
+        var currentType = type;
+        var fieldComparer = new FieldInfoComparer();
+        var fieldInfoList = new HashSet<FieldInfo>(fieldInfos, fieldComparer);
+        while (currentType != typeof(object))
+        {
+            fieldInfos = currentType.GetFields(bindingFlags);
+            fieldInfoList.UnionWith(fieldInfos);
+            currentType = currentType.BaseType;
+        }
+
+        return fieldInfoList.ToArray();
+    }
+
+    private class FieldInfoComparer : IEqualityComparer<FieldInfo>
+    {
+        public bool Equals(FieldInfo x, FieldInfo y)
+        {
+            return x.DeclaringType == y.DeclaringType && x.Name == y.Name;
+        }
+
+        public int GetHashCode(FieldInfo obj)
+        {
+            return obj.Name.GetHashCode() ^ obj.DeclaringType.GetHashCode();
+        }
     }
 }
