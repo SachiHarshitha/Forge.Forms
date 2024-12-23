@@ -53,7 +53,6 @@ public class Dialogs : ObservableObject, IActionHandler
                     var result = await Show.Window().For<Login>();
                     if (result.Action is "login")
                         await Show.Window(275d).For(new Alert($"Hello {result.Model.Username}!"));
-
                     break;
                 default:
                     return;

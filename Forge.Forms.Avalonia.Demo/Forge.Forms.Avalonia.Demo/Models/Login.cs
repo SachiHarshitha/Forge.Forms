@@ -32,6 +32,7 @@ public class Login : IActionHandler, INotifyPropertyChanged
 
     // Or be dynamically assigned...
     [Field(Icon = "{Property PasswordIcon}")]
+    [Value(Must.NotBeEmpty)]
     [Password]
     public string Password
     {

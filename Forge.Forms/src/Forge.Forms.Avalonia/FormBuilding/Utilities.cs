@@ -10,7 +10,6 @@ using Avalonia.Data;
 using Forge.Forms.AvaloniaUI.Annotations;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using Forge.Forms.AvaloniaUI.DynamicExpressions.BooleanExpressions;
-using Forge.Forms.AvaloniaUI.Validation;
 using MaterialDesign.Avalonia.PackIcon;
 
 namespace Forge.Forms.AvaloniaUI.FormBuilding;
@@ -215,32 +214,7 @@ internal static partial class Utilities
 
         return ValueProvider;
     }
-
-    public static Func<IResourceContext, IErrorStringProvider> GetErrorProvider(string message, string propertyKey)
-    {
-        var func = GetValueProvider(propertyKey);
-        var boundExpression = BoundExpression.Parse(message, new Dictionary<string, object>
-        {
-            ["Value"] = func
-        });
-
-        if (boundExpression.IsPlainString)
-        {
-            var errorMessage = boundExpression.StringFormat;
-            return context => new PlainErrorStringProvider(errorMessage);
-        }
-
-        if (boundExpression.Resources.Any(
-                res => res is DeferredProxyResource resource && resource.ProxyProvider == func))
-        {
-            var key = propertyKey;
-            return context =>
-                new ValueErrorStringProvider(boundExpression.GetStringValue(context), GetValueProxy(context, key));
-        }
-
-        return context => new ErrorStringProvider(boundExpression.GetStringValue(context));
-    }
-
+    
     public static double[] GetGridWidths(string gridExpression)
     {
         if (string.IsNullOrEmpty(gridExpression)) return null;

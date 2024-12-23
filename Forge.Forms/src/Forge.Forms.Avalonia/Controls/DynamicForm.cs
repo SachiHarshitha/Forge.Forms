@@ -13,6 +13,7 @@ using Avalonia.VisualTree;
 using Forge.Forms.AvaloniaUI.Controls.Internal;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using Forge.Forms.AvaloniaUI.FormBuilding;
+using Forge.Forms.AvaloniaUI.Validator;
 
 namespace Forge.Forms.AvaloniaUI.Controls;
 
@@ -27,7 +28,6 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         AvaloniaProperty.Register<DynamicForm, object>(
             "Value");
 
-    //TODO: Maybe Inherits?
     public static readonly AvaloniaProperty ContextProperty =
         AvaloniaProperty.Register<DynamicForm, object>(
             "Context");
@@ -48,8 +48,9 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
     public static HashSet<DynamicForm> ActiveForms = new();
 
     public static List<IModelInterceptor> InterceptorChain = new();
-
     private readonly List<Control> currentElements;
+    private readonly Dictionary<DataFormField, Control> currentFieldControls;
+
     internal readonly Dictionary<string, IDataBindingProvider> DataBindingProviders;
     internal readonly Dictionary<string, DataFormField> DataFields;
 
@@ -58,6 +59,8 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
     private IFormDefinition currentDefinition;
 
     private Grid itemsGrid;
+
+    private ModelWrapper<object> modelWrapper;
     private int rows;
 
     static DynamicForm()
@@ -72,11 +75,11 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         ResourceContext = new FormResourceContext(this);
         columns = new double[0];
         currentElements = new List<Control>();
+        currentFieldControls = new Dictionary<DataFormField, Control>();
         DataFields = new Dictionary<string, DataFormField>();
         DataBindingProviders = new Dictionary<string, IDataBindingProvider>();
         Environment = new FormEnvironment();
 
-        // TODO: Need to find a way for BindingOperations.SetBindign
         var binding = new Binding
         {
             Source = this,
@@ -84,11 +87,12 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
             Mode = BindingMode.OneWay
         };
         Bind(ContextProperty, binding);
-        //BindingOperations.Apply(this, ContextProperty, InstancedBinding.OneWay(context));
 
         Loaded += (s, e) => { ActiveForms.Add(this); };
         Unloaded += (s, e) => { ActiveForms.Remove(this); };
     }
+
+    public ModelWrapper<object> ModelWrapper => modelWrapper;
 
     protected override Type StyleKeyOverride => typeof(DynamicForm);
 
@@ -172,9 +176,21 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         FillGrid();
     }
 
+    public List<Control> GetFieldControls()
+    {
+        return new List<Control>(currentFieldControls.Values);
+    }
+
     public Dictionary<string, DataFormField> GetDataFields()
     {
         return new Dictionary<string, DataFormField>(DataFields);
+    }
+
+    public Control GetCurrentControl(DataFormField field)
+    {
+        if (currentFieldControls.TryGetValue(field, out var control))
+            return control;
+        return null;
     }
 
     private static void ModelChanged(object obj, AvaloniaPropertyChangedEventArgs e)
@@ -212,6 +228,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
             SetValue(ValueProperty, null);
             currentDefinition = null;
             newValue = null;
+            SetModelWrapper(null);
         }
         else if (newModel is IFormDefinition formDefinition)
         {
@@ -221,12 +238,14 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
             RebuildForm(formDefinition);
             currentDefinition = formDefinition;
             newValue = instance;
+            SetModelWrapper(instance);
         }
         else if (oldModel != null && oldModel.GetType() == newModel.GetType())
         {
             // Same type -> update values only.
             SetValue(ValueProperty, newModel);
             newValue = newModel;
+            SetModelWrapper(newModel);
         }
         else if (newModel is Type type)
         {
@@ -244,6 +263,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
                 SetValue(ValueProperty, instance);
                 RebuildForm(formDefinition);
                 newValue = instance;
+                SetModelWrapper(instance);
             }
 
             currentDefinition = formDefinition;
@@ -257,12 +277,14 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
                 ClearForm();
                 SetValue(ValueProperty, null);
                 newValue = null;
+                SetModelWrapper(null);
             }
             else
             {
                 SetValue(ValueProperty, newModel);
                 RebuildForm(formDefinition);
                 newValue = newModel;
+                SetModelWrapper(newModel);
             }
 
             currentDefinition = formDefinition;
@@ -295,6 +317,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         rows = formDefinition.FormRows.Count;
         columns = formDefinition.Grid;
         currentElements.Clear();
+        currentFieldControls.Clear();
         DataBindingProviders.Clear();
         DataFields.Clear();
 
@@ -383,6 +406,11 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
                 break;
         }
 
+        if (element is DataFormField dataField)
+        {
+            currentFieldControls.Add(dataField, contentPresenter);
+        }
+
         return contentPresenter;
     }
 
@@ -429,5 +457,57 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
     internal void RaiseOnAction(IActionContext actionContext)
     {
         OnAction?.Invoke(this, new ActionEventArgs(actionContext));
+    }
+
+    internal void SetModelWrapper(object model)
+    {
+        if (modelWrapper != null)
+            modelWrapper.ValidationErrorsChanged -= HandleValidationErrorsChanged;
+
+        if (model == null)
+        {
+            modelWrapper = null;
+        }
+        else
+        {
+            modelWrapper = new ModelWrapper<object>(model);
+            modelWrapper.ValidationErrorsChanged += HandleValidationErrorsChanged;
+        }
+    }
+
+    /// <summary>
+    /// Handle Validation Errors Changed Event
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void HandleValidationErrorsChanged(object? sender, ValidationErrorEventArgs args)
+    {
+        var senderModel = sender as ModelWrapper<object>;
+        if (senderModel == null) return;
+
+        foreach (var form in ModelState.GetForms(senderModel.Model))
+        {
+            var fields = form.GetDataFields();
+            fields.TryGetValue(args.PropertyName, out var field);
+            if (field != null)
+            {
+                var control = form.GetCurrentControl(field);
+                if (control != null)
+                {
+                    var children = control.GetVisualDescendants().ToList();
+                    var child = children.FirstOrDefault(x => x.Name == "ValueHolderControl");
+                    if (child != null)
+                    {
+                        DataValidationErrors.ClearErrors(child as Control);
+                        DataValidationErrors.SetErrors(child as Control, args.Errors);
+                    }
+                    else
+                    {
+                        DataValidationErrors.ClearErrors(control);
+                        DataValidationErrors.SetErrors(control, args.Errors);
+                    }
+                }
+            }
+        }
     }
 }

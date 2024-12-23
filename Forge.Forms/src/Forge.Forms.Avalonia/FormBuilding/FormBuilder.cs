@@ -729,7 +729,8 @@ public class FormBuilder : IFormBuilder
                 continue;
 
             // Pass three - initialize elements.
-            foreach (var initializer in FieldInitializers) initializer.Initialize(element, property, deserializer);
+            foreach (var initializer in FieldInitializers) 
+                initializer.Initialize(element, property, deserializer);
 
             var wrapper = new ElementWrapper(element, property);
             // Set layout.

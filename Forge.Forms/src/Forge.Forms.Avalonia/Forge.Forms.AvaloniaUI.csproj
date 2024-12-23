@@ -30,6 +30,7 @@
 
     <ItemGroup>
         <None Remove="Themes\Elements\Default.axaml~"/>
+        <None Remove="Validation\**"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -42,6 +43,7 @@
             <XamlRuntime>Wpf</XamlRuntime>
             <SubType>Designer</SubType>
         </AvaloniaXaml>
+        <AvaloniaXaml Remove="Validation\**"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -56,5 +58,4 @@
             <SubType>Designer</SubType>
         </Page>
     </ItemGroup>
-
 </Project>

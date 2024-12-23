@@ -33,7 +33,7 @@
                 Margin="0,0,0,4"
                 Text="{formBuilding:FormBinding Name}" />
             <Slider
-                x:Name="ValueHolderControl"
+                Name="ValueHolderControl"
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="0,4,0,0"

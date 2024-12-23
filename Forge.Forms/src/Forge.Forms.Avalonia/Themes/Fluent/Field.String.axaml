@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
-    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:validation="clr-namespace:Forge.Forms.AvaloniaUI.Validation">
 
     <ControlTemplate x:Key="WpfStringPresenterTemplate">
         <Grid
@@ -43,7 +44,9 @@
                 IsEnabled="{formBuilding:FormBinding  IsEnabled}"
                 IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
                 Text="{formBuilding:FormBinding Value}"
-                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" >
+                           
+            </TextBox>
         </Grid>
     </ControlTemplate>
 </ResourceDictionary>

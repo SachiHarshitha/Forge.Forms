@@ -1,31 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using Avalonia.Data;
 using Forge.Forms.AvaloniaUI.FormBuilding;
-using Forge.Forms.AvaloniaUI.Validation;
 
 namespace Forge.Forms.AvaloniaUI.DynamicExpressions;
 
 public sealed class ConvertedDataBinding : IValueProvider
 {
-    public ConvertedDataBinding(string propertyPath, BindingOptions bindingOptions,
-        List<IValidatorProvider> validationRules, ReplacementPipe replacementPipe,
-        Func<IResourceContext, IErrorStringProvider> conversionErrorStringProvider)
-        : this(propertyPath, bindingOptions, validationRules,
-            replacementPipe, conversionErrorStringProvider, false)
+    public ConvertedDataBinding(string propertyPath, BindingOptions bindingOptions, ReplacementPipe replacementPipe)
+        : this(propertyPath, bindingOptions, replacementPipe, false)
     {
     }
 
-    public ConvertedDataBinding(string propertyPath, BindingOptions bindingOptions,
-        List<IValidatorProvider> validationRules, ReplacementPipe replacementPipe,
-        Func<IResourceContext, IErrorStringProvider> conversionErrorStringProvider,
+    public ConvertedDataBinding(string propertyPath, BindingOptions bindingOptions, ReplacementPipe replacementPipe,
         bool oneWay)
     {
         PropertyPath = propertyPath;
         BindingOptions = bindingOptions ?? throw new ArgumentNullException(nameof(bindingOptions));
         ReplacementPipe = replacementPipe ?? throw new ArgumentNullException(nameof(replacementPipe));
-        ValidationRules = validationRules ?? new List<IValidatorProvider>();
-        ConversionErrorStringProvider = conversionErrorStringProvider;
         OneWay = oneWay;
     }
 
@@ -33,11 +24,7 @@ public sealed class ConvertedDataBinding : IValueProvider
 
     public BindingOptions BindingOptions { get; }
 
-    public List<IValidatorProvider> ValidationRules { get; }
-
     public ReplacementPipe ReplacementPipe { get; }
-
-    public Func<IResourceContext, IErrorStringProvider> ConversionErrorStringProvider { get; }
 
     public bool OneWay { get; }
 
@@ -49,13 +36,6 @@ public sealed class ConvertedDataBinding : IValueProvider
         BindingOptions.Apply(binding);
         var deserializer = ReplacementPipe.CreateDeserializer(context);
         binding.Converter = new StringTypeConverter(deserializer);
-        //binding.ValidationRules.Add(new ConversionValidator(deserializer, ConversionErrorStringProvider(context),
-        //    binding.ConverterCulture));
-        var pipe = new ValidationPipe();
-        //foreach (var validatorProvider in ValidationRules)
-        //     binding.ValidationRules.Add(validatorProvider.GetValidator(context, pipe));
-
-        //binding.ValidationRules.Add(pipe);
         return binding;
     }
 

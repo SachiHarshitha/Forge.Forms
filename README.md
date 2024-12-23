@@ -57,16 +57,24 @@ THEMES.
 
 ### Logical Components
 
-|          Logic          | Status           | Comment                                                                                                                                                                    |
-|:-----------------------:|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|      Form Builder       | :zzz: Ported     | Need more testing                                                                                                                                                          |
-|    XML Form Builder     | :zzz: Ported     | Need more testing. Bindings seems not to work.                                                                                                                             |
-|       Attributes        | :zzz: Ported     | Mostly working, other than dynamic property bindings for Selection.                                                                                                        |
-| Form Binding Extension  | :zzz: Incomplete | Given that the DataContext setting is not set mostly during initialization, had to optimize logic and seperate certain Bindings to use a converter (FormBindingConverter). |
-| Freezable Proxy Objects | :zzz: Incomplete | Replaced Ifreezable with avalonia object and pass binding from control.                                                                                                    |
-|         Dialogs         | :zzz: Ported     | Need more testing and style optimization.                                                                                                                                  |
-|      File Binding       | :zzz: Incomplete | FileWatcher only works on Desktop. Need to find an alternative.                                                                                                            |
-|     Data Validation     | :construction:   | Need to rewrite the whole Validation logic. Because there is no **ValidationRule** in Avalonia.                                                                            |
+|          Logic          | Status           | Comment                                                                                                                                                                                                                                                |
+|:-----------------------:|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      Form Builder       | :zzz: Ported     | Need more testing                                                                                                                                                                                                                                      |
+|    XML Form Builder     | :zzz: Ported     | Need more testing. Bindings seems not to work.                                                                                                                                                                                                         |
+|       Attributes        | :zzz: Ported     | Mostly working, other than dynamic property bindings for Selection.                                                                                                                                                                                    |
+| Form Binding Extension  | :zzz: Ported     | Given that the DataContext setting is not set mostly during initialization, had to optimize logic and seperate certain Bindings to use a converter (FormBindingConverter).                                                                             |
+| Freezable Proxy Objects | :zzz: Ported     | Replaced Ifreezable with avalonia object and pass binding from control.                                                                                                                                                                                |
+|         Dialogs         | :zzz: Ported     | Need more testing and style optimization. Window needs to be optimized.                                                                                                                                                                                |
+|      File Binding       | :zzz: Incomplete | FileWatcher only works on Desktop. Need to find an alternative.                                                                                                                                                                                        |
+|     Data Validation     | :zzz: Rebuilded  | Rewrote the validation logic in a simple manner using a model wrapper, Validation event and [DataValidationErrors](https://github.com/AvaloniaUI/Avalonia/blob/07f3ad23e49da9ced46b7a68392e78a150622c35/src/Avalonia.Controls/DataValidationErrors.cs) |
+
+### Themes
+
+| Framework         | Method        | Status                    | How to Use                                                                             |
+|-------------------|---------------|---------------------------|----------------------------------------------------------------------------------------|
+| Avalonia - Simple | Styles        | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />``` |
+| Avalonia - Fluent | Control Theme | Planned                   |                                                                                        |
+| Material          | Control Theme | Planned                   |                                                                                        |
 
 ## Installation
 

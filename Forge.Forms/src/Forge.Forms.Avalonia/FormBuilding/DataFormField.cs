@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using Forge.Forms.AvaloniaUI.DynamicExpressions.BooleanExpressions;
-using Forge.Forms.AvaloniaUI.Validation;
 
 namespace Forge.Forms.AvaloniaUI.FormBuilding;
 
@@ -15,7 +13,6 @@ public abstract class DataFormField : FormField
     {
         Key = key;
         PropertyType = propertyType;
-        Validators = new List<IValidatorProvider>();
         BindingOptions = new BindingOptions();
     }
 
@@ -29,9 +26,7 @@ public abstract class DataFormField : FormField
     public IValueProvider DefaultValue { get; set; }
 
     public BindingOptions BindingOptions { get; }
-
-    public List<IValidatorProvider> Validators { get; set; }
-
+    
     public IValueProvider SelectOnFocus { get; set; }
 
     protected internal bool IsDirectBinding { get; set; }
@@ -47,11 +42,11 @@ public abstract class DataFormField : FormField
         if (CreateBinding)
         {
             if (IsDirectBinding)
-                Resources.Add("Value", new DirectBinding(BindingOptions, Validators));
+                Resources.Add("Value", new DirectBinding(BindingOptions));
             else if (string.IsNullOrEmpty(Key))
                 Resources.Add("Value", LiteralValue.Null);
             else
-                Resources.Add("Value", new DataBinding(Key, BindingOptions, Validators, StrictlyReadOnly));
+                Resources.Add("Value", new DataBinding(Key, BindingOptions, StrictlyReadOnly));
         }
 
         Resources.Add(nameof(IsReadOnly), IsReadOnly ?? LiteralValue.False);
@@ -77,6 +72,11 @@ public abstract class DataFormField : FormField
         Resources.Add(nameof(SelectOnFocus), SelectOnFocus ?? LiteralValue.True);
     }
 
+    public bool IsValid(IResourceContext context)
+    {
+        return false;
+    }
+    
     public virtual object GetDefaultValue(IResourceContext context)
     {
         if (DefaultValue != null) return DefaultValue.GetValue(context).Value;

@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
+using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.VisualTree;
 using FastMember;
 using Forge.Forms.AvaloniaUI.Controls;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
@@ -122,84 +124,55 @@ public static class ModelState
     /// </summary>
     public static void ClearValidationErrors(object model)
     {
-        foreach (var expression in GetBindings(model))
+        foreach (var form in GetForms(model))
         {
-            //TODO: Validation
-            //Avalonia.Controls.Validation.ClearInvalid(expression);
+            foreach (var control in form.GetFieldControls())
+            {
+                var children = control.GetVisualDescendants().ToList();
+                var child = children.FirstOrDefault(x => x.Name == "ValueHolderControl");
+                if (child != null)
+                {
+                    DataValidationErrors.ClearErrors(child as Control);
+                }
+                else
+                    DataValidationErrors.ClearErrors(control);
+            }
         }
     }
-
-    /// <summary>
-    ///     Clear validation errors from properties.
-    /// </summary>
-    public static void ClearValidationErrors(object model, params string[] properties)
-    {
-        foreach (var expression in GetBindings(model, properties))
-        {
-            //TODO: Validation
-            //Avalonia.Controls.Validation.ClearInvalid(expression);
-        }
-    }
-
-    /// <summary>
-    ///     Validates source by checking bindings shallowly.
-    ///     You should generally use <see cref="Validate(object)" /> for better compatibility.
-    /// </summary>
-    public static bool ValidateWithoutUpdate(object model)
-    {
-        var hasErrors = false;
-        foreach (var expression in GetBindings(model))
-        {
-            //TODO: Validation
-            //expression.ValidateWithoutUpdate();
-            //hasErrors = hasErrors || expression.HasValidationError;
-        }
-
-        return !hasErrors;
-    }
-
-    /// <summary>
-    ///     Validates source properties by checking bindings shallowly.
-    ///     You should generally use <see cref="Validate(object, string[])" /> for better compatibility.
-    /// </summary>
-    public static bool ValidateWithoutUpdate(object model, params string[] properties)
-    {
-        var hasErrors = false;
-        foreach (var expression in GetBindings(model, properties))
-        {
-            //TODO: Validation
-            // The only way to validate is to attempt a write-through,
-            // otherwise non-strict validation won't fire.
-            //expression.ValidateWithoutUpdate();
-            //hasErrors = hasErrors || expression.HasValidationError;
-        }
-
-        return !hasErrors;
-    }
-
+    
     /// <summary>
     ///     Validates source by flushing bindings.
     /// </summary>
     public static bool Validate(object model)
     {
-        var hasErrors = false;
-        foreach (var expression in GetBindings(model)) expression.UpdateSource();
-        //hasErrors = hasErrors || expression.HasValidationError;
-        return !hasErrors;
+        ClearValidationErrors(model);
+        var errors = new List<string>();
+        
+        foreach (var form in GetForms(model))
+        {
+            form.ModelWrapper.ValidateModel().Values.SelectMany(x => x).ToList().ForEach(x => errors.Add(x));
+        }
+        return !errors.Any();
     }
+
 
     /// <summary>
     ///     Validates source properties by flushing bindings.
     /// </summary>
     public static bool Validate(object model, params string[] properties)
     {
-        var hasErrors = false;
+        ClearValidationErrors(model);
+        var errors = new List<string>();
+
+        foreach (var form in GetForms(model))
+        {
+            form.ModelWrapper.ValidateModel().Values.SelectMany(x => x).ToList().ForEach(x => errors.Add(x));
+        }
+        
         foreach (var expression in GetBindings(model, properties))
-            // The only way to validate is to attempt a write-through,
-            // otherwise non-strict validation won't fire.
             expression.UpdateSource();
-        //hasErrors = hasErrors || expression.HasValidationError;
-        return !hasErrors;
+        
+        return !errors.Any();
     }
 
     /// <summary>
@@ -242,22 +215,10 @@ public static class ModelState
     public static string[] GetValidationErrors(object model)
     {
         var errors = new List<string>();
-        foreach (var expression in GetBindings(model))
+        foreach (var form in GetForms(model))
         {
-            // if (!expression.HasValidationError)
-            // {
-            //     continue;
-            // }
-
-            // foreach (var error in expression.ValidationErrors)
-            // {
-            //     if (error.ErrorContent is string str)
-            //     {
-            //         errors.Add(str);
-            //     }
-            // }
+            form.ModelWrapper.ValidateModel().Values.SelectMany(x=>x).ToList().ForEach(x=>errors.Add(x));
         }
-
         return errors.ToArray();
     }
 
@@ -267,22 +228,10 @@ public static class ModelState
     public static string[] GetValidationErrors(object model, params string[] properties)
     {
         var errors = new List<string>();
-        foreach (var expression in GetBindings(model, properties))
+        foreach (var form in GetForms(model))
         {
-            /*if (!expression.HasValidationError)
-            {
-                continue;
-            }
-
-            foreach (var error in expression.ValidationErrors)
-            {
-                if (error.ErrorContent is string str)
-                {
-                    errors.Add(str);
-                }
-            }*/
+            form.ModelWrapper.ValidateModel().Values.SelectMany(x=>x).ToList().ForEach(x=>errors.Add(x));
         }
-
         return errors.ToArray();
     }
 
@@ -293,13 +242,9 @@ public static class ModelState
     /// </summary>
     public static void Invalidate(object model, string property, string message)
     {
-        foreach (var expression in GetBindings(model, new[] { property }))
+        foreach (var form in GetForms(model))
         {
-            /*
-            System.Windows.Controls.Validation.MarkInvalid(
-                expression,
-                new ValidationError(HiddenValidationRule.Instance, expression, message, null));
-        */
+            form.ModelWrapper.InvalidateProperty(property,message);
         }
     }
 
@@ -332,7 +277,7 @@ public static class ModelState
             .ToArray();
     }
 
-    private static IEnumerable<DynamicForm> GetForms(object model)
+    public static IEnumerable<DynamicForm> GetForms(object model)
     {
         if (model == null) throw new ArgumentNullException(nameof(model));
 

@@ -19,8 +19,7 @@ public abstract class FormElement
     }
 
     #endregion
-
-
+    
     #region Properties
 
     protected internal Position LinePosition { get; set; }

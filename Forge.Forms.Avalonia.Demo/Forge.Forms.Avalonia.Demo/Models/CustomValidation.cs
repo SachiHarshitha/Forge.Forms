@@ -84,8 +84,7 @@ public class CustomValidation : IActionHandler, INotifyPropertyChanged
         switch (actionContext.Action)
         {
             case "invalidate":
-                //TODO: ModelState.Invalidate Missing
-                //ModelState.Invalidate(this, nameof(ThroughModelState), "Invalid value.");
+                ModelState.Invalidate(this, nameof(ThroughModelState), "Invalid value.");
                 break;
             case "validate":
                 ModelState.Validate(this, nameof(ThroughStaticMethod));
