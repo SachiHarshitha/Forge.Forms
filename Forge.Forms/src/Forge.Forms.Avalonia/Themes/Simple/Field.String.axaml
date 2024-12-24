@@ -5,14 +5,21 @@
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
-    <ControlTemplate x:Key="WpfSwitchPresenterTemplate">
-        <Grid Margin="8,12" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+    <ControlTemplate x:Key="StringPresenterTemplate">
+        <Grid
+            Margin="8"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
             <packIcon:PackIcon
+                Grid.Row="1"
                 Grid.Column="0"
                 Width="24"
                 Height="24"
@@ -22,21 +29,23 @@
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
             <TextBlock
+                Grid.Row="0"
                 Grid.Column="1"
-                VerticalAlignment="Center"
+                Margin="0,0,0,4"
                 FontSize="12"
-                Text="{formBuilding:FormBinding Name}"
-                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
-            <ToggleSwitch
+                Text="{formBuilding:FormBinding Name}" />
+            <TextBox
                 Name="ValueHolderControl"
-                Grid.Column="2"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
-                Content="Toggle"
+                Grid.Row="1"
+                Grid.Column="1"
+                internal:FocusHelper.InitialFocus="{formBuilding:FormBinding  InitialFocus}"
                 FontSize="12"
-                IsChecked="{formBuilding:FormBinding Value}"
-                IsEnabled="{formBuilding:FormBinding IsEnabled}" />
+                IsEnabled="{formBuilding:FormBinding  IsEnabled}"
+                IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
+                Text="{formBuilding:FormBinding Value}"
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}">
+
+            </TextBox>
         </Grid>
     </ControlTemplate>
 </ResourceDictionary>

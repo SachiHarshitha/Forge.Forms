@@ -6,11 +6,6 @@
     xmlns:internal="clr-namespace:Forge.Forms.Controls.Internal"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Forge.Forms.aalex675;component/Themes/Material/IconStyles.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TimePicker.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <ControlTemplate x:Key="MaterialTimePickerPresenterTemplate" TargetType="{x:Type defaults:TimePresenter}">
         <Grid>
             <Grid.ColumnDefinitions>

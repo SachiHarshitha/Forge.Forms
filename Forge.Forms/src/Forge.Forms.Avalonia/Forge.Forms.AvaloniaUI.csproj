@@ -38,24 +38,54 @@
     </ItemGroup>
 
     <ItemGroup>
-        <AvaloniaXaml Include="Themes\Fluent\Field.DatePicker.axaml">
+        <AvaloniaXaml Include="Themes\Simple\Field.DatePicker.axaml">
             <Generator>MSBuild:Compile</Generator>
             <XamlRuntime>Wpf</XamlRuntime>
             <SubType>Designer</SubType>
         </AvaloniaXaml>
         <AvaloniaXaml Remove="Validation\**"/>
+        <AvaloniaXaml Update="Themes\Material\Field.DatePicker.axaml">
+            <XamlRuntime>Wpf</XamlRuntime>
+        </AvaloniaXaml>
+        <AvaloniaXaml Update="Themes\Material\Field.DatePicker.axaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+        </AvaloniaXaml>
     </ItemGroup>
 
     <ItemGroup>
-        <Page Include="Themes\Fluent\Field.Slider.axaml">
+        <Page Include="Themes\Simple\Field.Slider.axaml">
             <Generator>MSBuild:Compile</Generator>
             <XamlRuntime>Wpf</XamlRuntime>
             <SubType>Designer</SubType>
         </Page>
-        <Page Include="Themes\Fluent\Field.TimePicker.axaml">
+        <Page Include="Themes\Simple\Field.TimePicker.axaml">
             <Generator>MSBuild:Compile</Generator>
             <XamlRuntime>Wpf</XamlRuntime>
             <SubType>Designer</SubType>
         </Page>
+        <Page Include="Themes\Material\Field.Slider.axaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Include="Themes\Material\Field.TimePicker.axaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="Themes\Material\Element.Action.axaml"/>
+        <AdditionalFiles Include="Themes\Material\Field.CheckBox.axaml"/>
+        <AdditionalFiles Include="Themes\Material\Field.Converted.axaml"/>
+        <AdditionalFiles Include="Themes\Material\Field.DatePicker.axaml"/>
+        <AdditionalFiles Include="Themes\Material\Field.MultiLineString.axaml"/>
+        <AdditionalFiles Include="Themes\Material\Field.Password.axaml"/>
+        <AdditionalFiles Include="Themes\Material\Field.Selection.axaml"/>
+        <AdditionalFiles Include="Themes\Material\Field.String.axaml"/>
+        <AdditionalFiles Include="Themes\Material\Field.Switch.axaml"/>
+        <AdditionalFiles Include="Themes\Material\Material.Card.axaml"/>
     </ItemGroup>
 </Project>

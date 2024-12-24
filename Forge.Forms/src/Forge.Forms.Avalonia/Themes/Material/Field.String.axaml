@@ -1,12 +1,13 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:material="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
-    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
-    xmlns:validation="clr-namespace:Forge.Forms.AvaloniaUI.Validation">
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
 
-    <ControlTemplate x:Key="WpfStringPresenterTemplate">
+    <ControlTemplate x:Key="MaterialStringPresenterTemplate">
         <Grid
             Margin="8"
             HorizontalAlignment="Stretch"
@@ -15,37 +16,27 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
             <packIcon:PackIcon
-                Grid.Row="1"
                 Grid.Column="0"
                 Width="24"
                 Height="24"
                 Margin="0,0,16,0"
                 HorizontalAlignment="Center"
+                Theme="{DynamicResource MaterialColoredIconStyle}"
                 VerticalAlignment="Center"
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="0,0,0,4"
-                FontSize="12"
-                Text="{formBuilding:FormBinding Name}" />
             <TextBox
                 Name="ValueHolderControl"
-                Grid.Row="1"
                 Grid.Column="1"
+                UseFloatingWatermark="True"
+                Watermark="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=ToolTip}"
+                material:TextFieldAssist.Label="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Name}"
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding  InitialFocus}"
                 FontSize="12"
                 IsEnabled="{formBuilding:FormBinding  IsEnabled}"
                 IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
-                Text="{formBuilding:FormBinding Value}"
-                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" >
-                           
+                Text="{formBuilding:FormBinding Value}">
             </TextBox>
         </Grid>
     </ControlTemplate>

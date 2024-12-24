@@ -11,20 +11,21 @@
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/IconStyles.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Text.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Image.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Material.Card.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Element.Action.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.Password.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.Converted.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.String.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.MultiLineString.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.Switch.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.CheckBox.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.Selection.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.DatePicker.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.TimePicker.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent/Field.Slider.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Material.Card.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Element.Action.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.Password.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.Converted.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.String.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.MultiLineString.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.Switch.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.CheckBox.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.Selection.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.DatePicker.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.TimePicker.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.Slider.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
@@ -124,18 +125,18 @@
         <Setter Property="Padding" Value="8,2" />
         <Setter Property="MinWidth" Value="48" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource MaterialActionPresenterTemplate}" />
+        <Setter Property="Template" Value="{StaticResource ActionPresenterTemplate}" />
         <Interaction.Behaviors>
             <DataTriggerBehavior Binding="{formBuilding:FormBinding IsPrimary}" Value="True">
                 <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource MaterialPrimaryActionPresenterTemplate}" />
+                                      Value="{StaticResource PrimaryActionPresenterTemplate}" />
             </DataTriggerBehavior>
             <DataTriggerBehavior Binding="{formBuilding:FormBinding IsLoading}" Value="True">
                 <!--
 				<ChangePropertyAction PropertyName="Width" Value="{TemplateBinding ActualWidth}" />
 				-->
                 <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource MaterialActionPresenterLoadingTemplate}" />
+                                      Value="{StaticResource ActionPresenterLoadingTemplate}" />
             </DataTriggerBehavior>
         </Interaction.Behaviors>
     </Style>
@@ -144,53 +145,53 @@
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource WpfCheckBoxPresenterTemplate}" />
+        <Setter Property="Template" Value="{StaticResource CheckBoxPresenterTemplate}" />
     </Style>
 
     <Style Selector="defaults|ConvertedPresenter">
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource WpfConvertedPresenterTemplate}" />
+        <Setter Property="Template" Value="{StaticResource ConvertedPresenterTemplate}" />
     </Style>
 
     <Style Selector="defaults|MultiLineStringPresenter">
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource WpfMultiLineStringPresenterTemplate}" />
+        <Setter Property="Template" Value="{StaticResource MultiLineStringPresenterTemplate}" />
     </Style>
 
     <Style Selector="defaults|PasswordPresenter">
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource WpfPasswordPresenterTemplate}" />
+        <Setter Property="Template" Value="{StaticResource PasswordPresenterTemplate}" />
     </Style>
 
     <Style Selector="defaults|SelectionPresenter">
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource WpfComboBoxSelectionPresenterTemplate}" />
+        <Setter Property="Template" Value="{StaticResource ComboBoxSelectionPresenterTemplate}" />
         <Interaction.Behaviors>
             <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}"
                                  Value="{x:Static annotations:SelectionType.RadioButtons}">
                 <ChangePropertyAction PropertyName="Margin" Value="8" />
                 <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource WpfRadioButtonsSelectionPresenterTemplate}" />
+                                      Value="{StaticResource RadioButtonsSelectionPresenterTemplate}" />
             </DataTriggerBehavior>
             <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}"
                                  Value="{x:Static annotations:SelectionType.RadioButtonsInline}">
                 <ChangePropertyAction PropertyName="Margin" Value="8" />
                 <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource WpfRadioButtonsInlineSelectionPresenterTemplate}" />
+                                      Value="{StaticResource RadioButtonsInlineSelectionPresenterTemplate}" />
             </DataTriggerBehavior>
             <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}"
                                  Value="{x:Static annotations:SelectionType.ComboBoxEditable}">
                 <ChangePropertyAction PropertyName="Margin" Value="8" />
                 <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource WpfEditableComboBoxSelectionPresenterTemplate}" />
+                                      Value="{StaticResource EditableComboBoxSelectionPresenterTemplate}" />
             </DataTriggerBehavior>
         </Interaction.Behaviors>
     </Style>
@@ -199,14 +200,14 @@
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource WpfStringPresenterTemplate}" />
+        <Setter Property="Template" Value="{StaticResource StringPresenterTemplate}" />
     </Style>
 
     <Style Selector="defaults|SwitchPresenter">
         <Setter Property="Margin" Value="8,12" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource WpfSwitchPresenterTemplate}" />
+        <Setter Property="Template" Value="{StaticResource SwitchPresenterTemplate}" />
     </Style>
 
     <Style Selector="defaults|DatePresenter">

@@ -1,0 +1,52 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults">
+
+    <ControlTemplate x:Key="MaterialSwitchPresenterTemplate">
+        <Grid Margin="8,8" HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <packIcon:PackIcon
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                Theme="{DynamicResource MaterialColoredIconStyle}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Kind="{formBuilding:FormBinding Icon}"
+                IsVisible="{formBuilding:FormBinding IconVisibility}" />
+            <TextBlock
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontSize="{Binding FontSize}"
+                Text="{formBuilding:FormBinding Name}"
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+            <ToggleSwitch
+                Name="ValueHolderControl"
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
+                Content="Toggle"
+                FontSize="12"
+                IsChecked="{formBuilding:FormBinding Value}"
+                IsEnabled="{formBuilding:FormBinding IsEnabled}">
+                <ToggleSwitch.Styles>
+                    <Style
+                        Selector="defaults|SwitchPresenter /template/ ToggleSwitch#ValueHolderControl:unchecked /template/ Ellipse#RippleThumb">
+                        <Setter Property="Width" Value="30" />
+                        <Setter Property="Height" Value="30" />
+                    </Style>
+                </ToggleSwitch.Styles>
+            </ToggleSwitch>
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>

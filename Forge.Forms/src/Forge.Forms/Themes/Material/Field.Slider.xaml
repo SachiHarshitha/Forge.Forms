@@ -6,11 +6,6 @@
     xmlns:internal="clr-namespace:Forge.Forms.Controls.Internal"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Forge.Forms.aalex675;component/Themes/Material/IconStyles.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <ControlTemplate x:Key="MaterialSliderPresenterTemplate" TargetType="{x:Type defaults:SliderPresenter}">
         <Grid>
             <Grid.RowDefinitions>

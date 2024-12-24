@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+                    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+                    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+                    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal">
+
+
+    <ControlTemplate x:Key="CheckBoxPresenterTemplate" TargetType="{x:Type defaults:CheckBoxPresenter}">
+        <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <packIcon:PackIcon
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Kind="{formBuilding:FormBinding Icon}"
+                IsVisible="{formBuilding:FormBinding IconVisibility}" />
+            <CheckBox
+                Name="ValueHolderControl"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
+                Content="{formBuilding:FormBinding Name}"
+                FontSize="12"
+                IsChecked="{formBuilding:FormBinding Value}"
+                IsEnabled="{formBuilding:FormBinding IsEnabled}"
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>

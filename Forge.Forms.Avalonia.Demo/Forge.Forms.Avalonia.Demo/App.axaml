@@ -59,7 +59,19 @@
 
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
+
+        <!-- Simple Theme -->
+        <!--
         <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />
+        -->
+
+        <!-- Material Theme -->
+        <!--
+        <themes:MaterialTheme PrimaryColor="Purple" SecondaryColor="Lime" />
+        <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material.axaml" />
+        -->
+
+        <!-- Avalonia Edit Styles-->
+        <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
     </Application.Styles>
 </Application>

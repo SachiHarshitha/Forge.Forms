@@ -6,7 +6,7 @@
                     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal">
 
 
-    <ControlTemplate x:Key="WpfCheckBoxPresenterTemplate" TargetType="{x:Type defaults:CheckBoxPresenter}">
+    <ControlTemplate x:Key="MaterialCheckBoxPresenterTemplate" TargetType="{x:Type defaults:CheckBoxPresenter}">
         <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -16,6 +16,7 @@
                 Grid.Column="0"
                 Width="24"
                 Height="24"
+                Theme="{DynamicResource MaterialColoredIconStyle}"
                 Margin="0,0,16,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

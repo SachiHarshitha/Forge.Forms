@@ -70,11 +70,11 @@ THEMES.
 
 ### Themes
 
-| Framework         | Method        | Status                    | How to Use                                                                             |
-|-------------------|---------------|---------------------------|----------------------------------------------------------------------------------------|
-| Avalonia - Simple | Styles        | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />``` |
-| Avalonia - Fluent | Control Theme | Planned                   |                                                                                        |
-| Material          | Control Theme | Planned                   |                                                                                        |
+| Framework         | Method        | Status                    | How to Use                                                                                  |
+|-------------------|---------------|---------------------------|---------------------------------------------------------------------------------------------|
+| Avalonia - Simple | Styles        | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />```      |
+| Avalonia - Fluent | Styles        | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material.axaml" /> ``` |
+| Material          | Control Theme | Planned                   |                                                                                             |
 
 ## Installation
 

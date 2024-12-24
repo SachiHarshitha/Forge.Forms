@@ -174,7 +174,7 @@ public class FormBindingExtension : MarkupExtension
     private void ApplyLiteralValueViaReflection(StyledElement styledElement, object value)
     {
         // Use reflection to set the literal value
-        var targetPropertyInfo = styledElement.GetType().GetProperty(_targetPropertyName);
+        var targetPropertyInfo = GetAllProperties(styledElement).FirstOrDefault(x => x.Name == _targetPropertyName);
         if (targetPropertyInfo != null)
             try
             {
@@ -183,13 +183,54 @@ public class FormBindingExtension : MarkupExtension
                 else
                     targetPropertyInfo.SetValue(styledElement, value);
                 Console.WriteLine($"Literal value set via reflection to {_targetPropertyName}");
+                return;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
         else
-            Console.WriteLine($"Target property '{_targetPropertyName}' not found on target.");
+        {
+            var avaProp = GetDependencyProperty(styledElement.GetType(), _targetPropertyName);
+            if (avaProp != null)
+            {
+                if (avaProp.PropertyType == typeof(BindingBase))
+                {
+                    styledElement.SetValue(avaProp, new Binding(value.ToString()));
+                    return;
+                }
+                else
+                {
+                    styledElement.SetValue(avaProp, value);
+                    return;
+                }
+            }
+        }
+
+        Console.WriteLine($"Target property '{_targetPropertyName}' not found on target.");
+    }
+
+    /// <summary>
+    /// Retrieves all properties from an object, including those from base classes.
+    /// </summary>
+    /// <param name="obj">The object to get properties from.</param>
+    /// <returns>A list of PropertyInfo objects representing the properties of the object.</returns>
+    public static List<PropertyInfo> GetAllProperties(object obj)
+    {
+        if (obj == null) throw new ArgumentNullException(nameof(obj));
+
+        var type = obj.GetType();
+        var properties = new List<PropertyInfo>();
+
+        // Traverse the inheritance hierarchy to collect properties
+        while (type != null)
+        {
+            properties.AddRange(type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
+                                                   BindingFlags.Instance | BindingFlags.DeclaredOnly));
+            type = type.BaseType;
+        }
+
+        return properties;
     }
 
     private void ObserveDataContextChange(StyledElement styledElement)

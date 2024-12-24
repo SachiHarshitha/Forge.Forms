@@ -1,0 +1,219 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+        xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+        xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
+        xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+        xmlns:annotations="clr-namespace:Forge.Forms.AvaloniaUI.Annotations">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Text.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/IconStyles.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Image.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.String.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Element.Action.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.CheckBox.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Converted.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.DatePicker.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.MultiLineString.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Password.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Selection.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Slider.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Switch.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.TimePicker.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+
+
+    <!-- Add Styles Here -->
+
+    <!-- Packicon Styles  -->
+    <StyleInclude Source="avares://MaterialDesign.Avalonia.PackIcon/Assets/Generic.xaml" />
+
+    <!-- Dialog Hoat Styles -->
+    <dialogHostAvalonia:DialogHostStyles />
+
+    <Style Selector="controls|DynamicForm">
+        <Setter Property="controls:TextProperties.TitleFontSize" Value="20" />
+        <Setter Property="controls:TextProperties.HeadingFontSize" Value="15" />
+        <Setter Property="controls:TextProperties.TextFontSize"
+                Value="{Binding FontSize, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:DynamicForm}">
+                    <Grid Name="PART_ItemsGrid" Margin="{TemplateBinding Padding}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style Selector="defaults|TitlePresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource TitlePresenterTemplate}" />
+        <Interaction.Behaviors>
+            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
+                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
+            </DataTriggerBehavior>
+        </Interaction.Behaviors>
+    </Style>
+
+    <Style Selector="defaults|HeadingPresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource HeadingPresenterTemplate}" />
+        <Interaction.Behaviors>
+            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
+                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
+            </DataTriggerBehavior>
+        </Interaction.Behaviors>
+    </Style>
+
+    <Style Selector="defaults|TextPresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource TextPresenterTemplate}" />
+        <Interaction.Behaviors>
+            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
+                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
+            </DataTriggerBehavior>
+        </Interaction.Behaviors>
+    </Style>
+
+    <Style Selector="defaults|ErrorTextPresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource ErrorTextPresenterTemplate}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlsValidationBrush}" />
+        <Interaction.Behaviors>
+            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
+                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
+            </DataTriggerBehavior>
+        </Interaction.Behaviors>
+    </Style>
+
+    <Style Selector="defaults|ActionPresenter">
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Padding" Value="8,2" />
+        <Setter Property="MinWidth" Value="48" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialActionPresenterTemplate}" />
+        <Interaction.Behaviors>
+            <DataTriggerBehavior Binding="{formBuilding:FormBinding IsPrimary}" Value="True">
+                <ChangePropertyAction PropertyName="Template"
+                                      Value="{StaticResource MaterialPrimaryActionPresenterTemplate}" />
+            </DataTriggerBehavior>
+            <DataTriggerBehavior Binding="{formBuilding:FormBinding IsLoading}" Value="True">
+                <!--
+				<ChangePropertyAction PropertyName="Width" Value="{TemplateBinding ActualWidth}" />
+				-->
+                <ChangePropertyAction PropertyName="Template"
+                                      Value="{StaticResource MaterialActionPresenterLoadingTemplate}" />
+            </DataTriggerBehavior>
+        </Interaction.Behaviors>
+    </Style>
+
+
+    <Style Selector="defaults|CheckBoxPresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialCheckBoxPresenterTemplate}" />
+    </Style>
+
+    <Style Selector="defaults|ConvertedPresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialConvertedPresenterTemplate}" />
+    </Style>
+
+    <Style Selector="defaults|DatePresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialDatePickerPresenterTemplate}" />
+    </Style>
+
+    <Style Selector="defaults|MultiLineStringPresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialMultiLineStringPresenterTemplate}" />
+    </Style>
+
+    <Style Selector="defaults|PasswordPresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialPasswordPresenterTemplate}" />
+    </Style>
+
+    <Style Selector="defaults|SelectionPresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialComboBoxSelectionPresenterTemplate}" />
+        <Interaction.Behaviors>
+            <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}"
+                                 Value="{x:Static annotations:SelectionType.RadioButtons}">
+                <ChangePropertyAction PropertyName="Margin" Value="8" />
+                <ChangePropertyAction PropertyName="Template"
+                                      Value="{StaticResource MaterialRadioButtonsSelectionPresenterTemplate}" />
+            </DataTriggerBehavior>
+            <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}"
+                                 Value="{x:Static annotations:SelectionType.RadioButtonsInline}">
+                <ChangePropertyAction PropertyName="Margin" Value="8" />
+                <ChangePropertyAction PropertyName="Template"
+                                      Value="{StaticResource MaterialRadioButtonsInlineSelectionPresenterTemplate}" />
+            </DataTriggerBehavior>
+            <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}"
+                                 Value="{x:Static annotations:SelectionType.ComboBoxEditable}">
+                <ChangePropertyAction PropertyName="Margin" Value="8" />
+                <ChangePropertyAction PropertyName="Template"
+                                      Value="{StaticResource MaterialEditableComboBoxSelectionPresenterTemplate}" />
+            </DataTriggerBehavior>
+        </Interaction.Behaviors>
+    </Style>
+
+    <Style Selector="defaults|SliderPresenter">
+        <Setter Property="Margin" Value="8,16" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialSliderPresenterTemplate}" />
+    </Style>
+
+    <Style Selector="defaults|StringPresenter">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialStringPresenterTemplate}" />
+    </Style>
+
+    <Style Selector="defaults|SwitchPresenter">
+        <Setter Property="Margin" Value="8,8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialSwitchPresenterTemplate}" />
+    </Style>
+
+    <Style Selector="defaults|TimePresenter">
+        <Setter Property="Margin" Value="8,16" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MaterialTimePickerPresenterTemplate}" />
+    </Style>
+</Styles>

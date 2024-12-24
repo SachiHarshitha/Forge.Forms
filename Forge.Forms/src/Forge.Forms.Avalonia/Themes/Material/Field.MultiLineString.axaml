@@ -1,0 +1,49 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles">
+    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
+
+    <ControlTemplate x:Key="MaterialMultiLineStringPresenterTemplate"
+                     TargetType="{x:Type defaults:MultiLineStringPresenter}">
+        <Grid
+            Margin="8"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <packIcon:PackIcon
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Theme="{DynamicResource MaterialColoredIconStyle}"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsVisible="{formBuilding:FormBinding IconVisibility}"
+                Kind="{formBuilding:FormBinding Icon}" />
+            <TextBox
+                Name="ValueHolderControl"
+                Grid.Column="1"
+                Watermark="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=ToolTip}"
+                assists:TextFieldAssist.Label="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Name}"
+                internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
+                AcceptsReturn="True"
+                FontSize="12"
+                IsEnabled="{formBuilding:FormBinding IsEnabled}"
+                IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
+                MinLines="3"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                Text="{formBuilding:FormBinding Value}"
+                TextWrapping="Wrap"
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>

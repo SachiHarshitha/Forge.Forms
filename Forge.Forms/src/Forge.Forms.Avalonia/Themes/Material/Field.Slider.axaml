@@ -1,0 +1,57 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+
+    <ControlTemplate x:Key="MaterialSliderPresenterTemplate" TargetType="{x:Type defaults:SliderPresenter}">
+        <Grid Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <packIcon:PackIcon
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="0,0,16,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Theme="{DynamicResource MaterialColoredIconStyle}"
+                Kind="{formBuilding:FormBinding Icon}"
+                IsVisible="{formBuilding:FormBinding IconVisibility}" />
+            <TextBlock
+                VerticalAlignment="Center"
+                Grid.Column="1"
+                Text="{formBuilding:FormBinding Name}" />
+            <Slider
+                Name="ValueHolderControl"
+                Grid.Column="2"
+                Margin="25,0,25,0"
+                VerticalAlignment="Stretch"
+                IsSnapToTickEnabled="True"
+                TickFrequency="1"
+                assists:SliderAssist.ThicknessTick="2"
+                internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
+                IsEnabled="{formBuilding:FormBinding IsEnabled}"
+                Maximum="{formBuilding:FormBinding Maximum}"
+                Minimum="{formBuilding:FormBinding Minimum}"
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}"
+                Value="{formBuilding:FormBinding Value}">
+                <Slider.Styles>
+                    <Style
+                        Selector="defaults|SliderPresenter /template/ Slider#ValueHolderControl:horizontal /template/ Thumb#PART_SliderThumb /template/ Border#PART_HoverEffect">
+                        <Setter Property="Width" Value="30" />
+                        <Setter Property="Height" Value="30" />
+                    </Style>
+                </Slider.Styles>
+            </Slider>
+        </Grid>
+    </ControlTemplate>
+
+
+</ResourceDictionary>

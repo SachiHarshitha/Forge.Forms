@@ -5,42 +5,31 @@
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
-    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters">
+    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters"
+    xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles">
     <valueConverters:ItemStringFormatter x:Key="ItemFormatter" />
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
-    <ControlTemplate x:Key="WpfComboBoxSelectionPresenterTemplate">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+
+    <ControlTemplate x:Key="MaterialComboBoxSelectionPresenterTemplate">
+        <Grid Margin="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
             <packIcon:PackIcon
-                Grid.Row="1"
                 Grid.Column="0"
                 Width="24"
                 Height="24"
                 Margin="0,0,16,0"
                 HorizontalAlignment="Center"
+                Theme="{DynamicResource MaterialColoredIconStyle}"
                 VerticalAlignment="Center"
                 IsVisible="{formBuilding:FormBinding IconVisibility}"
                 Kind="{formBuilding:FormBinding Icon}" />
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="0,0,0,4"
-                FontSize="12"
-                Text="{formBuilding:FormBinding Name}" />
             <ComboBox
                 Name="ValueHolderControl"
-                Grid.Row="1"
                 Grid.Column="1"
+                assists:ComboBoxAssist.Label="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Name}"
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                 DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
                 IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
@@ -58,11 +47,17 @@
                         <TextBlock Text="{Binding Converter={StaticResource ItemFormatter}, ConverterParameter={Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}}}" />
                     </DataTemplate>-->
                 </ComboBox.ItemTemplate>
+                <ComboBox.Styles>
+                    <Style
+                        Selector="defaults|SelectionPresenter /template/ ComboBox#ValueHolderControl /template/ Panel#PART_InnerPanel">
+                        <Setter Property="Margin" Value="0 25 0 0"></Setter>
+                    </Style>
+                </ComboBox.Styles>
             </ComboBox>
         </Grid>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="WpfEditableComboBoxSelectionPresenterTemplate">
+    <ControlTemplate x:Key="MaterialEditableComboBoxSelectionPresenterTemplate">
         <Grid
             Margin="8"
             HorizontalAlignment="Stretch"
@@ -71,33 +66,23 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
             <packIcon:PackIcon
-                Grid.Row="1"
                 Grid.Column="0"
                 Width="24"
                 Height="24"
+                Theme="{DynamicResource MaterialColoredIconStyle}"
                 Margin="0,0,16,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 IsVisible="{formBuilding:FormBinding IconVisibility}"
                 Kind="{formBuilding:FormBinding Icon}" />
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="0,0,0,4"
-                FontSize="12"
-                Text="{formBuilding:FormBinding Name}" />
             <ComboBox
                 Name="ValueHolderControl"
-                Grid.Row="1"
                 Grid.Column="1"
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                 DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
                 IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
+                assists:ComboBoxAssist.Label="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Name}"
                 ItemsSource="{formBuilding:FormBinding ItemsSource}"
                 SelectedValue="{formBuilding:FormBinding Value}"
                 ToolTip.Tip="{formBuilding:FormBinding ToolTip}">
@@ -115,7 +100,7 @@
         </Grid>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="WpfRadioButtonsSelectionPresenterTemplate"
+    <ControlTemplate x:Key="MaterialRadioButtonsSelectionPresenterTemplate"
                      TargetType="{x:Type defaults:SelectionPresenter}">
         <Grid
             Margin="8"
@@ -133,6 +118,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Width="24"
+                Theme="{DynamicResource MaterialColoredIconStyle}"
                 Height="24"
                 Margin="0,0,16,0"
                 HorizontalAlignment="Center"
@@ -178,7 +164,7 @@
         </Grid>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="WpfRadioButtonsInlineSelectionPresenterTemplate"
+    <ControlTemplate x:Key="MaterialRadioButtonsInlineSelectionPresenterTemplate"
                      TargetType="{x:Type defaults:SelectionPresenter}">
         <Grid
             Margin="8"
@@ -196,6 +182,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Width="24"
+                Theme="{DynamicResource MaterialColoredIconStyle}"
                 Height="24"
                 Margin="0,0,16,0"
                 HorizontalAlignment="Center"

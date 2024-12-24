@@ -19,7 +19,7 @@
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="1"
-            VerticalAlignment="Stretch">
+            VerticalAlignment="Center">
             <ListBox
                 DisplayMemberBinding="{Binding DisplayString}"
                 ItemsSource="{Binding Models}"
@@ -32,7 +32,7 @@
             Grid.Column="0"
             MaxWidth="{Binding CurrentModel.PreferredWidth}"
             Padding="15"
-            VerticalAlignment="Stretch">
+            VerticalAlignment="Center">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <controls1:DynamicForm Margin="16,16,16,8" Model="{Binding CurrentModel.Object}" />
             </ScrollViewer>

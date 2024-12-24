@@ -1,0 +1,59 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+
+    <ControlTemplate x:Key="ActionPresenterTemplate">
+        <Button
+            MinWidth="48"
+            MinHeight="36"
+            Padding="{Binding Padding}"
+            Command="{Binding Command}"
+            IsCancel="{formBuilding:FormBinding IsCancel}"
+            IsDefault="{formBuilding:FormBinding IsDefault}">
+            <StackPanel Orientation="Horizontal">
+                <packIcon:PackIcon
+                    Width="18"
+                    Height="18"
+                    Margin="0,0,4,0"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource MaterialDesignBody}"
+                    Kind="{formBuilding:FormBinding Icon}"
+                    IsVisible="{formBuilding:FormBinding IconVisibility}" />
+                <TextBlock VerticalAlignment="Center" Text="{formBuilding:FormBinding Content}" />
+            </StackPanel>
+        </Button>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="PrimaryActionPresenterTemplate" TargetType="{x:Type defaults:ActionPresenter}">
+        <Button
+            MinWidth="48"
+            MinHeight="36"
+            Padding="{Binding Padding}"
+            Command="{Binding Command}"
+            IsCancel="{formBuilding:FormBinding IsCancel}"
+            IsDefault="{formBuilding:FormBinding IsDefault}">
+            <StackPanel Orientation="Horizontal">
+                <packIcon:PackIcon
+                    Width="18"
+                    Height="18"
+                    Margin="0,0,4,0"
+                    VerticalAlignment="Center"
+                    Kind="{formBuilding:FormBinding Icon}"
+                    IsVisible="{formBuilding:FormBinding IconVisibility}" />
+                <TextBlock VerticalAlignment="Center" Text="{formBuilding:FormBinding Content}" />
+            </StackPanel>
+        </Button>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ActionPresenterLoadingTemplate" TargetType="{x:Type defaults:ActionPresenter}">
+        <Border MinWidth="48" MinHeight="36">
+            <ProgressBar
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsIndeterminate="True" />
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>
