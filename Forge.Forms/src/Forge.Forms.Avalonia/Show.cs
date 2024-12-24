@@ -94,27 +94,31 @@ public static class Show
             this.options = options;
         }
 
-        public Task<DialogResult<T>> For<T>(T model)
+        public async Task<DialogResult<T>> For<T>(T model)
         {
-            return Task.FromResult(ShowWindow(model).MakeGeneric<T>());
+            return (await ShowWindowAsync(model)).MakeGeneric<T>();
         }
 
-        public Task<DialogResult> For(Type type)
+        public async Task<DialogResult> For(Type type)
         {
-            return Task.FromResult(ShowWindow(type));
+            return await ShowWindowAsync(type);
         }
 
-        public Task<DialogResult> For(IFormDefinition formDefinition)
+        public async Task<DialogResult> For(IFormDefinition formDefinition)
         {
-            return Task.FromResult(ShowWindow(formDefinition));
+            return await ShowWindowAsync(formDefinition);
         }
 
-        private DialogResult ShowWindow(object model)
+
+        private async Task<DialogResult> ShowWindowAsync(object model)
         {
             object lastAction = null;
             object lastActionParameter = null;
             var window = new DialogWindow(model, context, options);
+
             if (options.TopMost) window.Topmost = true;
+
+            var tcs = new TaskCompletionSource<DialogResult>();
 
             window.Form.OnAction += (s, e) =>
             {
@@ -122,8 +126,14 @@ public static class Show
                 lastActionParameter = e.ActionContext.ActionParameter;
             };
 
+            window.Closed += (s, e) =>
+            {
+                var result = new DialogResult(window.Form.Value, lastAction, lastActionParameter);
+                tcs.SetResult(result);
+            };
+
             window.Show();
-            return new DialogResult(window.Form.Value, lastAction, lastActionParameter);
+            return await tcs.Task;
         }
     }
 
