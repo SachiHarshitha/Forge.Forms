@@ -7,7 +7,7 @@
     xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults">
 
     <ControlTemplate x:Key="MaterialTimePickerPresenterTemplate" TargetType="{x:Type defaults:TimePresenter}">
-        <Grid>
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />

@@ -2,16 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:Forge.Forms.Avalonia.Demo.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Forge.Forms.Avalonia.Demo.Views.MainView"
-             xmlns:views="clr-namespace:Forge.Forms.Avalonia.Demo.Views"
-             x:DataType="vm:MainViewModel">
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainViewModel />
-    </Design.DataContext>
+             xmlns:views="clr-namespace:Forge.Forms.Avalonia.Demo.Views">
     <TabControl>
         <TabItem Header="Home">
             <views:FormView />
@@ -24,11 +17,6 @@
         </TabItem>
         <TabItem Header="Source">
             <views:SourceView />
-        </TabItem>
-        <TabItem Header="test">
-            <ScrollViewer>
-                <Button Command="{Binding OpenFormCommand}" />
-            </ScrollViewer>
         </TabItem>
     </TabControl>
 </UserControl>

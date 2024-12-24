@@ -10,10 +10,11 @@
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
 
     <ControlTemplate x:Key="ComboBoxSelectionPresenterTemplate">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
+              Margin="8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -64,10 +65,11 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="EditableComboBoxSelectionPresenterTemplate">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
+              Margin="8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -118,10 +120,11 @@
 
     <ControlTemplate x:Key="RadioButtonsSelectionPresenterTemplate"
                      TargetType="{x:Type defaults:SelectionPresenter}">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
+              Margin="8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -181,10 +184,11 @@
 
     <ControlTemplate x:Key="RadioButtonsInlineSelectionPresenterTemplate"
                      TargetType="{x:Type defaults:SelectionPresenter}">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
+              Margin="8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />

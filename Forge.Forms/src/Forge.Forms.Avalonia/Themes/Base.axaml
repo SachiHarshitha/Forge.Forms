@@ -2,18 +2,14 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:annotations="clr-namespace:Forge.Forms.AvaloniaUI.Annotations"
-    xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
     xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
-    xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
-    xmlns:materialDesign="clr-namespace:Material.Styles.Controls;assembly=Material.Styles">
+    xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/IconStyles.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Text.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Image.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Material.Card.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Element.Action.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Simple/Field.Password.axaml" />
@@ -35,6 +31,9 @@
         </Border>
     </Design.PreviewWith>
 
+    <!-- Generic Styles -->
+    <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Generic.axaml" />
+
     <!-- Packicon Styles  -->
     <StyleInclude Source="avares://MaterialDesign.Avalonia.PackIcon/Assets/Generic.xaml" />
 
@@ -42,84 +41,6 @@
     <dialogHostAvalonia:DialogHostStyles />
 
     <!--  Add Styles Here  -->
-    <Style Selector="defaults|DirectContentPresenter">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="defaults:DirectContentPresenter">
-                    <ContentControl
-                        internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
-                        Content="{formBuilding:FormBinding Value}"
-                        ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style Selector="defaults|DividerPresenter">
-        <Setter Property="Foreground" Value="{DynamicResource MaterialDesignDivider}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type defaults:DividerPresenter}">
-                    <Rectangle
-                        Height="1"
-                        Margin="{TemplateBinding Padding}"
-                        Fill="{TemplateBinding Foreground}"
-                        Stroke="{x:Null}">
-                        <Interaction.Behaviors>
-                            <DataTriggerBehavior Binding="{formBuilding:FormBinding HasMargin}" Value="True">
-                                <!--
-								<ChangePropertyAction PropertyName="Padding" Value="0,8" />
-							-->
-                            </DataTriggerBehavior>
-                        </Interaction.Behaviors>
-                    </Rectangle>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style Selector="defaults|BreakPresenter">
-        <Setter Property="Height" Value="{formBuilding:FormBinding Height}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="defaults:BreakPresenter" />
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style Selector="controls|DynamicForm">
-        <Setter Property="controls:TextProperties.TitleFontSize" Value="20" />
-        <Setter Property="controls:TextProperties.HeadingFontSize" Value="15" />
-        <Setter Property="controls:TextProperties.TextFontSize"
-                Value="{Binding FontSize, RelativeSource={RelativeSource Self}}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:DynamicForm}">
-                    <Grid Name="PART_ItemsGrid" Margin="{TemplateBinding Padding}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style Selector="defaults|CardPresenter">
-        <Setter Property="ZIndex" Value="-1" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type defaults:CardPresenter}">
-                    <materialDesign:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style Selector="defaults|ImagePresenter">
-        <Setter Property="Margin" Value="8" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="Template" Value="{StaticResource ImagePresenterTemplate}" />
-    </Style>
-
     <Style Selector="defaults|ActionPresenter">
         <Setter Property="Margin" Value="2" />
         <Setter Property="Padding" Value="8,2" />

@@ -11,7 +11,7 @@
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
 
     <ControlTemplate x:Key="MaterialComboBoxSelectionPresenterTemplate">
-        <Grid Margin="8">
+        <Grid Margin="8" IsVisible="{formBuilding:FormBinding IsVisible}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -58,10 +58,11 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="MaterialEditableComboBoxSelectionPresenterTemplate">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
+              Margin="8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -102,10 +103,11 @@
 
     <ControlTemplate x:Key="MaterialRadioButtonsSelectionPresenterTemplate"
                      TargetType="{x:Type defaults:SelectionPresenter}">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
+              Margin="8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -166,10 +168,11 @@
 
     <ControlTemplate x:Key="MaterialRadioButtonsInlineSelectionPresenterTemplate"
                      TargetType="{x:Type defaults:SelectionPresenter}">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
+              Margin="8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />

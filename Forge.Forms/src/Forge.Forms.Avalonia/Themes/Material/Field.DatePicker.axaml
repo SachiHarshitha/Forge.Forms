@@ -9,7 +9,7 @@
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
 
     <ControlTemplate x:Key="MaterialDatePickerPresenterTemplate">
-        <Grid>
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />

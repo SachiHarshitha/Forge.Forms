@@ -6,7 +6,7 @@
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
     <ControlTemplate x:Key="DatePickerPresenterTemplate">
-        <Grid>
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />

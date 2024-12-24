@@ -10,10 +10,11 @@
 
     <ControlTemplate x:Key="MaterialMultiLineStringPresenterTemplate"
                      TargetType="{x:Type defaults:MultiLineStringPresenter}">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
+              Margin="8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />

@@ -7,6 +7,8 @@
 
     <ControlTemplate x:Key="MaterialActionPresenterTemplate">
         <Button
+            IsVisible="{formBuilding:FormBinding IsVisible}"
+
             MinWidth="48"
             MinHeight="36"
             Padding="{Binding Padding}"
@@ -31,6 +33,8 @@
     <ControlTemplate x:Key="MaterialPrimaryActionPresenterTemplate" TargetType="{x:Type defaults:ActionPresenter}">
         <Button
             MinWidth="48"
+            IsVisible="{formBuilding:FormBinding IsVisible}"
+
             MinHeight="36"
             Padding="{Binding Padding}"
             Command="{Binding Command}"
@@ -51,7 +55,7 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="MaterialActionPresenterLoadingTemplate" TargetType="{x:Type defaults:ActionPresenter}">
-        <Border MinWidth="48" MinHeight="36">
+        <Border MinWidth="48" MinHeight="36" IsVisible="{formBuilding:FormBinding IsVisible}">
             <ProgressBar
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

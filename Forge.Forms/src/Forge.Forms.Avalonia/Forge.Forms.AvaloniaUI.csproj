@@ -54,6 +54,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Page Include="Themes\Generic.axaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
         <Page Include="Themes\Simple\Field.Slider.axaml">
             <Generator>MSBuild:Compile</Generator>
             <XamlRuntime>Wpf</XamlRuntime>
@@ -86,6 +91,5 @@
         <AdditionalFiles Include="Themes\Material\Field.Selection.axaml"/>
         <AdditionalFiles Include="Themes\Material\Field.String.axaml"/>
         <AdditionalFiles Include="Themes\Material\Field.Switch.axaml"/>
-        <AdditionalFiles Include="Themes\Material\Material.Card.axaml"/>
     </ItemGroup>
 </Project>

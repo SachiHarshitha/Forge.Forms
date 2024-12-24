@@ -392,7 +392,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         var contentPresenter = provider as ContentPresenter ?? new ContentPresenter
         {
             Content = provider,
-            VerticalAlignment = VerticalAlignment.Center
+            VerticalAlignment = VerticalAlignment.Stretch
         };
 
         var visibility = provider.ProvideValue("IsVisible");

@@ -6,10 +6,11 @@
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
     <ControlTemplate x:Key="StringPresenterTemplate">
-        <Grid
-            Margin="8"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
+              Margin="8"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />

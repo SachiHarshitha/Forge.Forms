@@ -6,7 +6,8 @@
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
     <ControlTemplate x:Key="SwitchPresenterTemplate">
-        <Grid Margin="8,12" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <Grid Margin="8,12" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+              IsVisible="{formBuilding:FormBinding IsVisible}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />

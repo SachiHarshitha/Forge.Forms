@@ -7,7 +7,8 @@
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
     <ControlTemplate x:Key="ConvertedPresenterTemplate" TargetType="{x:Type defaults:ConvertedPresenter}">
-        <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+              IsVisible="{formBuilding:FormBinding IsVisible}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />

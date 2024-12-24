@@ -36,24 +36,24 @@ Similarly based on the functionality the components are classified as follows.
 First iteration of the controls are ported using basic Fluent Theme styling and later need to be ported to CONTROL
 THEMES.
 
-|    Control Type    | Status                 | Comment                                                              |
-|:------------------:|------------------------|----------------------------------------------------------------------|
-|   Action Element   | :zzz: Incomplete       |                                                                      |
-|   Boolean Field    | :zzz: Incomplete       |                                                                      |
-|   Break Element    | :crossed_flags: Ported |                                                                      |
-|    Card Element    | :crossed_flags: Ported | Dependency to Card Component of Material Design                      |
-|  Converted Field   | :zzz: Incomplete       |                                                                      |
-|     Date Field     | :crossed_flags: Ported | Must use DateTimeOffset for the bound properties instead of DateTime |
-|     Time Field     | :crossed_flags: Ported | Avalonia Returns DateTime offset. Need to change the Resource type   |
-|  Divider Element   | :crossed_flags: Ported |                                                                      |
-| Error Text Element | :zzz: Incomplete       | Need to rewrite the validation concept.                              |
-|  Heading Element   | :crossed_flags: Ported |                                                                      |
-|   Image Element    | :zzz: Incomplete       | Handle image source binding need to update.                          |
-|  Selection Field   | :zzz: Ported           | Dynamic Binding not available due to Binding Incompatibilities       |
-|    Slider Field    | :crossed_flags: Ported |                                                                      |
-|    Text Element    | :zzz:  Ported          | WASM seems to not handle the MultiBinding Strings.                   |
-|   Title Element    | :crossed_flags: Ported |                                                                      |
-|    Toggle Field    | :crossed_flags: Ported |                                                                      |
+|    Control Type    | Status                 | Comment                                                                  |
+|:------------------:|------------------------|--------------------------------------------------------------------------|
+|   Action Element   | :crossed_flags: Ported |                                                                          |
+|   Boolean Field    | :crossed_flags: Ported |                                                                          |
+|   Break Element    | :crossed_flags: Ported |                                                                          |
+|    Card Element    | :crossed_flags: Ported | Dependency to Card Component of Material Design, need to work on sizing. |
+|  Converted Field   | :zzz: Incomplete       | Need to test moree                                                       |
+|     Date Field     | :crossed_flags: Ported | Must use DateTimeOffset for the bound properties instead of DateTime     |
+|     Time Field     | :crossed_flags: Ported | Avalonia Returns DateTime offset. Need to change the Resource type       |
+|  Divider Element   | :crossed_flags: Ported |                                                                          |
+| Error Text Element | :zzz: Will be removed  | Do not needed.                                                           |
+|  Heading Element   | :crossed_flags: Ported |                                                                          |
+|   Image Element    | :zzz: Incomplete       | Handle image source binding need to update.                              |
+|  Selection Field   | :zzz: Ported           | Dynamic Binding not available due to Binding Incompatibilities           |
+|    Slider Field    | :crossed_flags: Ported |                                                                          |
+|    Text Element    | :zzz:  Ported          | WASM seems to not handle the MultiBinding Strings.                       |
+|   Title Element    | :crossed_flags: Ported |                                                                          |
+|    Toggle Field    | :crossed_flags: Ported |                                                                          |
 
 ### Logical Components
 
@@ -70,11 +70,11 @@ THEMES.
 
 ### Themes
 
-| Framework         | Method        | Status                    | How to Use                                                                                  |
-|-------------------|---------------|---------------------------|---------------------------------------------------------------------------------------------|
-| Avalonia - Simple | Styles        | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />```      |
-| Avalonia - Fluent | Styles        | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material.axaml" /> ``` |
-| Material          | Control Theme | Planned                   |                                                                                             |
+| Framework         | Method | Status                    | How to Use                                                                                  |
+|-------------------|--------|---------------------------|---------------------------------------------------------------------------------------------|
+| Avalonia - Simple | Styles | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />```      |
+| Avalonia - Fluent | Styles | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />```      |
+| Material          | Styles | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material.axaml" /> ``` |
 
 ## Installation
 

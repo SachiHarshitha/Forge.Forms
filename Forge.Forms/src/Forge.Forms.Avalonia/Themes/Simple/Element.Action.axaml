@@ -9,6 +9,7 @@
         <Button
             MinWidth="48"
             MinHeight="36"
+            IsVisible="{formBuilding:FormBinding IsVisible}"
             Padding="{Binding Padding}"
             Command="{Binding Command}"
             IsCancel="{formBuilding:FormBinding IsCancel}"
@@ -31,6 +32,7 @@
         <Button
             MinWidth="48"
             MinHeight="36"
+            IsVisible="{formBuilding:FormBinding IsVisible}"
             Padding="{Binding Padding}"
             Command="{Binding Command}"
             IsCancel="{formBuilding:FormBinding IsCancel}"
@@ -49,7 +51,7 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="ActionPresenterLoadingTemplate" TargetType="{x:Type defaults:ActionPresenter}">
-        <Border MinWidth="48" MinHeight="36">
+        <Border MinWidth="48" MinHeight="36" IsVisible="{formBuilding:FormBinding IsVisible}">
             <ProgressBar
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

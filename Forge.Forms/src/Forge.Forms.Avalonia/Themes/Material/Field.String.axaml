@@ -9,6 +9,7 @@
 
     <ControlTemplate x:Key="MaterialStringPresenterTemplate">
         <Grid
+            IsVisible="{formBuilding:FormBinding IsVisible}"
             Margin="8"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center">
