@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
@@ -115,7 +116,7 @@ public class FormBindingExtension : MarkupExtension
         if (styledElement.DataContext is IBindingProvider field)
         {
             var value = field.ProvideValue(Name);
-            Console.WriteLine($"Provided value for {Name}: {value}");
+            //Console.WriteLine($"Provided value for {Name}: {value}");
 
             // If the value is a BindingBase (e.g., Binding), apply it
             if (value is Binding binding)
@@ -163,7 +164,7 @@ public class FormBindingExtension : MarkupExtension
         }
         else
         {
-            Console.WriteLine($"DataContext does not implement IBindingProvider for {Name}.");
+            Debug.WriteLine($"DataContext does not implement IBindingProvider for {Name}.");
             _isUpdating = false;
         }
 
@@ -182,12 +183,12 @@ public class FormBindingExtension : MarkupExtension
                     targetPropertyInfo.SetValue(styledElement, new Binding(expr));
                 else
                     targetPropertyInfo.SetValue(styledElement, value);
-                Console.WriteLine($"Literal value set via reflection to {_targetPropertyName}");
+                //Console.WriteLine($"Literal value set via reflection to {_targetPropertyName}");
                 return;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine($"Fail to apply property via reflection due to: {e}");
             }
         else
         {
@@ -207,7 +208,7 @@ public class FormBindingExtension : MarkupExtension
             }
         }
 
-        Console.WriteLine($"Target property '{_targetPropertyName}' not found on target.");
+        Debug.WriteLine($"Target property '{_targetPropertyName}' not found on target.");
     }
 
     /// <summary>
@@ -246,7 +247,7 @@ public class FormBindingExtension : MarkupExtension
                 if (!_isUpdating)
                 {
                     //_isUpdating = true;
-                    Console.WriteLine("DataContext set, applying binding...");
+                    // Console.WriteLine("DataContext set, applying binding...");
                     ApplyBinding(styledElement);
                     _isUpdating = false;
                 }
@@ -257,7 +258,7 @@ public class FormBindingExtension : MarkupExtension
     {
         if (string.IsNullOrEmpty(Converter)) return null;
 
-        Console.WriteLine($"Getting converter: {Converter}");
+        //Console.WriteLine($"Getting converter: {Converter}");
         return Resource.GetValueConverter(null, Converter);
     }
 

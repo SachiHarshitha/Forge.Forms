@@ -4,19 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Forge.Forms.Avalonia.Demo.Views.MainView"
-             xmlns:views="clr-namespace:Forge.Forms.Avalonia.Demo.Views">
-    <TabControl>
-        <TabItem Header="Home">
-            <views:FormView />
-        </TabItem>
-        <TabItem Header="Examples">
-            <views:ExamplesView />
-        </TabItem>
-        <TabItem Header="XML">
-            <views:XmlExamplesView />
-        </TabItem>
-        <TabItem Header="Source">
-            <views:SourceView />
-        </TabItem>
-    </TabControl>
+             xmlns:views="clr-namespace:Forge.Forms.Avalonia.Demo.Views"
+             xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
+    <Grid>
+        <dialogHostAvalonia:DialogHost Identifier="MainDialogHost" ZIndex="10" />
+
+        <TabControl>
+            <TabItem Header="Home">
+                <views:FormView />
+            </TabItem>
+            <TabItem Header="Examples">
+                <views:ExamplesView />
+            </TabItem>
+            <TabItem Header="XML">
+                <views:XmlExamplesView />
+            </TabItem>
+            <TabItem Header="Source">
+                <views:SourceView />
+            </TabItem>
+        </TabControl>
+    </Grid>
+
 </UserControl>

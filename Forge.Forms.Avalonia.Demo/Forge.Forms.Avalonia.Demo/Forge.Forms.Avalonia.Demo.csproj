@@ -26,15 +26,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Forge.Forms\src\Forge.Forms.Avalonia\Forge.Forms.AvaloniaUI.csproj"/>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="example.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="captcha.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Forge.Forms\src\Forge.Forms.Avalonia\Forge.Forms.AvaloniaUI.csproj"/>
   </ItemGroup>
 </Project>

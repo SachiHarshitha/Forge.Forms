@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -8,27 +9,26 @@ using Forge.Forms.AvaloniaUI.Annotations;
 
 namespace Forge.Forms.AvaloniaUI.Validator;
 
-
 public class ModelWrapper<T> where T : class
 {
-    private readonly T _model;
     private readonly Dictionary<string, List<ModelValidator>> _validators = new();
-    public event EventHandler<ValidationErrorEventArgs> ValidationErrorsChanged;
 
-    public T Model => _model;
-    
     public ModelWrapper(T model)
     {
-        _model = model ?? throw new ArgumentNullException(nameof(model));
+        Model = model ?? throw new ArgumentNullException(nameof(model));
         InitializeValidators();
     }
+
+    public T Model { get; }
+
+    public event EventHandler<ValidationErrorEventArgs> ValidationErrorsChanged;
 
     /// <summary>
     /// Initialize the Validators for the model.
     /// </summary>
     private void InitializeValidators()
     {
-        var properties = _model.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        var properties = Model.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
         foreach (var property in properties)
         {
             var attributes = property.GetCustomAttributes<ValueAttribute>().ToList();
@@ -38,14 +38,14 @@ public class ModelWrapper<T> where T : class
             foreach (var attribute in attributes)
             {
                 // Initialize the 'When' condition if provided
-                InitializeWhenBinding(attribute, _model, property.Name);
+                InitializeWhenBinding(attribute, Model, property.Name);
 
                 // Create CustomValidator based on ValueAttribute
                 var validator = new ModelValidator(
                     attribute.Condition,
                     attribute.Message,
                     attribute.Argument,
-                    _model.GetType(), // Model type (for SatisfyMethod)
+                    Model.GetType(), // Model type (for SatisfyMethod)
                     attribute.Condition == Must.SatisfyMethod ? attribute.Argument as string : null
                 )
                 {
@@ -58,7 +58,7 @@ public class ModelWrapper<T> where T : class
             _validators[property.Name] = validators;
         }
     }
-    
+
     /// <summary>
     /// Initialize When condition for the property. 
     /// </summary>
@@ -105,7 +105,7 @@ public class ModelWrapper<T> where T : class
             attribute.When = true;
         }
     }
-    
+
     /// <summary>
     /// Validates a specific property.
     /// </summary>
@@ -118,13 +118,13 @@ public class ModelWrapper<T> where T : class
             throw new ArgumentException($"No validators found for property: {propertyName}");
         }
 
-        var property = _model.GetType().GetProperty(propertyName);
+        var property = Model.GetType().GetProperty(propertyName);
         if (property == null)
         {
             throw new ArgumentException($"Property not found: {propertyName}");
         }
 
-        var value = property.GetValue(_model);
+        var value = property.GetValue(Model);
         var errors = new List<string>();
 
         foreach (var validator in _validators[propertyName])
@@ -141,7 +141,7 @@ public class ModelWrapper<T> where T : class
 
         return errors;
     }
-    
+
     /// <summary>
     /// Invalidate Property By force
     /// </summary>
@@ -150,12 +150,12 @@ public class ModelWrapper<T> where T : class
     /// <exception cref="ArgumentException"></exception>
     public void InvalidateProperty(string propertyName, string errorMessage)
     {
-        var errors = new List<string> {errorMessage};
+        var errors = new List<string> { errorMessage };
 
         // Trigger the event
         ValidationErrorsChanged?.Invoke(this, new ValidationErrorEventArgs(propertyName, errors));
     }
-    
+
     /// <summary>
     /// Validates the entire model.
     /// </summary>
@@ -176,9 +176,8 @@ public class ModelWrapper<T> where T : class
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine($"Failed to validate property {propertyName}, due to:{e}");
             }
-            
         }
 
         return result;
@@ -194,13 +193,11 @@ public class ModelWrapper<T> where T : class
             try
             {
                 InvalidateProperty(propertyName, "Invalid property value.");
-                
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine($"Failed to Invalidate property {propertyName}, due to:{e}");
             }
-            
         }
     }
 }
