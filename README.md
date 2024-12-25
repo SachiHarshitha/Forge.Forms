@@ -1,5 +1,5 @@
 # Forge.Forms.AvaloniaUI
-
+![NuGet](https://img.shields.io/nuget/v/Forge.Forms.AvaloniaUI.svg)
 ## 📖 About
 
 [Forge.Forms ](https://github.com/WPF-Forge/Forge.Forms)you can create dynamic forms in WPF from classes or XML.
