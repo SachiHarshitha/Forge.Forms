@@ -18,7 +18,7 @@ or follow the [installation](#installation) instructions below.
 
 | **Desktop**                                                                                                                           | **WASM**                                                                                                                                         |
 |---------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="https://github.com/user-attachments/assets/c658e2ec-230d-4292-9e14-b50e9e686d24" title="Avalonia Desktop App" width="400"/> | <img src="https://github.com/user-attachments/assets/c773e661-8458-4755-9d65-17a10c738609" title="Avalonia Webassembly App (WASM)" width="400"/> |
+| <img src="https://github.com/user-attachments/assets/b65363fd-c91a-4a28-9518-2a73703f5b36" title="Avalonia Desktop App" width="400"/> | <img src="https://github.com/user-attachments/assets/c773e661-8458-4755-9d65-17a10c738609" title="Avalonia Webassembly App (WASM)" width="400"/> |
 
 ## ⚠️ Warning
 
