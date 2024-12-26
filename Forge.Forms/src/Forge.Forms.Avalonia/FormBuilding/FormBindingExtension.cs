@@ -8,6 +8,9 @@ using Avalonia;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Styling;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using MultiBinding = Avalonia.Data.MultiBinding;
@@ -19,25 +22,50 @@ namespace Forge.Forms.AvaloniaUI.FormBuilding;
 /// </summary>
 public class FormBindingExtension : MarkupExtension
 {
+    #region Fields
+
     private bool _dataContextSet; // Flag to track if DataContext has been set
     private IDisposable _dataContextSubscription;
 
     private bool _isUpdating;
     private string _targetPropertyName; // Store the target property name
 
+    #endregion
+
+    #region Constructor
+
+    /// <summary>
+    ///     empty constructor
+    /// </summary>
     public FormBindingExtension()
     {
     }
 
+    /// <summary>
+    ///     Name constructor
+    /// </summary>
+    /// <param name="name"></param>
     public FormBindingExtension(string name)
     {
         Name = name;
     }
 
-    [ConstructorArgument("name")] public string Name { get; set; }
+    #endregion
 
+    #region Properties
+
+    [ConstructorArgument("name")] public string Name { get; set; }
     public string Converter { get; set; }
 
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    ///     Provide the value for the markup extension.
+    /// </summary>
+    /// <param name="serviceProvider"></param>
+    /// <returns></returns>
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
         var pvt = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
@@ -106,6 +134,11 @@ public class FormBindingExtension : MarkupExtension
         return this; // Fallback behavior for non-StyledElement
     }
 
+    /// <summary>
+    ///     Apply the binding to the target property.
+    /// </summary>
+    /// <param name="styledElement"></param>
+    /// <returns></returns>
     private object ApplyBinding(StyledElement styledElement)
     {
         if (_isUpdating)
@@ -172,6 +205,11 @@ public class FormBindingExtension : MarkupExtension
     }
 
 
+    /// <summary>
+    ///     Apply the literal value to the target property via reflection.
+    /// </summary>
+    /// <param name="styledElement"></param>
+    /// <param name="value"></param>
     private void ApplyLiteralValueViaReflection(StyledElement styledElement, object value)
     {
         // Use reflection to set the literal value
@@ -181,8 +219,14 @@ public class FormBindingExtension : MarkupExtension
             {
                 if (targetPropertyInfo.PropertyType.FullName.Contains(nameof(IBinding)) && value is string expr)
                     targetPropertyInfo.SetValue(styledElement, new Binding(expr));
+                else if (targetPropertyInfo.PropertyType.FullName.Contains(nameof(IImage)) && value is string image)
+                {
+                    var bitmap = new Bitmap(AssetLoader.Open(new Uri(image)));
+                    targetPropertyInfo.SetValue(styledElement, bitmap);
+                }
                 else
                     targetPropertyInfo.SetValue(styledElement, value);
+
                 //Console.WriteLine($"Literal value set via reflection to {_targetPropertyName}");
                 return;
             }
@@ -234,6 +278,10 @@ public class FormBindingExtension : MarkupExtension
         return properties;
     }
 
+    /// <summary>
+    ///     Observe datatcontext chagnes and apply binding when it's set.
+    /// </summary>
+    /// <param name="styledElement"></param>
     private void ObserveDataContextChange(StyledElement styledElement)
     {
         // If we've already subscribed, return early to prevent multiple subscriptions
@@ -254,6 +302,10 @@ public class FormBindingExtension : MarkupExtension
             });
     }
 
+    /// <summary>
+    ///     Get converter from the resource dictionary.
+    /// </summary>
+    /// <returns></returns>
     private IValueConverter GetConverter()
     {
         if (string.IsNullOrEmpty(Converter)) return null;
@@ -262,6 +314,9 @@ public class FormBindingExtension : MarkupExtension
         return Resource.GetValueConverter(null, Converter);
     }
 
+    /// <summary>
+    ///     Dispose Logic
+    /// </summary>
     public void Dispose()
     {
         _dataContextSubscription?.Dispose();
@@ -269,6 +324,12 @@ public class FormBindingExtension : MarkupExtension
     }
 
 
+    /// <summary>
+    ///     Get the dependency property from the type and property name.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="propertyName"></param>
+    /// <returns></returns>
     private static AvaloniaProperty? GetDependencyProperty(Type type, string propertyName)
     {
         AvaloniaProperty avaloniaProperty = null;
@@ -280,12 +341,24 @@ public class FormBindingExtension : MarkupExtension
         return avaloniaProperty;
     }
 
+    /// <summary>
+    ///     Get the property info from the type and property name.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="propertyName"></param>
+    /// <returns></returns>
     private static PropertyInfo? GetPropInfoProperty(Type type, string propertyName)
     {
         var props = type.GetProperties(BindingFlags.Static | BindingFlags.Public);
         return props.FirstOrDefault(p => p.Name.Equals($"{propertyName}"));
     }
 
+    /// <summary>
+    ///     Get all field infos including base classes.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="bindingFlags"></param>
+    /// <returns></returns>
     public static FieldInfo[] GetFieldInfosIncludingBaseClasses(Type type, BindingFlags bindingFlags)
     {
         FieldInfo[] fieldInfos = type.GetFields(bindingFlags);
@@ -307,6 +380,9 @@ public class FormBindingExtension : MarkupExtension
         return fieldInfoList.ToArray();
     }
 
+    /// <summary>
+    ///     FieldInfo comparer
+    /// </summary>
     private class FieldInfoComparer : IEqualityComparer<FieldInfo>
     {
         public bool Equals(FieldInfo x, FieldInfo y)
@@ -319,4 +395,6 @@ public class FormBindingExtension : MarkupExtension
             return obj.Name.GetHashCode() ^ obj.DeclaringType.GetHashCode();
         }
     }
+
+    #endregion
 }
