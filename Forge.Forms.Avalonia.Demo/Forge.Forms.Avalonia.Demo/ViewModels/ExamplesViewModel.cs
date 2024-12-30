@@ -29,7 +29,7 @@ public partial class ExamplesViewModel : ObservableObject
     {
         const double small = 320d;
         const double large = 540d;
-        const double xLarge = 720d;
+        const double xLarge = 800d;
 
         yield return new ExamplePresenter(new Login(), "Login", large);
 

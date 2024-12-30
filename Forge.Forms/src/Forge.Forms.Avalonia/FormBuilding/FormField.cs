@@ -1,3 +1,4 @@
+using System;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using MaterialDesign.Avalonia.PackIcon;
 
@@ -49,5 +50,13 @@ public abstract class FormField : FormElement
             Resources.Add("IconVisibility", LiteralValue.False);
             Resources.Add(nameof(Icon), new LiteralValue((PackIconKind)(-2)));
         }
+
+        // Check if Icon doesnt exist then set to False
+        if (Resources.TryGetValue(nameof(Icon), out var valueProvider))
+            if (valueProvider is LiteralValue val)
+                if (Enum.IsDefined(typeof(PackIconKind), val.Value))
+                    Resources["IconVisibility"] = LiteralValue.True;
+                else
+                    Resources["IconVisibility"] = LiteralValue.False;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Forge.Forms.AvaloniaUI.DynamicExpressions;
 
 namespace Forge.Forms.AvaloniaUI.FormBuilding.Defaults;
 
@@ -57,63 +58,89 @@ internal static class Primitive
         return BuildWith(field);
     }
 
+    public static FormDefinition Numeric(Type numericType, object minValue, object maxValue, object incrementValue)
+    {
+        if (!IsNumericType(numericType))
+            throw new ArgumentException("The specified type is not numeric.", nameof(numericType));
+
+        var field = new NumericField(null, numericType)
+        {
+            IsDirectBinding = true,
+            Minimum = new LiteralValue(minValue),
+            Maximum = new LiteralValue(maxValue),
+            Increment = new LiteralValue(incrementValue)
+        };
+
+        return BuildWith(field);
+    }
+
+    public static FormDefinition Int16()
+    {
+        return Numeric(typeof(short), short.MinValue, short.MaxValue, 1);
+    }
+
+    public static FormDefinition Int32()
+    {
+        return Numeric(typeof(int), int.MinValue, int.MaxValue, 1);
+    }
+
+    public static FormDefinition Int64()
+    {
+        return Numeric(typeof(long), long.MinValue, long.MaxValue, 1);
+    }
+
+    public static FormDefinition UInt16()
+    {
+        return Numeric(typeof(ushort), ushort.MinValue, ushort.MaxValue, 1);
+    }
+
+    public static FormDefinition UInt32()
+    {
+        return Numeric(typeof(uint), uint.MinValue, uint.MaxValue, 1);
+    }
+
+    public static FormDefinition UInt64()
+    {
+        return Numeric(typeof(ulong), ulong.MinValue, ulong.MaxValue, 1);
+    }
+
+    public static FormDefinition Single()
+    {
+        return Numeric(typeof(float), float.MinValue, float.MaxValue, 0.1f);
+    }
+
+    public static FormDefinition Double()
+    {
+        return Numeric(typeof(double), double.MinValue, double.MaxValue, 0.1);
+    }
+
+    public static FormDefinition Decimal()
+    {
+        return Numeric(typeof(decimal), decimal.MinValue, decimal.MaxValue, 0.1m);
+    }
+
+    public static FormDefinition Byte()
+    {
+        return Numeric(typeof(byte), byte.MinValue, byte.MaxValue, 1);
+    }
+
+    public static FormDefinition SByte()
+    {
+        return Numeric(typeof(sbyte), sbyte.MinValue, sbyte.MaxValue, 1);
+    }
+
     public static FormDefinition Char()
     {
         return BuildConverted(typeof(char), Deserializers.Char);
     }
 
-    public static FormDefinition Byte()
+    private static bool IsNumericType(Type type)
     {
-        return BuildConverted(typeof(byte), Deserializers.Byte);
-    }
-
-    public static FormDefinition SByte()
-    {
-        return BuildConverted(typeof(sbyte), Deserializers.SByte);
-    }
-
-    public static FormDefinition Int16()
-    {
-        return BuildConverted(typeof(short), Deserializers.Int16);
-    }
-
-    public static FormDefinition Int32()
-    {
-        return BuildConverted(typeof(int), Deserializers.Int32);
-    }
-
-    public static FormDefinition Int64()
-    {
-        return BuildConverted(typeof(long), Deserializers.Int64);
-    }
-
-    public static FormDefinition UInt16()
-    {
-        return BuildConverted(typeof(ushort), Deserializers.UInt16);
-    }
-
-    public static FormDefinition UInt32()
-    {
-        return BuildConverted(typeof(uint), Deserializers.UInt32);
-    }
-
-    public static FormDefinition UInt64()
-    {
-        return BuildConverted(typeof(ulong), Deserializers.UInt64);
-    }
-
-    public static FormDefinition Single()
-    {
-        return BuildConverted(typeof(float), Deserializers.Single);
-    }
-
-    public static FormDefinition Double()
-    {
-        return BuildConverted(typeof(double), Deserializers.Double);
-    }
-
-    public static FormDefinition Decimal()
-    {
-        return BuildConverted(typeof(decimal), Deserializers.Decimal);
+        return type == typeof(byte) || type == typeof(sbyte) ||
+               type == typeof(short) || type == typeof(ushort) ||
+               type == typeof(int) || type == typeof(uint) ||
+               type == typeof(long) || type == typeof(ulong) ||
+               type == typeof(float) || type == typeof(double) ||
+               type == typeof(decimal);
     }
 }

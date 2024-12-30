@@ -4,11 +4,14 @@
     xmlns:material="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
-    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters">
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
+    <valueConverters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
     <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="IconStyles.axaml" />
     </ResourceDictionary.MergedDictionaries>
+
     <ControlTemplate x:Key="MaterialStringPresenterTemplate">
         <Grid
             IsVisible="{formBuilding:FormBinding IsVisible}"
@@ -20,6 +23,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <packIcon:PackIcon
+                x:Name="PART_Icon"
                 Grid.Column="0"
                 Width="24"
                 Height="24"

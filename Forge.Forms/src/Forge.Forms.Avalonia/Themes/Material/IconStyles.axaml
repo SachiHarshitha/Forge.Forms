@@ -4,7 +4,7 @@
     xmlns:materialDesign="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
     <ControlTheme x:Key="MaterialColoredIconStyle" TargetType="{x:Type materialDesign:PackIcon}">
-        <Setter Property="Foreground" Value="{Binding Foreground, ElementName=ValueHolderControl}" />
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesignToolForeground}" />
         <Setter Property="(Interaction.Behaviors)">
             <BehaviorCollectionTemplate>
                 <BehaviorCollection>
@@ -16,11 +16,11 @@
                                 <Binding ElementName="ValueHolderControl" Path="(DataValidationErrors.HasErrors)" />
                             </MultiBinding>
                         </DataTriggerBehavior.Binding>
-                        <ChangePropertyAction PropertyName="Foreground" Value="PrimaryHueMidBrush" />
+                        <ChangePropertyAction PropertyName="Foreground" Value="{DynamicResource PrimaryHueMidBrush}" />
                     </DataTriggerBehavior>
                     <DataTriggerBehavior
                         Binding="{Binding ElementName=ValueHolderControl, Path=(DataValidationErrors.HasErrors)}"
-                        Value="True">
+                        Value="{x:True}">
                         <ChangePropertyAction PropertyName="Foreground"
                                               Value="{DynamicResource MaterialValidationErrorBrush}" />
                     </DataTriggerBehavior>

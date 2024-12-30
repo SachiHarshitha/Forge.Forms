@@ -1,14 +1,15 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
-    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters"
-    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults">
+    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters">
+    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
     <valueConverters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
 
-    <ControlTheme x:Key="{x:Type defaults:StringPresenter}" TargetType="{x:Type defaults:StringPresenter}">
+    <ControlTheme x:Key="{x:Type defaults:NumericPresenter}" TargetType="{x:Type defaults:NumericPresenter}">
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -39,10 +40,11 @@
                         Width="24"
                         Height="24"
                         Margin="0,0,16,0"
+                        Theme="{DynamicResource MaterialColoredIconStyle}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Kind="{formBuilding:FormBinding Icon}"
-                        IsVisible="{formBuilding:FormBinding IconVisibility}" />
+                        IsVisible="{formBuilding:FormBinding IconVisibility}"
+                        Kind="{formBuilding:FormBinding Icon}" />
                     <TextBlock
                         x:Name="PART_Name"
                         Grid.Row="0"
@@ -50,19 +52,20 @@
                         Margin="0,0,0,4"
                         FontSize="12"
                         Text="{formBuilding:FormBinding Name}" />
-                    <TextBox
+                    <NumericUpDown
                         Name="ValueHolderControl"
                         Grid.Row="1"
                         Grid.Column="1"
-                        internal:FocusHelper.InitialFocus="{formBuilding:FormBinding  InitialFocus}"
+                        Maximum="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Maximum}"
+                        Minimum="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Minimum}"
+                        Increment="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Increment}"
+                        Watermark="{formBuilding:FormBinding ToolTip}"
+                        internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                         FontSize="12"
-                        IsEnabled="{formBuilding:FormBinding  IsEnabled}"
-                        IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
-                        Text="{formBuilding:FormBinding Value}"
-                        ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+                        IsEnabled="{formBuilding:FormBinding IsEnabled}"
+                        Text="{formBuilding:FormBinding Value}" />
                 </Grid>
             </ControlTemplate>
         </Setter>
     </ControlTheme>
-
 </ResourceDictionary>

@@ -8,6 +8,9 @@
     xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters"
     xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
     xmlns:annotations="clr-namespace:Forge.Forms.AvaloniaUI.Annotations">
+    <valueConverters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
+    <valueConverters:ItemStringFormatter x:Key="ItemFormatter" />
+    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
             <ControlTemplate x:Key="MaterialComboBoxSelectionPresenterTemplate">
@@ -97,6 +100,13 @@
                       Margin="8"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Center">
+                    <Interaction.Behaviors>
+                        <DataTriggerBehavior
+                            Binding="{Binding #HintText.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                            Value="{x:False}" ComparisonCondition="Equal">
+                            <ChangePropertyAction TargetObject="HintText" PropertyName="IsVisible" Value="False" />
+                        </DataTriggerBehavior>
+                    </Interaction.Behaviors>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -159,6 +169,13 @@
                       Margin="8"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Center">
+                    <Interaction.Behaviors>
+                        <DataTriggerBehavior
+                            Binding="{Binding #HintText.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                            Value="{x:False}" ComparisonCondition="Equal">
+                            <ChangePropertyAction TargetObject="HintText" PropertyName="IsVisible" Value="False" />
+                        </DataTriggerBehavior>
+                    </Interaction.Behaviors>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -258,7 +275,17 @@
 
             <ControlTemplate x:Key="MaterialRadioButtonsInlineRightAlignedSelectionPresenterTemplate"
                              TargetType="{x:Type defaults:SelectionPresenter}">
-                <Grid>
+                <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+                      Margin="8"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center">
+                    <Interaction.Behaviors>
+                        <DataTriggerBehavior
+                            Binding="{Binding #HintText.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                            Value="{x:False}" ComparisonCondition="Equal">
+                            <ChangePropertyAction TargetObject="HintText" PropertyName="IsVisible" Value="False" />
+                        </DataTriggerBehavior>
+                    </Interaction.Behaviors>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -354,8 +381,7 @@
         <ResourceInclude Source="IconStyles.axaml" />
 
     </ResourceDictionary.MergedDictionaries>
-    <valueConverters:ItemStringFormatter x:Key="ItemFormatter" />
-    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
+
 
     <ControlTheme x:Key="{x:Type defaults:SelectionPresenter}" TargetType="{x:Type defaults:SelectionPresenter}">
         <Setter Property="Margin" Value="8" />

@@ -17,6 +17,10 @@ public class IsNotEmptyConverter : IValueConverter
                 return !string.IsNullOrEmpty(s);
             case IEnumerable<object> e:
                 return e.Any();
+            case Enum en:
+                if (Enum.IsDefined(value.GetType(), value))
+                    return !en.Equals(value);
+                return false;
             default:
                 return false;
         }

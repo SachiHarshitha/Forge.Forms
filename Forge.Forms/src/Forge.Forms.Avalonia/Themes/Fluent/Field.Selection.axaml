@@ -9,6 +9,8 @@
     xmlns:annotations="clr-namespace:Forge.Forms.AvaloniaUI.Annotations">
     <valueConverters:ItemStringFormatter x:Key="ItemFormatter" />
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
+    <valueConverters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
+
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
             <ControlTemplate x:Key="ComboBoxSelectionPresenterTemplate">
@@ -16,6 +18,13 @@
                       Margin="8"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Center">
+                    <Interaction.Behaviors>
+                        <DataTriggerBehavior
+                            Binding="{Binding #PART_Name.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                            Value="{x:False}" ComparisonCondition="Equal">
+                            <ChangePropertyAction TargetObject="PART_Name" PropertyName="IsVisible" Value="False" />
+                        </DataTriggerBehavior>
+                    </Interaction.Behaviors>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -35,6 +44,7 @@
                         IsVisible="{formBuilding:FormBinding IconVisibility}"
                         Kind="{formBuilding:FormBinding Icon}" />
                     <TextBlock
+                        x:Name="PART_Name"
                         Grid.Row="0"
                         Grid.Column="1"
                         Margin="0,0,0,4"
@@ -44,6 +54,7 @@
                         Name="ValueHolderControl"
                         Grid.Row="1"
                         Grid.Column="1"
+                        HorizontalAlignment="Stretch"
                         internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                         DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
                         IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
@@ -70,6 +81,13 @@
                       Margin="8"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Center">
+                    <Interaction.Behaviors>
+                        <DataTriggerBehavior
+                            Binding="{Binding #PART_Name.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                            Value="{x:False}" ComparisonCondition="Equal">
+                            <ChangePropertyAction TargetObject="PART_Name" PropertyName="IsVisible" Value="False" />
+                        </DataTriggerBehavior>
+                    </Interaction.Behaviors>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -89,6 +107,7 @@
                         IsVisible="{formBuilding:FormBinding IconVisibility}"
                         Kind="{formBuilding:FormBinding Icon}" />
                     <TextBlock
+                        x:Name="PART_Name"
                         Grid.Row="0"
                         Grid.Column="1"
                         Margin="0,0,0,4"
@@ -98,6 +117,7 @@
                         Name="ValueHolderControl"
                         Grid.Row="1"
                         Grid.Column="1"
+                        HorizontalAlignment="Stretch"
                         PlaceholderText="{formBuilding:FormBinding ToolTip}"
                         internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                         DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
@@ -114,6 +134,13 @@
                       Margin="8"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Center">
+                    <Interaction.Behaviors>
+                        <DataTriggerBehavior
+                            Binding="{Binding #HintText.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                            Value="{x:False}" ComparisonCondition="Equal">
+                            <ChangePropertyAction TargetObject="HintText" PropertyName="IsVisible" Value="False" />
+                        </DataTriggerBehavior>
+                    </Interaction.Behaviors>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -173,10 +200,16 @@
             <ControlTemplate x:Key="RadioButtonsInlineSelectionPresenterTemplate"
                              TargetType="{x:Type defaults:SelectionPresenter}">
                 <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
-
                       Margin="8"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Center">
+                    <Interaction.Behaviors>
+                        <DataTriggerBehavior
+                            Binding="{Binding #HintText.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                            Value="{x:False}" ComparisonCondition="Equal">
+                            <ChangePropertyAction TargetObject="HintText" PropertyName="IsVisible" Value="False" />
+                        </DataTriggerBehavior>
+                    </Interaction.Behaviors>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -239,9 +272,20 @@
                     </ListBox>
                 </Grid>
             </ControlTemplate>
+
             <ControlTemplate x:Key="RadioButtonsInlineRightAlignedSelectionPresenterTemplate"
                              TargetType="{x:Type defaults:SelectionPresenter}">
-                <Grid>
+                <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+                      Margin="8"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center">
+                    <Interaction.Behaviors>
+                        <DataTriggerBehavior
+                            Binding="{Binding #HintText.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                            Value="{x:False}" ComparisonCondition="Equal">
+                            <ChangePropertyAction TargetObject="HintText" PropertyName="IsVisible" Value="False" />
+                        </DataTriggerBehavior>
+                    </Interaction.Behaviors>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />

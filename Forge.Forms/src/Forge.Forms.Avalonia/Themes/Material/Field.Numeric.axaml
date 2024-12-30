@@ -1,0 +1,53 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles">
+    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="NumericUpDown.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <ControlTheme x:Key="{x:Type defaults:NumericPresenter}" TargetType="{x:Type defaults:NumericPresenter}">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+                      Margin="8"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <packIcon:PackIcon
+                        Grid.Column="0"
+                        Width="24"
+                        Height="24"
+                        Margin="0,0,16,0"
+                        Theme="{DynamicResource MaterialColoredIconStyle}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsVisible="{formBuilding:FormBinding IconVisibility}"
+                        Kind="{formBuilding:FormBinding Icon}" />
+                    <NumericUpDown
+                        Name="ValueHolderControl"
+                        Grid.Column="1"
+                        Maximum="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Maximum}"
+                        Minimum="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Minimum}"
+                        Increment="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Increment}"
+                        Watermark="{formBuilding:FormBinding ToolTip}"
+                        assists:TextFieldAssist.Label="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Name}"
+                        internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
+                        FontSize="12"
+                        IsEnabled="{formBuilding:FormBinding IsEnabled}"
+                        Text="{formBuilding:FormBinding Value}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

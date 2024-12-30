@@ -99,33 +99,35 @@ public class FormBuilder : IFormBuilder
             [typeof(bool)] = AsList(new BooleanFieldBuilder()),
             [typeof(bool?)] = AsList(new BooleanFieldBuilder()),
 
-            // Converted non-nullable
-            [typeof(char)] = AsList(new ConvertedFieldBuilder(Deserializers.Char)),
-            [typeof(byte)] = AsList(new ConvertedFieldBuilder(Deserializers.Byte)),
-            [typeof(sbyte)] = AsList(new ConvertedFieldBuilder(Deserializers.SByte)),
-            [typeof(short)] = AsList(new ConvertedFieldBuilder(Deserializers.Int16)),
-            [typeof(int)] = AsList(new ConvertedFieldBuilder(Deserializers.Int32)),
-            [typeof(long)] = AsList(new ConvertedFieldBuilder(Deserializers.Int64)),
-            [typeof(ushort)] = AsList(new ConvertedFieldBuilder(Deserializers.UInt16)),
-            [typeof(uint)] = AsList(new ConvertedFieldBuilder(Deserializers.UInt32)),
-            [typeof(ulong)] = AsList(new ConvertedFieldBuilder(Deserializers.UInt64)),
-            [typeof(float)] = AsList(new ConvertedFieldBuilder(Deserializers.Single)),
-            [typeof(double)] = AsList(new ConvertedFieldBuilder(Deserializers.Double)),
-            [typeof(decimal)] = AsList(new ConvertedFieldBuilder(Deserializers.Decimal)),
+            // Numeric fields using NumericFieldBuilder
+            [typeof(byte)] = AsList(new NumericFieldBuilder()),
+            [typeof(sbyte)] = AsList(new NumericFieldBuilder()),
+            [typeof(short)] = AsList(new NumericFieldBuilder()),
+            [typeof(int)] = AsList(new NumericFieldBuilder()),
+            [typeof(long)] = AsList(new NumericFieldBuilder()),
+            [typeof(ushort)] = AsList(new NumericFieldBuilder()),
+            [typeof(uint)] = AsList(new NumericFieldBuilder()),
+            [typeof(ulong)] = AsList(new NumericFieldBuilder()),
+            [typeof(float)] = AsList(new NumericFieldBuilder()),
+            [typeof(double)] = AsList(new NumericFieldBuilder()),
+            [typeof(decimal)] = AsList(new NumericFieldBuilder()),
 
-            // Converted nullable
+            // Nullable numeric fields using NumericFieldBuilder
+            [typeof(byte?)] = AsList(new NumericFieldBuilder()),
+            [typeof(sbyte?)] = AsList(new NumericFieldBuilder()),
+            [typeof(short?)] = AsList(new NumericFieldBuilder()),
+            [typeof(int?)] = AsList(new NumericFieldBuilder()),
+            [typeof(long?)] = AsList(new NumericFieldBuilder()),
+            [typeof(ushort?)] = AsList(new NumericFieldBuilder()),
+            [typeof(uint?)] = AsList(new NumericFieldBuilder()),
+            [typeof(ulong?)] = AsList(new NumericFieldBuilder()),
+            [typeof(float?)] = AsList(new NumericFieldBuilder()),
+            [typeof(double?)] = AsList(new NumericFieldBuilder()),
+            [typeof(decimal?)] = AsList(new NumericFieldBuilder()),
+
+            // Converted non-numeric fields
+            [typeof(char)] = AsList(new ConvertedFieldBuilder(Deserializers.Char)),
             [typeof(char?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableChar)),
-            [typeof(byte?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableByte)),
-            [typeof(sbyte?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableSByte)),
-            [typeof(short?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableInt16)),
-            [typeof(int?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableInt32)),
-            [typeof(long?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableInt64)),
-            [typeof(ushort?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableUInt16)),
-            [typeof(uint?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableUInt32)),
-            [typeof(ulong?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableUInt64)),
-            [typeof(float?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableSingle)),
-            [typeof(double?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableDouble)),
-            [typeof(decimal?)] = AsList(new ConvertedFieldBuilder(Deserializers.NullableDecimal))
         };
 
         FieldInitializers = new List<IFieldInitializer>

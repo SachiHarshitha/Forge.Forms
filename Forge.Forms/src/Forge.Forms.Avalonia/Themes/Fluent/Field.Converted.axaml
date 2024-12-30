@@ -28,11 +28,20 @@
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
             <TextBlock
+                Name="PART_Name"
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="0,0,0,4"
                 FontSize="12"
-                Text="{formBuilding:FormBinding Name}" />
+                Text="{formBuilding:FormBinding Name}">
+                <Interaction.Behaviors>
+                    <DataTriggerBehavior
+                        Binding="{Binding #PART_Name.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                        Value="{x:False}" ComparisonCondition="Equal">
+                        <ChangePropertyAction PropertyName="IsVisible" Value="False" />
+                    </DataTriggerBehavior>
+                </Interaction.Behaviors>
+            </TextBlock>
             <TextBox
                 Name="ValueHolderControl"
                 Grid.Row="1"

@@ -4,11 +4,20 @@
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
-    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults">
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters">
+    <valueConverters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
 
     <ControlTemplate x:Key="MaterialSwitchPresenterTemplate">
         <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
               Margin="8,8" HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Center">
+            <Interaction.Behaviors>
+                <DataTriggerBehavior
+                    Binding="{Binding #PART_Name.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                    Value="{x:False}" ComparisonCondition="Equal">
+                    <ChangePropertyAction TargetObject="PART_Name" PropertyName="IsVisible" Value="False" />
+                </DataTriggerBehavior>
+            </Interaction.Behaviors>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -25,24 +34,24 @@
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
             <TextBlock
+                x:Name="PART_Name"
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 FontSize="{Binding FontSize}"
-                Text="{formBuilding:FormBinding Name}"
-                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+                Text="{formBuilding:FormBinding Name}" />
             <ToggleSwitch
                 Name="ValueHolderControl"
                 Grid.Column="2"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
-                Content="Toggle"
                 FontSize="12"
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}"
                 IsChecked="{formBuilding:FormBinding Value}"
                 IsEnabled="{formBuilding:FormBinding IsEnabled}">
                 <ToggleSwitch.Styles>
                     <Style
-                        Selector="defaults|SwitchPresenter /template/ ToggleSwitch#ValueHolderControl:unchecked /template/ Ellipse#RippleThumb">
+                        Selector="defaults|SwitchPresenter /template/ ToggleSwitch#ValueHolderControl /template/ Ellipse#RippleThumb">
                         <Setter Property="Width" Value="30" />
                         <Setter Property="Height" Value="30" />
                     </Style>

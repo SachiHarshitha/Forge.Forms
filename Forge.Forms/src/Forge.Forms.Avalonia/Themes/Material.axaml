@@ -2,8 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
         xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-        xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
-        xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding">
+        xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls">
 
     <Design.PreviewWith>
         <Border Padding="20">
@@ -58,58 +57,6 @@
         </Setter>
     </Style>
 
-    <Style Selector="defaults|TitlePresenter">
-        <Setter Property="Margin" Value="8" />
-        <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource TitlePresenterTemplate}" />
-        <Interaction.Behaviors>
-            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
-                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
-            </DataTriggerBehavior>
-        </Interaction.Behaviors>
-    </Style>
-
-    <Style Selector="defaults|HeadingPresenter">
-        <Setter Property="Margin" Value="8" />
-        <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource HeadingPresenterTemplate}" />
-        <Interaction.Behaviors>
-            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
-                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
-            </DataTriggerBehavior>
-        </Interaction.Behaviors>
-    </Style>
-
-    <Style Selector="defaults|TextPresenter">
-        <Setter Property="Margin" Value="8" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource TextPresenterTemplate}" />
-        <Interaction.Behaviors>
-            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
-                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
-            </DataTriggerBehavior>
-        </Interaction.Behaviors>
-    </Style>
-
-    <Style Selector="defaults|ErrorTextPresenter">
-        <Setter Property="Margin" Value="8" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource ErrorTextPresenterTemplate}" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlsValidationBrush}" />
-        <Interaction.Behaviors>
-            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="True">
-                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
-            </DataTriggerBehavior>
-        </Interaction.Behaviors>
-    </Style>
-
-
     <Style Selector="defaults|CheckBoxPresenter">
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -143,13 +90,6 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Template" Value="{StaticResource MaterialPasswordPresenterTemplate}" />
-    </Style>
-
-    <Style Selector="defaults|NumericPresenter">
-        <Setter Property="Margin" Value="8" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource MaterialNumericPresenterTemplate}" />
     </Style>
 
     <Style Selector="defaults|SliderPresenter">

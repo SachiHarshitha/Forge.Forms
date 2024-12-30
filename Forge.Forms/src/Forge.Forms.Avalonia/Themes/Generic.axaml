@@ -8,6 +8,7 @@
     xmlns:controls1="clr-namespace:Material.Styles.Controls;assembly=Material.Styles">
     <Styles.Resources>
         <ResourceDictionary>
+            <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Image.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Material.Card.axaml" />
@@ -39,7 +40,8 @@
                         Fill="{TemplateBinding Foreground}"
                         Stroke="{x:Null}">
                         <Interaction.Behaviors>
-                            <DataTriggerBehavior Binding="{formBuilding:FormBinding HasMargin}" Value="True">
+                            <DataTriggerBehavior Binding="{formBuilding:FormBinding HasMargin}"
+                                                 ComparisonCondition="Equal" Value="{x:True}">
                                 <!--
 								<ChangePropertyAction PropertyName="Padding" Value="0,8" />
 							-->
@@ -52,7 +54,8 @@
     </Style>
 
     <Style Selector="defaults|BreakPresenter">
-        <Setter Property="Height" Value="{formBuilding:FormBinding Height}" />
+        <Setter Property="Height"
+                Value="{Binding DataContext,Converter={StaticResource FormBindingConverter}, ConverterParameter=Height}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="defaults:BreakPresenter" />

@@ -3,10 +3,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
-    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters">
+    <valueConverters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
 
     <ControlTemplate x:Key="DatePickerPresenterTemplate">
-        <Grid IsVisible="{formBuilding:FormBinding IsVisible}">
+        <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+              HorizontalAlignment="Stretch"
+              Margin="8"
+              VerticalAlignment="Center">
+            <Interaction.Behaviors>
+                <DataTriggerBehavior
+                    Binding="{Binding #PART_Name.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                    Value="{x:False}" ComparisonCondition="Equal">
+                    <ChangePropertyAction TargetObject="PART_Name" PropertyName="IsVisible" Value="False" />
+                </DataTriggerBehavior>
+            </Interaction.Behaviors>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -26,6 +38,7 @@
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
             <TextBlock
+                x:Name="PART_Name"
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="0,0,0,4"

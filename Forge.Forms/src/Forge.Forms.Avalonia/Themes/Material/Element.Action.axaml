@@ -3,9 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
-    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
-    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters">
-    <valueConverters:BoolToClassConverter x:Key="BoolToClassConverter" />
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="IconStyles.axaml" />

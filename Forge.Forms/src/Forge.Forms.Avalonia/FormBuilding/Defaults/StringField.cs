@@ -80,15 +80,3 @@ public class MultiLineStringPresenter : ValueBindingProvider
 
     protected override Type StyleKeyOverride => typeof(MultiLineStringPresenter);
 }
-
-public class NumericPresenter : ValueBindingProvider
-{
-    public NumericPresenter(IResourceContext context,
-        IDictionary<string, IValueProvider> fieldResources,
-        IDictionary<string, IValueProvider> formResources)
-        : base(context, fieldResources, formResources, true)
-    {
-    }
-
-    protected override Type StyleKeyOverride => typeof(NumericPresenter);
-}

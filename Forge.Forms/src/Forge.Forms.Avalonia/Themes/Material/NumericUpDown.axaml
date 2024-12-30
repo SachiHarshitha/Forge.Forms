@@ -1,0 +1,126 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+                    xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+                    xmlns:system="clr-namespace:System;assembly=netstandard">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://Material.Styles/Resources/Themes/TextBox.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Design.PreviewWith>
+        <Border Padding="20" Width="300">
+            <StackPanel Spacing="20">
+                <NumericUpDown Minimum="0"
+                               Maximum="10"
+                               Increment="0.5"
+                               Watermark="Enter text"
+                               Theme=""
+                               assists:TextFieldAssist.Hints="Here is the hint"
+                               assists:TextFieldAssist.Label="Very Long Cool label" />
+                <NumericUpDown Minimum="0"
+                               Maximum="10"
+                               Increment="0.5"
+                               Watermark="Enter text"
+                               assists:TextFieldAssist.Hints="Here is the hint"
+                               assists:TextFieldAssist.Label="Cool label">
+                    <DataValidationErrors.Error>
+                        <system:ArgumentNullException />
+                    </DataValidationErrors.Error>
+                </NumericUpDown>
+                <NumericUpDown Minimum="0"
+                               Maximum="10"
+                               Increment="0.5"
+                               VerticalContentAlignment="Center"
+                               HorizontalContentAlignment="Center"
+                               ButtonSpinnerLocation="Left"
+                               Watermark="Enter text" />
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="FilledNumericUpDown" TargetType="NumericUpDown">
+        <Setter Property="Background" Value="{DynamicResource MaterialTextFieldBoxBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_RootBorder"
+                        ClipToBounds="False"
+                        CornerRadius="4,4,0,0"
+                        Margin="{TemplateBinding Padding}"
+                        Background="Transparent"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <Panel Name="PART_RootPanel">
+                        <Panel>
+                            <TextBox Name="PART_TextBox"
+                                     BorderThickness="0"
+                                     TextBlock.FontFamily="{TemplateBinding FontFamily}"
+                                     TextBlock.FontSize="{TemplateBinding FontSize}"
+                                     TextBlock.FontStyle="{TemplateBinding FontStyle}"
+                                     TextBlock.FontWeight="{TemplateBinding FontWeight}"
+                                     TextBlock.Foreground="{TemplateBinding Foreground}"
+                                     assists:TextFieldAssist.Label="{TemplateBinding assists:TextFieldAssist.Label}"
+                                     DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"
+                                     Text="{TemplateBinding Text}"
+                                     UseFloatingWatermark="True"
+                                     Watermark="{TemplateBinding Watermark}"
+                                     AcceptsReturn="False"
+                                     TextWrapping="NoWrap">
+                                <TextBox.InnerRightContent>
+                                    <ButtonSpinner Name="PART_Spinner"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   BorderThickness="0"
+                                                   BorderBrush="Transparent"
+                                                   Height="50"
+                                                   VerticalContentAlignment="Top"
+                                                   AllowSpin="{TemplateBinding AllowSpin}"
+                                                   ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}"
+                                                   ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}" />
+                                </TextBox.InnerRightContent>
+                            </TextBox>
+                        </Panel>
+                    </Panel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ controls|MaterialUnderline#Underline">
+            <Setter Property="IsHovered" Value="True" />
+        </Style>
+
+        <Style Selector="^:focus-within /template/ controls|MaterialUnderline#Underline">
+            <Setter Property="IsActive" Value="True" />
+        </Style>
+
+        <Style Selector="^ /template/ Border#PART_RootBorder">
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialTextBoxBorderBrush}" />
+            <Setter Property="MinHeight" Value="48" />
+        </Style>
+
+        <Style Selector="^ /template/ Border#PART_RootBorder">
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialTextBoxBorderBrush}" />
+            <Setter Property="MinHeight" Value="48" />
+        </Style>
+
+        <Style Selector="^ /template/ TextBlock#PART_HintsText">
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Margin" Value="0,3,0,0" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style Selector="^ /template/ controls|MaterialUnderline#PART_Underline">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Duration="0:0:0.25" Property="ActiveBrush" Easing="LinearEasing" />
+                </Transitions>
+            </Setter>
+        </Style>
+    </ControlTheme>
+
+    <!-- Default theme -->
+    <ControlTheme x:Key="{x:Type NumericUpDown}" TargetType="NumericUpDown"
+                  BasedOn="{StaticResource FilledNumericUpDown}" />
+
+</ResourceDictionary>

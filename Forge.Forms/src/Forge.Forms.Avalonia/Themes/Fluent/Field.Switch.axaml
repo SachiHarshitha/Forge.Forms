@@ -3,16 +3,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
-    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters">
+    <valueConverters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
 
     <ControlTemplate x:Key="SwitchPresenterTemplate">
         <Grid Margin="8,12" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-              IsVisible="{formBuilding:FormBinding IsVisible}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+              IsVisible="{formBuilding:FormBinding IsVisible}" ColumnDefinitions="Auto,1*,Auto">
+            <Interaction.Behaviors>
+                <DataTriggerBehavior
+                    Binding="{Binding #PART_Name.Text, Converter={StaticResource IsNotEmptyConverter}}"
+                    Value="{x:False}" ComparisonCondition="Equal">
+                    <ChangePropertyAction TargetObject="PART_Name" PropertyName="IsVisible" Value="False" />
+                </DataTriggerBehavior>
+            </Interaction.Behaviors>
             <packIcon:PackIcon
                 Grid.Column="0"
                 Width="24"
@@ -23,11 +27,12 @@
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
             <TextBlock
+                x:Name="PART_Name"
+                Grid.Row="0"
                 Grid.Column="1"
-                VerticalAlignment="Center"
+                Margin="0,0,0,4"
                 FontSize="12"
-                Text="{formBuilding:FormBinding Name}"
-                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
+                Text="{formBuilding:FormBinding Name}" />
             <ToggleSwitch
                 Name="ValueHolderControl"
                 Grid.Column="2"

@@ -13,6 +13,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Styling;
 using Avalonia.Xaml.Interactions.Core;
+using Forge.Forms.AvaloniaUI.Controls;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using MultiBinding = Avalonia.Data.MultiBinding;
 
@@ -155,6 +156,14 @@ public class FormBindingExtension : MarkupExtension
             // If the value is a BindingBase (e.g., Binding), apply it
             if (value is Binding binding)
             {
+                // Quick and dirty hack for Material Icons.
+                if (_targetPropertyName == "Kind" && binding.Source is DynamicForm form)
+                {
+                    var path = binding.Path.Split('.').Last();
+                    var icon = form.Model.GetHighestPropertyValue(path);
+                    ApplyLiteralValueViaReflection(styledElement, icon);
+                }
+
                 var avaProp = GetDependencyProperty(styledElement.GetType(), _targetPropertyName);
                 if (avaProp?.PropertyType == typeof(BindingBase)) return value;
                 if (avaProp != null)
@@ -337,6 +346,7 @@ public class FormBindingExtension : MarkupExtension
     private static AvaloniaProperty? GetDependencyProperty(Type type, string propertyName)
     {
         AvaloniaProperty avaloniaProperty = null;
+
         var avaloniaProps =
             GetFieldInfosIncludingBaseClasses(type, BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => p.FieldType.IsSubclassOf(typeof(AvaloniaProperty)));

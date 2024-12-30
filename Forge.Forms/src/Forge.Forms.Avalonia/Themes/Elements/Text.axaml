@@ -4,97 +4,155 @@
     xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
     xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
     xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
-    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters">
+    <valueConverters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
 
-    <ControlTemplate x:Key="TitlePresenterTemplate" TargetType="{x:Type defaults:TitlePresenter}">
-        <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <packIcon:PackIcon
-                Grid.Column="0"
-                Width="18"
-                Height="18"
-                Margin="0,0,8,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Foreground="{TemplateBinding Foreground}"
-                Kind="{formBuilding:FormBinding Icon}"
-                IsVisible="{formBuilding:FormBinding IconVisibility}">
-                <Interaction.Behaviors>
-                    <DataTriggerBehavior Binding="{Binding IconPadding}" Value="True">
-                        <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
+    <ControlTheme x:Key="{x:Type defaults:TitlePresenter}" TargetType="{x:Type defaults:TitlePresenter}">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="(Interaction.Behaviors)">
+            <BehaviorCollectionTemplate>
+                <BehaviorCollection>
+                    <DataTriggerBehavior Binding="{formBuilding:FormBinding IsVisible}" Value="{x:True}"
+                                         ComparisonCondition="Equal">
+                        <ChangePropertyAction PropertyName="IsVisible" Value="True" />
                     </DataTriggerBehavior>
-                </Interaction.Behaviors>
-            </packIcon:PackIcon>
-            <TextBlock
-                Grid.Column="1"
-                VerticalAlignment="Center"
-                FontWeight="Medium"
-                FontSize="{TemplateBinding controls:TextProperties.TitleFontSize}"
-                IsVisible="{formBuilding:FormBinding IsVisible}"
-                Text="{formBuilding:FormBinding Content}"
-                TextWrapping="Wrap" />
-        </Grid>
-
-    </ControlTemplate>
-
-    <ControlTemplate x:Key="HeadingPresenterTemplate" TargetType="{x:Type defaults:HeadingPresenter}">
-        <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <packIcon:PackIcon
-                Grid.Column="0"
-                Width="18"
-                Height="18"
-                Margin="0,0,8,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Foreground="{TemplateBinding Foreground}"
-                Kind="{formBuilding:FormBinding Icon}"
-                IsVisible="{formBuilding:FormBinding IconVisibility}">
-                <Interaction.Behaviors>
-                    <DataTriggerBehavior Binding="{Binding IconPadding}" Value="True">
-                        <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
+                    <DataTriggerBehavior Binding="{formBuilding:FormBinding IsVisible}" Value="{x:False}"
+                                         ComparisonCondition="Equal">
+                        <ChangePropertyAction PropertyName="IsVisible" Value="False" />
                     </DataTriggerBehavior>
-                </Interaction.Behaviors>
-            </packIcon:PackIcon>
-            <TextBlock
-                Grid.Column="1"
-                VerticalAlignment="Center"
-                FontWeight="Medium"
-                IsVisible="{formBuilding:FormBinding IsVisible}"
-                FontSize="{TemplateBinding controls:TextProperties.HeadingFontSize}"
-                Text="{formBuilding:FormBinding Content}"
-                TextWrapping="Wrap" />
-        </Grid>
+                </BehaviorCollection>
+            </BehaviorCollectionTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Margin="8"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <packIcon:PackIcon
+                        x:Name="Icon"
+                        Grid.Column="0"
+                        Width="18"
+                        Height="18"
+                        Margin="0,0,8,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{TemplateBinding Foreground}"
+                        Kind="{formBuilding:FormBinding Icon}"
+                        IsVisible="{formBuilding:FormBinding  IconVisibility}">
+                        <Interaction.Behaviors>
+                            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="{x:True}"
+                                                 ComparisonCondition="Equal">
+                                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
+                            </DataTriggerBehavior>
+                        </Interaction.Behaviors>
+                    </packIcon:PackIcon>
+                    <TextBlock
+                        x:Name="PART_ContentText"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        FontWeight="Medium"
+                        FontSize="{TemplateBinding controls:TextProperties.TitleFontSize}"
+                        Text="{formBuilding:FormBinding Content}"
+                        TextWrapping="Wrap" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-    </ControlTemplate>
+    <ControlTheme x:Key="{x:Type defaults:HeadingPresenter}" TargetType="{x:Type defaults:HeadingPresenter}">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="(Interaction.Behaviors)">
+            <BehaviorCollectionTemplate>
+                <BehaviorCollection>
+                    <DataTriggerBehavior Binding="{formBuilding:FormBinding IsVisible}" Value="{x:True}"
+                                         ComparisonCondition="Equal">
+                        <ChangePropertyAction PropertyName="IsVisible" Value="True" />
+                    </DataTriggerBehavior>
+                    <DataTriggerBehavior Binding="{formBuilding:FormBinding IsVisible}" Value="{x:False}"
+                                         ComparisonCondition="Equal">
+                        <ChangePropertyAction PropertyName="IsVisible" Value="False" />
+                    </DataTriggerBehavior>
+                </BehaviorCollection>
+            </BehaviorCollectionTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <packIcon:PackIcon
+                        x:Name="Icon"
+                        Grid.Column="0"
+                        Width="18"
+                        Height="18"
+                        Margin="0,0,8,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{TemplateBinding Foreground}"
+                        Kind="{formBuilding:FormBinding Icon}"
+                        IsVisible="{formBuilding:FormBinding IconVisibility}">
+                        <Interaction.Behaviors>
+                            <DataTriggerBehavior Binding="{formBuilding:FormBinding IconPadding}" Value="{x:True}"
+                                                 ComparisonCondition="Equal">
+                                <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
+                            </DataTriggerBehavior>
+                        </Interaction.Behaviors>
+                    </packIcon:PackIcon>
+                    <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        FontWeight="Medium"
+                        FontSize="{TemplateBinding controls:TextProperties.HeadingFontSize}"
+                        Text="{formBuilding:FormBinding Content}"
+                        TextWrapping="Wrap" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-    <ControlTemplate x:Key="TextPresenterTemplate">
-        <TextBlock Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                   FontSize="{TemplateBinding controls:TextProperties.TextFontSize}"
-                   IsVisible="{formBuilding:FormBinding IsVisible}"
-                   Text="{formBuilding:FormBinding Content}"
-                   TextWrapping="Wrap">
-            <Interaction.Behaviors>
-                <DataTriggerBehavior Binding="{Binding IconPadding}" Value="True">
-                    <ChangePropertyAction PropertyName="Padding" Value="32,0,0,0" />
-                </DataTriggerBehavior>
-            </Interaction.Behaviors>
-        </TextBlock>
+    <ControlTheme x:Key="{x:Type defaults:TextPresenter}" TargetType="{x:Type defaults:TextPresenter}">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="(Interaction.Behaviors)">
+            <BehaviorCollectionTemplate>
+                <BehaviorCollection>
+                    <DataTriggerBehavior Binding="{formBuilding:FormBinding IsVisible}" Value="{x:True}"
+                                         ComparisonCondition="Equal">
+                        <ChangePropertyAction PropertyName="IsVisible" Value="True" />
+                    </DataTriggerBehavior>
+                    <DataTriggerBehavior Binding="{formBuilding:FormBinding IsVisible}" Value="{x:False}"
+                                         ComparisonCondition="Equal">
+                        <ChangePropertyAction PropertyName="IsVisible" Value="False" />
+                    </DataTriggerBehavior>
+                </BehaviorCollection>
+            </BehaviorCollectionTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid>
+                    <TextBlock x:Name="PART_String"
+                               Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                               FontSize="{TemplateBinding controls:TextProperties.TextFontSize}"
+                               Text="{formBuilding:FormBinding Content}"
+                               TextWrapping="Wrap" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-    </ControlTemplate>
 
-
-    <ControlTemplate x:Key="ErrorTextPresenterTemplate" TargetType="{x:Type defaults:ErrorTextPresenter}">
-        <TextBlock
-            Margin="{TemplateBinding Padding}"
-            FontSize="{TemplateBinding controls:TextProperties.TextFontSize}"
-            Text="{formBuilding:FormBinding Content}"
-            TextWrapping="Wrap" />
-    </ControlTemplate>
 </ResourceDictionary>
