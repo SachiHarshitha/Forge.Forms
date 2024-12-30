@@ -12,6 +12,7 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Styling;
+using Avalonia.Xaml.Interactions.Core;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using MultiBinding = Avalonia.Data.MultiBinding;
 
@@ -217,6 +218,9 @@ public class FormBindingExtension : MarkupExtension
         if (targetPropertyInfo != null)
             try
             {
+                if (styledElement is DataTriggerBehavior dataTrigger && _targetPropertyName == "Binding")
+                    dataTrigger.SetValue(DataTriggerBehavior.BindingProperty, value);
+
                 if (targetPropertyInfo.PropertyType.FullName.Contains(nameof(IBinding)) && value is string expr)
                     targetPropertyInfo.SetValue(styledElement, new Binding(expr));
                 else if (targetPropertyInfo.PropertyType.FullName.Contains(nameof(IImage)) && value is string image)

@@ -2,7 +2,7 @@
 ![NuGet](https://img.shields.io/nuget/v/Forge.Forms.AvaloniaUI.svg)
 ## 📖 About
 
-[Forge.Forms ](https://github.com/WPF-Forge/Forge.Forms)you can create dynamic forms in WPF from classes or XML.
+With [Forge.Forms ](https://github.com/WPF-Forge/Forge.Forms)you can create dynamic forms in WPF from classes or XML.
 Using this library is straightforward. DynamicForm is a control that will render controls bound to an associated model.
 A model can be an object, a type, a primitive, or a custom IFormDefinition.
 
@@ -70,11 +70,11 @@ THEMES.
 
 ### Themes
 
-| Framework         | Method | Status                    | How to Use                                                                                  |
-|-------------------|--------|---------------------------|---------------------------------------------------------------------------------------------|
-| Avalonia - Simple | Styles | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />```      |
-| Avalonia - Fluent | Styles | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />```      |
-| Material          | Styles | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material.axaml" /> ``` |
+| Framework         | Method                 | Status                    | How to Use                                                                                  |
+|-------------------|------------------------|---------------------------|---------------------------------------------------------------------------------------------|
+| Avalonia - Simple |                        | Currently being developed |                                                                                             |
+| Avalonia - Fluent | Styles & Control Theme | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent.axaml" />```    |
+| Material          | Styles & Control Theme | Currently being optimized | ```xaml <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material.axaml" /> ``` |
 
 ## Installation
 

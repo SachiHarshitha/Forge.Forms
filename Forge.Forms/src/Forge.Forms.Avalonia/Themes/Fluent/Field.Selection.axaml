@@ -6,31 +6,44 @@
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
     xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters"
-    xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
     xmlns:annotations="clr-namespace:Forge.Forms.AvaloniaUI.Annotations">
+    <valueConverters:ItemStringFormatter x:Key="ItemFormatter" />
+    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
-            <ControlTemplate x:Key="MaterialComboBoxSelectionPresenterTemplate">
-                <Grid Margin="8" IsVisible="{formBuilding:FormBinding IsVisible}">
+            <ControlTemplate x:Key="ComboBoxSelectionPresenterTemplate">
+                <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+                      Margin="8"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
                     <packIcon:PackIcon
+                        Grid.Row="1"
                         Grid.Column="0"
                         Width="24"
                         Height="24"
                         Margin="0,0,16,0"
                         HorizontalAlignment="Center"
-                        Theme="{DynamicResource MaterialColoredIconStyle}"
                         VerticalAlignment="Center"
                         IsVisible="{formBuilding:FormBinding IconVisibility}"
                         Kind="{formBuilding:FormBinding Icon}" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,0,4"
+                        FontSize="12"
+                        Text="{formBuilding:FormBinding Name}" />
                     <ComboBox
                         Name="ValueHolderControl"
+                        Grid.Row="1"
                         Grid.Column="1"
-                        PlaceholderText="{formBuilding:FormBinding ToolTip}"
-                        assists:ComboBoxAssist.Label="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Name}"
                         internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                         DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
                         IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
@@ -45,20 +58,14 @@
                         </ComboBox.ItemsPanel>
                         <ComboBox.ItemTemplate>
                             <!--<DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource ItemFormatter}, ConverterParameter={Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}}}" />
-                        </DataTemplate>-->
+                        <TextBlock Text="{Binding Converter={StaticResource ItemFormatter}, ConverterParameter={Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}}}" />
+                    </DataTemplate>-->
                         </ComboBox.ItemTemplate>
-                        <ComboBox.Styles>
-                            <Style
-                                Selector="defaults|SelectionPresenter /template/ ComboBox#ValueHolderControl /template/ Panel#PART_InnerPanel">
-                                <Setter Property="Margin" Value="0 25 0 0" />
-                            </Style>
-                        </ComboBox.Styles>
                     </ComboBox>
                 </Grid>
             </ControlTemplate>
 
-            <ControlTemplate x:Key="MaterialEditableComboBoxSelectionPresenterTemplate">
+            <ControlTemplate x:Key="EditableComboBoxSelectionPresenterTemplate">
                 <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
                       Margin="8"
                       HorizontalAlignment="Stretch"
@@ -67,31 +74,41 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
                     <packIcon:PackIcon
+                        Grid.Row="1"
                         Grid.Column="0"
                         Width="24"
                         Height="24"
-                        Theme="{DynamicResource MaterialColoredIconStyle}"
                         Margin="0,0,16,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         IsVisible="{formBuilding:FormBinding IconVisibility}"
                         Kind="{formBuilding:FormBinding Icon}" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,0,4"
+                        FontSize="12"
+                        Text="{formBuilding:FormBinding Name}" />
                     <internal:EditableComboBox
                         Name="ValueHolderControl"
+                        Grid.Row="1"
                         Grid.Column="1"
                         PlaceholderText="{formBuilding:FormBinding ToolTip}"
                         internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                         DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
                         IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
-                        assists:ComboBoxAssist.Label="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Name}"
                         ItemsSource="{formBuilding:FormBinding ItemsSource}"
                         SelectedValue="{formBuilding:FormBinding Value}"
                         ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
                 </Grid>
             </ControlTemplate>
 
-            <ControlTemplate x:Key="MaterialRadioButtonsSelectionPresenterTemplate"
+            <ControlTemplate x:Key="RadioButtonsSelectionPresenterTemplate"
                              TargetType="{x:Type defaults:SelectionPresenter}">
                 <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
                       Margin="8"
@@ -109,7 +126,6 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Width="24"
-                        Theme="{DynamicResource MaterialColoredIconStyle}"
                         Height="24"
                         Margin="0,0,16,0"
                         HorizontalAlignment="Center"
@@ -128,6 +144,7 @@
                         Name="ValueHolderControl"
                         Grid.Row="1"
                         Grid.Column="0"
+                        Background="Transparent"
                         Grid.ColumnSpan="2"
                         Padding="0,8,0,0"
                         BorderThickness="0"
@@ -153,9 +170,10 @@
                 </Grid>
             </ControlTemplate>
 
-            <ControlTemplate x:Key="MaterialRadioButtonsInlineSelectionPresenterTemplate"
+            <ControlTemplate x:Key="RadioButtonsInlineSelectionPresenterTemplate"
                              TargetType="{x:Type defaults:SelectionPresenter}">
                 <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+
                       Margin="8"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Center">
@@ -168,11 +186,9 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <packIcon:PackIcon
-                        x:Name="Icon"
                         Grid.Row="0"
                         Grid.Column="0"
                         Width="24"
-                        Theme="{DynamicResource MaterialColoredIconStyle}"
                         Height="24"
                         Margin="0,0,16,0"
                         HorizontalAlignment="Center"
@@ -186,20 +202,7 @@
                         VerticalAlignment="Center"
                         FontSize="12"
                         Text="{formBuilding:FormBinding Name}"
-                        ToolTip.Tip="{formBuilding:FormBinding ToolTip}">
-                        <Interaction.Behaviors>
-                            <DataTriggerBehavior Binding="{Binding #HintText.IsPointerOver}"
-                                                 ComparisonCondition="Equal" Value="{x:True}">
-                                <ChangePropertyAction PropertyName="Foreground" TargetObject="Icon"
-                                                      Value="{DynamicResource MaterialPrimaryMidBrush}" />
-                            </DataTriggerBehavior>
-                            <DataTriggerBehavior Binding="{Binding #HintText.IsPointerOver}"
-                                                 ComparisonCondition="Equal" Value="{x:False}">
-                                <ChangePropertyAction PropertyName="Foreground" TargetObject="Icon"
-                                                      Value="{Binding #HintText.Foreground}" />
-                            </DataTriggerBehavior>
-                        </Interaction.Behaviors>
-                    </TextBlock>
+                        ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
                     <ListBox
                         Name="ValueHolderControl"
                         Grid.Row="1"
@@ -207,33 +210,12 @@
                         Grid.ColumnSpan="2"
                         Padding="0,8,0,0"
                         BorderThickness="0"
+                        Background="Transparent"
                         DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
                         IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
                         ItemsSource="{formBuilding:FormBinding ItemsSource}"
                         SelectedValue="{formBuilding:FormBinding Value}"
                         SelectedValueBinding="{formBuilding:FormBinding ValuePath}">
-                        <Interaction.Behaviors>
-                            <DataTriggerBehavior Binding="{Binding #ValueHolderControl.IsPointerOver}"
-                                                 ComparisonCondition="Equal" Value="{x:True}">
-                                <ChangePropertyAction PropertyName="Foreground" TargetObject="Icon"
-                                                      Value="{DynamicResource MaterialPrimaryMidBrush}" />
-                            </DataTriggerBehavior>
-                            <DataTriggerBehavior Binding="{Binding #ValueHolderControl.IsPointerOver}"
-                                                 ComparisonCondition="Equal" Value="{x:False}">
-                                <ChangePropertyAction PropertyName="Foreground" TargetObject="Icon"
-                                                      Value="{Binding #HintText.Foreground}" />
-                            </DataTriggerBehavior>
-                            <DataTriggerBehavior Binding="{Binding #ValueHolderControl.IsFocused}"
-                                                 ComparisonCondition="Equal" Value="{x:True}">
-                                <ChangePropertyAction PropertyName="Foreground" TargetObject="Icon"
-                                                      Value="{DynamicResource MaterialPrimaryMidBrush}" />
-                            </DataTriggerBehavior>
-                            <DataTriggerBehavior Binding="{Binding #ValueHolderControl.IsFocused}"
-                                                 ComparisonCondition="Equal" Value="{x:False}">
-                                <ChangePropertyAction PropertyName="Foreground" TargetObject="Icon"
-                                                      Value="{Binding #HintText.Foreground}" />
-                            </DataTriggerBehavior>
-                        </Interaction.Behaviors>
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel />
@@ -245,8 +227,10 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
-                                            <RadioButton Padding="4,0,0,0" Content="B"
-                                                         IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}" />
+                                            <RadioButton Padding="4,0,0,0"
+                                                         IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}">
+                                                <ContentPresenter />
+                                            </RadioButton>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -255,8 +239,7 @@
                     </ListBox>
                 </Grid>
             </ControlTemplate>
-
-            <ControlTemplate x:Key="MaterialRadioButtonsInlineRightAlignedSelectionPresenterTemplate"
+            <ControlTemplate x:Key="RadioButtonsInlineRightAlignedSelectionPresenterTemplate"
                              TargetType="{x:Type defaults:SelectionPresenter}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -272,7 +255,6 @@
                         Margin="0,0,16,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Theme="{StaticResource MaterialColoredIconStyle}"
                         Kind="{formBuilding:FormBinding Icon}"
                         IsVisible="{formBuilding:FormBinding IconVisibility}" />
                     <TextBlock
@@ -286,7 +268,7 @@
                             <DataTriggerBehavior Binding="{Binding #HintText.IsPointerOver}"
                                                  ComparisonCondition="Equal" Value="{x:True}">
                                 <ChangePropertyAction PropertyName="Foreground" TargetObject="Icon"
-                                                      Value="{DynamicResource MaterialPrimaryMidBrush}" />
+                                                      Value="{DynamicResource ComboBoxItemForegroundPointerOver}" />
                             </DataTriggerBehavior>
                             <DataTriggerBehavior Binding="{Binding #HintText.IsPointerOver}"
                                                  ComparisonCondition="Equal" Value="{x:False}">
@@ -301,6 +283,7 @@
                         Grid.Column="2"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
+                        Background="Transparent"
                         DisplayMemberBinding="{formBuilding:FormBinding DisplayPath}"
                         IsEnabled="{formBuilding:FormBinding IsNotReadOnly}"
                         ItemsSource="{formBuilding:FormBinding ItemsSource}"
@@ -310,7 +293,7 @@
                             <DataTriggerBehavior Binding="{Binding #ValueHolderControl.IsPointerOver}"
                                                  ComparisonCondition="Equal" Value="{x:True}">
                                 <ChangePropertyAction PropertyName="Foreground" TargetObject="Icon"
-                                                      Value="{DynamicResource MaterialPrimaryMidBrush}" />
+                                                      Value="{DynamicResource ComboBoxItemForegroundPointerOver}" />
                             </DataTriggerBehavior>
                             <DataTriggerBehavior Binding="{Binding #ValueHolderControl.IsPointerOver}"
                                                  ComparisonCondition="Equal" Value="{x:False}">
@@ -320,7 +303,7 @@
                             <DataTriggerBehavior Binding="{Binding #ValueHolderControl.IsFocused}"
                                                  ComparisonCondition="Equal" Value="{x:True}">
                                 <ChangePropertyAction PropertyName="Foreground" TargetObject="Icon"
-                                                      Value="{DynamicResource MaterialPrimaryMidBrush}" />
+                                                      Value="{DynamicResource ComboBoxForegroundFocused}" />
                             </DataTriggerBehavior>
                             <DataTriggerBehavior Binding="{Binding #ValueHolderControl.IsFocused}"
                                                  ComparisonCondition="Equal" Value="{x:False}">
@@ -351,43 +334,40 @@
                 </Grid>
             </ControlTemplate>
         </ResourceDictionary>
-        <ResourceInclude Source="IconStyles.axaml" />
-
     </ResourceDictionary.MergedDictionaries>
-    <valueConverters:ItemStringFormatter x:Key="ItemFormatter" />
-    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
 
     <ControlTheme x:Key="{x:Type defaults:SelectionPresenter}" TargetType="{x:Type defaults:SelectionPresenter}">
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource MaterialComboBoxSelectionPresenterTemplate}" />
+        <Setter Property="Template" Value="{StaticResource ComboBoxSelectionPresenterTemplate}" />
         <Setter Property="(Interaction.Behaviors)">
             <BehaviorCollectionTemplate>
                 <BehaviorCollection>
                     <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}" ComparisonCondition="Equal"
                                          Value="{x:Static annotations:SelectionType.RadioButtons}">
                         <ChangePropertyAction PropertyName="Template"
-                                              Value="{StaticResource MaterialRadioButtonsSelectionPresenterTemplate}" />
+                                              Value="{StaticResource RadioButtonsSelectionPresenterTemplate}" />
                     </DataTriggerBehavior>
                     <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}" ComparisonCondition="Equal"
                                          Value="{x:Static annotations:SelectionType.RadioButtonsInline}">
                         <ChangePropertyAction PropertyName="Template"
-                                              Value="{StaticResource MaterialRadioButtonsInlineSelectionPresenterTemplate}" />
+                                              Value="{StaticResource RadioButtonsInlineSelectionPresenterTemplate}" />
                     </DataTriggerBehavior>
                     <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}" ComparisonCondition="Equal"
                                          Value="{x:Static annotations:SelectionType.RadioButtonsInlineRightAligned}">
                         <ChangePropertyAction PropertyName="Template"
-                                              Value="{StaticResource MaterialRadioButtonsInlineRightAlignedSelectionPresenterTemplate}" />
+                                              Value="{StaticResource RadioButtonsInlineRightAlignedSelectionPresenterTemplate}" />
                     </DataTriggerBehavior>
                     <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}" ComparisonCondition="Equal"
                                          Value="{x:Static annotations:SelectionType.ComboBoxEditable}">
                         <ChangePropertyAction PropertyName="Template"
-                                              Value="{StaticResource MaterialEditableComboBoxSelectionPresenterTemplate}" />
+                                              Value="{StaticResource EditableComboBoxSelectionPresenterTemplate}" />
                     </DataTriggerBehavior>
                 </BehaviorCollection>
             </BehaviorCollectionTemplate>
         </Setter>
 
     </ControlTheme>
+
 </ResourceDictionary>

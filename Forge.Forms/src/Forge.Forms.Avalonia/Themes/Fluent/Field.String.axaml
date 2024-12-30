@@ -44,9 +44,7 @@
                 IsEnabled="{formBuilding:FormBinding  IsEnabled}"
                 IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
                 Text="{formBuilding:FormBinding Value}"
-                ToolTip.Tip="{formBuilding:FormBinding ToolTip}">
-
-            </TextBox>
+                ToolTip.Tip="{formBuilding:FormBinding ToolTip}" />
         </Grid>
     </ControlTemplate>
 </ResourceDictionary>

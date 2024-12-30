@@ -7,7 +7,9 @@
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
     xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles">
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
-
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="IconStyles.axaml" />
+    </ResourceDictionary.MergedDictionaries>
     <ControlTemplate x:Key="MaterialMultiLineStringPresenterTemplate"
                      TargetType="{x:Type defaults:MultiLineStringPresenter}">
         <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
@@ -23,7 +25,7 @@
                 Grid.Column="0"
                 Width="24"
                 Height="24"
-                Theme="{DynamicResource MaterialColoredIconStyle}"
+                Theme="{StaticResource MaterialColoredIconStyle}"
                 Margin="0,0,16,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

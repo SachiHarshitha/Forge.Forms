@@ -35,11 +35,14 @@ public class Selection
     [SelectFrom(new[] { "Fantastic", "Good", "Average", "Bad" })]
     public string RateThisFeature { get; set; }
 
+    [Field(Icon = PackIconKind.Seat)]
     [SelectFrom("{Binding Seats}", SelectionType = SelectionType.ComboBoxEditable)]
     public int NumberOfSeats { get; set; }
 
     [SelectFrom(typeof(YesNo?))] public YesNo? DeselectMe { get; set; } = YesNo.Yes;
 
-    [SelectFrom(new[] { "First item", "Second item", "Third item" }, SelectionType = SelectionType.RadioButtonsInline)]
+    [Field(Icon = PackIconKind.Love, Name = "Select an Item")]
+    [SelectFrom(new[] { "First item", "Second item", "Third item" },
+        SelectionType = SelectionType.RadioButtonsInlineRightAligned)]
     public string InlineSelection { get; set; } = "First item";
 }

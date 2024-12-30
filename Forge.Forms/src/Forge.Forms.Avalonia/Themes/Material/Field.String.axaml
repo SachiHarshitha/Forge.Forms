@@ -6,7 +6,9 @@
     xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
-
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="IconStyles.axaml" />
+    </ResourceDictionary.MergedDictionaries>
     <ControlTemplate x:Key="MaterialStringPresenterTemplate">
         <Grid
             IsVisible="{formBuilding:FormBinding IsVisible}"
@@ -23,7 +25,7 @@
                 Height="24"
                 Margin="0,0,16,0"
                 HorizontalAlignment="Center"
-                Theme="{DynamicResource MaterialColoredIconStyle}"
+                Theme="{StaticResource MaterialColoredIconStyle}"
                 VerticalAlignment="Center"
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
@@ -37,8 +39,7 @@
                 FontSize="12"
                 IsEnabled="{formBuilding:FormBinding  IsEnabled}"
                 IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
-                Text="{formBuilding:FormBinding Value}">
-            </TextBox>
+                Text="{formBuilding:FormBinding Value}" />
         </Grid>
     </ControlTemplate>
 </ResourceDictionary>

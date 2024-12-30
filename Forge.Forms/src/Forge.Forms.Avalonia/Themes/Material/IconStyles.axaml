@@ -1,0 +1,31 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon">
+
+    <ControlTheme x:Key="MaterialColoredIconStyle" TargetType="{x:Type materialDesign:PackIcon}">
+        <Setter Property="Foreground" Value="{Binding Foreground, ElementName=ValueHolderControl}" />
+        <Setter Property="(Interaction.Behaviors)">
+            <BehaviorCollectionTemplate>
+                <BehaviorCollection>
+                    <DataTriggerBehavior
+                        ComparisonCondition="Equal" Value="{x:True}">
+                        <DataTriggerBehavior.Binding>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="#ValueHolderControl.IsFocused" />
+                                <Binding ElementName="ValueHolderControl" Path="(DataValidationErrors.HasErrors)" />
+                            </MultiBinding>
+                        </DataTriggerBehavior.Binding>
+                        <ChangePropertyAction PropertyName="Foreground" Value="PrimaryHueMidBrush" />
+                    </DataTriggerBehavior>
+                    <DataTriggerBehavior
+                        Binding="{Binding ElementName=ValueHolderControl, Path=(DataValidationErrors.HasErrors)}"
+                        Value="True">
+                        <ChangePropertyAction PropertyName="Foreground"
+                                              Value="{DynamicResource MaterialValidationErrorBrush}" />
+                    </DataTriggerBehavior>
+                </BehaviorCollection>
+            </BehaviorCollectionTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

@@ -729,7 +729,7 @@ public class FormBuilder : IFormBuilder
                 continue;
 
             // Pass three - initialize elements.
-            foreach (var initializer in FieldInitializers) 
+            foreach (var initializer in FieldInitializers)
                 initializer.Initialize(element, property, deserializer);
 
             var wrapper = new ElementWrapper(element, property);
@@ -1016,7 +1016,8 @@ public class FormBuilder : IFormBuilder
         foreach (var builder in builders)
         {
             var element = builder.TryBuild(property, deserializer);
-            if (element != null) return element;
+            if (element != null)
+                return element;
         }
 
         return null;

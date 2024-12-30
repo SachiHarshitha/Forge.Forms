@@ -63,7 +63,7 @@
 
         <!-- Simple Theme -->
         <!--
-        <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Base.axaml" />
+        <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent.axaml" />
         -->
 
         <!-- Material Theme -->

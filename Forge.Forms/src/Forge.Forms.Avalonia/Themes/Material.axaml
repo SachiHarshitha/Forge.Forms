@@ -3,8 +3,7 @@
         xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
         xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
         xmlns:controls="clr-namespace:Forge.Forms.AvaloniaUI.Controls"
-        xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
-        xmlns:annotations="clr-namespace:Forge.Forms.AvaloniaUI.Annotations">
+        xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding">
 
     <Design.PreviewWith>
         <Border Padding="20">
@@ -16,8 +15,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Text.axaml" />
-                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/IconStyles.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/IconStyles.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Elements/Image.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/EditableComboBox.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.String.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Element.Action.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.CheckBox.axaml" />
@@ -25,6 +25,7 @@
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.DatePicker.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.MultiLineString.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Password.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Numeric.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Selection.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Slider.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Switch.axaml" />
@@ -108,27 +109,6 @@
         </Interaction.Behaviors>
     </Style>
 
-    <Style Selector="defaults|ActionPresenter">
-        <Setter Property="Margin" Value="2" />
-        <Setter Property="Padding" Value="8,2" />
-        <Setter Property="MinWidth" Value="48" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource MaterialActionPresenterTemplate}" />
-        <Interaction.Behaviors>
-            <DataTriggerBehavior Binding="{formBuilding:FormBinding IsPrimary}" Value="True">
-                <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource MaterialPrimaryActionPresenterTemplate}" />
-            </DataTriggerBehavior>
-            <DataTriggerBehavior Binding="{formBuilding:FormBinding IsLoading}" Value="True">
-                <!--
-				<ChangePropertyAction PropertyName="Width" Value="{TemplateBinding ActualWidth}" />
-				-->
-                <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource MaterialActionPresenterLoadingTemplate}" />
-            </DataTriggerBehavior>
-        </Interaction.Behaviors>
-    </Style>
-
 
     <Style Selector="defaults|CheckBoxPresenter">
         <Setter Property="Margin" Value="8" />
@@ -165,31 +145,11 @@
         <Setter Property="Template" Value="{StaticResource MaterialPasswordPresenterTemplate}" />
     </Style>
 
-    <Style Selector="defaults|SelectionPresenter">
+    <Style Selector="defaults|NumericPresenter">
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template" Value="{StaticResource MaterialComboBoxSelectionPresenterTemplate}" />
-        <Interaction.Behaviors>
-            <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}"
-                                 Value="{x:Static annotations:SelectionType.RadioButtons}">
-                <ChangePropertyAction PropertyName="Margin" Value="8" />
-                <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource MaterialRadioButtonsSelectionPresenterTemplate}" />
-            </DataTriggerBehavior>
-            <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}"
-                                 Value="{x:Static annotations:SelectionType.RadioButtonsInline}">
-                <ChangePropertyAction PropertyName="Margin" Value="8" />
-                <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource MaterialRadioButtonsInlineSelectionPresenterTemplate}" />
-            </DataTriggerBehavior>
-            <DataTriggerBehavior Binding="{formBuilding:FormBinding SelectionType}"
-                                 Value="{x:Static annotations:SelectionType.ComboBoxEditable}">
-                <ChangePropertyAction PropertyName="Margin" Value="8" />
-                <ChangePropertyAction PropertyName="Template"
-                                      Value="{StaticResource MaterialEditableComboBoxSelectionPresenterTemplate}" />
-            </DataTriggerBehavior>
-        </Interaction.Behaviors>
+        <Setter Property="Template" Value="{StaticResource MaterialNumericPresenterTemplate}" />
     </Style>
 
     <Style Selector="defaults|SliderPresenter">

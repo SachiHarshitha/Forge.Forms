@@ -7,7 +7,9 @@
     xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
     xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles">
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
-
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="IconStyles.axaml" />
+    </ResourceDictionary.MergedDictionaries>
     <ControlTemplate x:Key="MaterialConvertedPresenterTemplate" TargetType="{x:Type defaults:ConvertedPresenter}">
         <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
               Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -22,7 +24,7 @@
                 Margin="0,0,16,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Theme="{DynamicResource MaterialColoredIconStyle}"
+                Theme="{StaticResource MaterialColoredIconStyle}"
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
             <TextBox

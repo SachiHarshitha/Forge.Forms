@@ -7,7 +7,9 @@
     xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
     xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults">
     <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
-
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="IconStyles.axaml" />
+    </ResourceDictionary.MergedDictionaries>
     <ControlTemplate x:Key="MaterialDatePickerPresenterTemplate">
         <Grid IsVisible="{formBuilding:FormBinding IsVisible}">
             <Grid.ColumnDefinitions>
@@ -21,7 +23,7 @@
                 Margin="0,0,8,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Theme="{DynamicResource MaterialColoredIconStyle}"
+                Theme="{StaticResource MaterialColoredIconStyle}"
                 Kind="{formBuilding:FormBinding Icon}"
                 IsVisible="{formBuilding:FormBinding IconVisibility}" />
             <DatePicker
@@ -36,6 +38,11 @@
                 <DatePicker.Styles>
                     <Style
                         Selector="defaults|DatePresenter /template/ DatePicker#ValueHolderControl:error /template/ TextBox#DisplayTextBox">
+                        <Setter Property="DataValidationErrors.Errors"
+                                Value="{TemplateBinding DataValidationErrors.Errors}" />
+                    </Style>
+                    <Style
+                        Selector="defaults|DatePresenter /template/ DatePicker#ValueHolderControl:hasnodate /template/ TextBox#DisplayTextBox">
                         <Setter Property="DataValidationErrors.Errors"
                                 Value="{TemplateBinding DataValidationErrors.Errors}" />
                     </Style>
