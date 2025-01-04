@@ -21,7 +21,7 @@
         <PackageIcon>Rastergrafik.png</PackageIcon>
         <RepositoryUrl>https://github.com/SachiHarshitha/Forge.Forms</RepositoryUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
     </PropertyGroup>
 
     <ItemGroup>

@@ -15,19 +15,34 @@ internal class ActionPanel : Panel
             Position.Right,
             true);
 
-    public static Position GetPosition(Control element)
+    public static readonly AvaloniaProperty<Thickness> PanelMarginProperty =
+        AvaloniaProperty.Register<ActionPanel, Thickness>(
+            nameof(PanelMargin),
+            new Thickness(8d, 0d));
+
+    public Thickness PanelMargin
+    {
+        get => (Thickness)GetValue(PanelMarginProperty);
+        set => SetValue(PanelMarginProperty, value);
+    }
+
+    public static Position GetPosition(AvaloniaObject element)
     {
         return element.GetValue(PositionProperty);
     }
 
-    public static void SetPosition(Control element, Position value)
+    public static void SetPosition(AvaloniaObject element, Position value)
     {
         element.SetValue(PositionProperty, value);
     }
 
     protected override Size MeasureOverride(Size availableSize)
     {
-        var newAvailableSize = availableSize.WithHeight(double.PositiveInfinity);
+        var margin = PanelMargin;
+        var adjustedSize = availableSize.Deflate(margin);
+
+        // Existing logic, but use `adjustedSize` instead of `availableSize`
+        var newAvailableSize = adjustedSize.WithHeight(double.PositiveInfinity);
         var children = Children;
         var leftWidth = 0d;
         var rightWidth = 0d;
@@ -98,6 +113,16 @@ internal class ActionPanel : Panel
 
     protected override Size ArrangeOverride(Size finalSize)
     {
+        // Get the PanelMargin
+        var margin = PanelMargin;
+
+        // Adjust the bounds by the PanelMargin
+        var adjustedBounds = new Rect(
+            margin.Left,
+            margin.Top,
+            finalSize.Width - margin.Left - margin.Right,
+            finalSize.Height - margin.Top - margin.Bottom);
+
         var children = Children;
         var leftWidth = 0d;
         var rightWidth = 0d;
@@ -111,6 +136,8 @@ internal class ActionPanel : Panel
         var rightChildren = new List<Control>();
         Control fillChild = null;
         var fillHeight = 0d;
+
+        // Classify children into left, right, or fill categories
         for (var i = 0; i < children.Count; i++)
         {
             var child = children[i];
@@ -146,49 +173,67 @@ internal class ActionPanel : Panel
             }
         }
 
-        // Test for h h.
-        if (leftWidth + rightWidth <= finalSize.Width)
+        // Handle different layout configurations
+        if (leftWidth + rightWidth <= adjustedBounds.Width)
         {
-            StackHorizontally(leftChildren, 0d, 0d, finalSize.Height);
-            fillChild?.Arrange(new Rect(leftWidth, 0d, finalSize.Width - leftWidth - rightWidth, finalSize.Height));
-            StackHorizontally(rightChildren, finalSize.Width - rightWidth, 0d, finalSize.Height);
+            StackHorizontally(leftChildren, adjustedBounds.Left, adjustedBounds.Top, adjustedBounds.Height);
+            fillChild?.Arrange(new Rect(
+                adjustedBounds.Left + leftWidth,
+                adjustedBounds.Top,
+                adjustedBounds.Width - leftWidth - rightWidth,
+                adjustedBounds.Height));
+            StackHorizontally(rightChildren, adjustedBounds.Right - rightWidth, adjustedBounds.Top,
+                adjustedBounds.Height);
             return finalSize;
         }
 
-        if (leftWidth <= finalSize.Width)
+        if (leftWidth <= adjustedBounds.Width)
         {
-            // Test for h / h
-            if (rightWidth <= finalSize.Width)
+            if (rightWidth <= adjustedBounds.Width)
             {
-                StackHorizontally(leftChildren, 0d, 0d, leftMaxHeight);
-                fillChild?.Arrange(new Rect(0d, leftMaxHeight, finalSize.Width, fillHeight));
-                StackHorizontally(rightChildren, finalSize.Width - rightWidth, leftMaxHeight + fillHeight,
-                    rightMaxHeight);
+                StackHorizontally(leftChildren, adjustedBounds.Left, adjustedBounds.Top, leftMaxHeight);
+                fillChild?.Arrange(new Rect(
+                    adjustedBounds.Left,
+                    adjustedBounds.Top + leftMaxHeight,
+                    adjustedBounds.Width,
+                    fillHeight));
+                StackHorizontally(rightChildren, adjustedBounds.Right - rightWidth,
+                    adjustedBounds.Top + leftMaxHeight + fillHeight, rightMaxHeight);
                 return finalSize;
             }
 
-            // Return h / v
-            StackHorizontally(leftChildren, 0d, 0d, leftMaxHeight);
-            fillChild?.Arrange(new Rect(0d, leftMaxHeight, finalSize.Width, fillHeight));
-            StackVertically(Enumerable.Reverse(rightChildren), finalSize.Width - rightMaxWidth,
-                leftMaxHeight + fillHeight, rightMaxWidth);
+            StackHorizontally(leftChildren, adjustedBounds.Left, adjustedBounds.Top, leftMaxHeight);
+            fillChild?.Arrange(new Rect(
+                adjustedBounds.Left,
+                adjustedBounds.Top + leftMaxHeight,
+                adjustedBounds.Width,
+                fillHeight));
+            StackVertically(Enumerable.Reverse(rightChildren), adjustedBounds.Right - rightMaxWidth,
+                adjustedBounds.Top + leftMaxHeight + fillHeight, rightMaxWidth);
             return finalSize;
         }
 
-        // Test for v / h
-        if (rightWidth <= finalSize.Width)
+        if (rightWidth <= adjustedBounds.Width)
         {
-            StackVertically(leftChildren, 0d, 0d, leftMaxWidth);
-            fillChild?.Arrange(new Rect(0d, leftHeight, finalSize.Width, fillHeight));
-            StackHorizontally(rightChildren, finalSize.Width - rightWidth, leftHeight + fillHeight, rightMaxHeight);
+            StackVertically(leftChildren, adjustedBounds.Left, adjustedBounds.Top, leftMaxWidth);
+            fillChild?.Arrange(new Rect(
+                adjustedBounds.Left,
+                adjustedBounds.Top + leftHeight,
+                adjustedBounds.Width,
+                fillHeight));
+            StackHorizontally(rightChildren, adjustedBounds.Right - rightWidth,
+                adjustedBounds.Top + leftHeight + fillHeight, rightMaxHeight);
             return finalSize;
         }
 
-        // Return v / v
-        StackVertically(leftChildren, 0d, 0d, leftMaxWidth);
-        fillChild?.Arrange(new Rect(0d, leftHeight, finalSize.Width, fillHeight));
-        StackVertically(Enumerable.Reverse(rightChildren), finalSize.Width - rightMaxWidth, leftHeight + fillHeight,
-            rightMaxWidth);
+        StackVertically(leftChildren, adjustedBounds.Left, adjustedBounds.Top, leftMaxWidth);
+        fillChild?.Arrange(new Rect(
+            adjustedBounds.Left,
+            adjustedBounds.Top + leftHeight,
+            adjustedBounds.Width,
+            fillHeight));
+        StackVertically(Enumerable.Reverse(rightChildren), adjustedBounds.Right - rightMaxWidth,
+            adjustedBounds.Top + leftHeight + fillHeight, rightMaxWidth);
         return finalSize;
     }
 

@@ -160,7 +160,7 @@ public class FormBindingExtension : MarkupExtension
                 if (_targetPropertyName == "Kind" && binding.Source is DynamicForm form)
                 {
                     var path = binding.Path.Split('.').Last();
-                    var icon = form.Model.GetHighestPropertyValue(path);
+                    var icon = form.ModelWrapper.Model.GetHighestPropertyValue(path);
                     ApplyLiteralValueViaReflection(styledElement, icon);
                 }
 
