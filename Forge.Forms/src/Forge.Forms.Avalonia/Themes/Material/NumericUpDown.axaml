@@ -2,46 +2,61 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
                     xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
-                    xmlns:system="clr-namespace:System;assembly=netstandard">
+                    xmlns:system="clr-namespace:System;assembly=netstandard"
+                    xmlns:valueConverters="clr-namespace:Forge.Forms.AvaloniaUI.DynamicExpressions.ValueConverters"
+                    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal">
     <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="avares://Material.Styles/Resources/Themes/TextBox.axaml" />
     </ResourceDictionary.MergedDictionaries>
+    <valueConverters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
 
     <Design.PreviewWith>
         <Border Padding="20" Width="300">
             <StackPanel Spacing="20">
-                <NumericUpDown Minimum="0"
-                               Maximum="10"
-                               Increment="0.5"
-                               Watermark="Enter text"
-                               Theme=""
-                               assists:TextFieldAssist.Hints="Here is the hint"
-                               assists:TextFieldAssist.Label="Very Long Cool label" />
-                <NumericUpDown Minimum="0"
-                               Maximum="10"
-                               Increment="0.5"
-                               Watermark="Enter text"
-                               assists:TextFieldAssist.Hints="Here is the hint"
-                               assists:TextFieldAssist.Label="Cool label">
+                <internal:CustomNumericUpDown Minimum="0"
+                                              Maximum="10"
+                                              Increment="0.5"
+                                              Watermark="Enter text"
+                                              Theme=""
+                                              assists:TextFieldAssist.Hints="Here is the hint"
+                                              assists:TextFieldAssist.Label="Very Long Cool label" />
+                <internal:CustomNumericUpDown Minimum="0"
+                                              Maximum="10"
+                                              Increment="0.5"
+                                              Watermark="Enter text"
+                                              assists:TextFieldAssist.Hints="Here is the hint"
+                                              assists:TextFieldAssist.Label="Cool label">
                     <DataValidationErrors.Error>
                         <system:ArgumentNullException />
                     </DataValidationErrors.Error>
-                </NumericUpDown>
-                <NumericUpDown Minimum="0"
-                               Maximum="10"
-                               Increment="0.5"
-                               VerticalContentAlignment="Center"
-                               HorizontalContentAlignment="Center"
-                               ButtonSpinnerLocation="Left"
-                               Watermark="Enter text" />
+                </internal:CustomNumericUpDown>
+                <internal:CustomNumericUpDown Minimum="0"
+                                              Maximum="10"
+                                              Increment="0.5"
+                                              VerticalContentAlignment="Center"
+                                              HorizontalContentAlignment="Center"
+                                              ButtonSpinnerLocation="Left"
+                                              Watermark="Enter text" />
             </StackPanel>
         </Border>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="FilledNumericUpDown" TargetType="NumericUpDown">
+    <ControlTheme x:Key="FilledNumericUpDown" TargetType="internal:CustomNumericUpDown">
         <Setter Property="Background" Value="{DynamicResource MaterialTextFieldBoxBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
+        <!--<Setter Property="(Interaction.Behaviors)">
+            <BehaviorCollectionTemplate>
+                <BehaviorCollection>
+                    <DataTriggerBehavior Binding="{TemplateBinding DataValidationErrors.Errors, Converter={StaticResource IsNotEmptyConverter}}" ComparisonCondition="Equal" Value="{x:True}">
+                        <ChangePropertyAction PropertyName="DataValidationErrors.Errors"  Value="{TemplateBinding DataValidationErrors.Errors}" />
+                    </DataTriggerBehavior>
+                    <DataTriggerBehavior Binding="{TemplateBinding DataValidationErrors.Errors, Converter={StaticResource IsNotEmptyConverter}}" ComparisonCondition="Equal" Value="{x:False}">
+                        <ChangePropertyAction PropertyName="DataValidationErrors.Errors"  Value="{TemplateBinding DataValidationErrors.Errors}" />
+                    </DataTriggerBehavior>
+                </BehaviorCollection>
+            </BehaviorCollectionTemplate>
+        </Setter>-->
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="PART_RootBorder"
@@ -53,33 +68,35 @@
                         BorderThickness="{TemplateBinding BorderThickness}">
                     <Panel Name="PART_RootPanel">
                         <Panel>
-                            <TextBox Name="PART_TextBox"
-                                     BorderThickness="0"
-                                     TextBlock.FontFamily="{TemplateBinding FontFamily}"
-                                     TextBlock.FontSize="{TemplateBinding FontSize}"
-                                     TextBlock.FontStyle="{TemplateBinding FontStyle}"
-                                     TextBlock.FontWeight="{TemplateBinding FontWeight}"
-                                     TextBlock.Foreground="{TemplateBinding Foreground}"
-                                     assists:TextFieldAssist.Label="{TemplateBinding assists:TextFieldAssist.Label}"
-                                     DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
-                                     IsReadOnly="{TemplateBinding IsReadOnly}"
-                                     Text="{TemplateBinding Text}"
-                                     UseFloatingWatermark="True"
-                                     Watermark="{TemplateBinding Watermark}"
-                                     AcceptsReturn="False"
-                                     TextWrapping="NoWrap">
-                                <TextBox.InnerRightContent>
-                                    <ButtonSpinner Name="PART_Spinner"
-                                                   Foreground="{TemplateBinding Foreground}"
-                                                   BorderThickness="0"
-                                                   BorderBrush="Transparent"
-                                                   Height="50"
-                                                   VerticalContentAlignment="Top"
-                                                   AllowSpin="{TemplateBinding AllowSpin}"
-                                                   ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}"
-                                                   ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}" />
-                                </TextBox.InnerRightContent>
-                            </TextBox>
+                            <DataValidationErrors Name="PART_DataValidation"
+                                                  Errors="{TemplateBinding DataValidationErrors.Errors}">
+                                <TextBox Name="PART_TextBox"
+                                         BorderThickness="0"
+                                         TextBlock.FontFamily="{TemplateBinding FontFamily}"
+                                         TextBlock.FontSize="{TemplateBinding FontSize}"
+                                         TextBlock.FontStyle="{TemplateBinding FontStyle}"
+                                         TextBlock.FontWeight="{TemplateBinding FontWeight}"
+                                         TextBlock.Foreground="{TemplateBinding Foreground}"
+                                         assists:TextFieldAssist.Label="{TemplateBinding assists:TextFieldAssist.Label}"
+                                         IsReadOnly="{TemplateBinding IsReadOnly}"
+                                         Text="{TemplateBinding Text, Mode=TwoWay}"
+                                         UseFloatingWatermark="True"
+                                         Watermark="{TemplateBinding Watermark}"
+                                         AcceptsReturn="False"
+                                         TextWrapping="NoWrap">
+                                    <TextBox.InnerRightContent>
+                                        <ButtonSpinner Name="PART_Spinner"
+                                                       Foreground="{TemplateBinding Foreground}"
+                                                       BorderThickness="0"
+                                                       BorderBrush="Transparent"
+                                                       Height="50"
+                                                       VerticalContentAlignment="Top"
+                                                       AllowSpin="{TemplateBinding AllowSpin}"
+                                                       ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}"
+                                                       ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}" />
+                                    </TextBox.InnerRightContent>
+                                </TextBox>
+                            </DataValidationErrors>
                         </Panel>
                     </Panel>
                 </Border>
@@ -120,7 +137,7 @@
     </ControlTheme>
 
     <!-- Default theme -->
-    <ControlTheme x:Key="{x:Type NumericUpDown}" TargetType="NumericUpDown"
+    <ControlTheme x:Key="{x:Type internal:CustomNumericUpDown}" TargetType="internal:CustomNumericUpDown"
                   BasedOn="{StaticResource FilledNumericUpDown}" />
 
 </ResourceDictionary>

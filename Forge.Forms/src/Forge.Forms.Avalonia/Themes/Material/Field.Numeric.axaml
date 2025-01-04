@@ -10,6 +10,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="NumericUpDown.axaml" />
     </ResourceDictionary.MergedDictionaries>
+
     <ControlTheme x:Key="{x:Type defaults:NumericPresenter}" TargetType="{x:Type defaults:NumericPresenter}">
         <Setter Property="Margin" Value="8" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -34,7 +35,7 @@
                         VerticalAlignment="Center"
                         IsVisible="{formBuilding:FormBinding IconVisibility}"
                         Kind="{formBuilding:FormBinding Icon}" />
-                    <NumericUpDown
+                    <internal:CustomNumericUpDown
                         Name="ValueHolderControl"
                         Grid.Column="1"
                         Maximum="{Binding DataContext, Converter={StaticResource FormBindingConverter}, ConverterParameter=Maximum}"
@@ -45,7 +46,14 @@
                         internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
                         FontSize="12"
                         IsEnabled="{formBuilding:FormBinding IsEnabled}"
-                        Text="{formBuilding:FormBinding Value}" />
+                        Text="{formBuilding:FormBinding Value}">
+                        <!--<internal:CustomNumericUpDown.Styles>
+                            <Style Selector="defaults|NumericPresenter /template/ NumericUpDown#ValueHolderControl:error /template/ TextBox#PART_TextBox">
+                                <Setter Property="DataValidationErrors.Errors" Value="{TemplateBinding DataValidationErrors.Errors}" />                            
+                                <Setter Property="DataValidationErrors.HasErrors" Value="{TemplateBinding DataValidationErrors.HasErrors}" />                            
+                            </Style>
+                        </internal:CustomNumericUpDown.Styles>-->
+                    </internal:CustomNumericUpDown>
                 </Grid>
             </ControlTemplate>
         </Setter>

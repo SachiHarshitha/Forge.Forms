@@ -64,7 +64,8 @@
         <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Fluent.axaml" />
 
         <!-- Material Theme -->
-        <!--<themes:MaterialTheme PrimaryColor="Purple" SecondaryColor="Lime" />
+        <!--
+        <themes:MaterialTheme PrimaryColor="Purple" SecondaryColor="Lime" />
         <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material.axaml" />
         -->
 

@@ -10,6 +10,7 @@ namespace Forge.Forms.Avalonia.Demo.Models;
 [Action("register", "REGISTER", Validates = true, IsDefault = true)]
 public class User : ObservableObject
 {
+    private int age;
     private bool agreeToLicense;
     private string confirmPassword;
     private DateTimeOffset? dateOfBirth;
@@ -37,6 +38,17 @@ public class User : ObservableObject
     {
         get => lastName;
         set => SetProperty(ref lastName, value);
+    }
+
+    [Field(Icon = PackIconKind.BirthdayCake)]
+    [Value(Must.BeLessThan, 99,
+        Message = "Things get complicated when you are above 99")]
+    [Value(Must.BeGreaterThan, 16,
+        Message = "You are underage and not allowed to participate.")]
+    public int Age
+    {
+        get => age;
+        set => SetProperty(ref age, value);
     }
 
     [Field(Icon = PackIconKind.Calendar)]
