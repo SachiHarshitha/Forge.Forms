@@ -58,6 +58,16 @@ internal static class Primitive
         return BuildWith(field);
     }
 
+    public static FormDefinition CreditCard()
+    {
+        var field = new CreditCardField(null)
+        {
+            IsDirectBinding = true
+        };
+
+        return BuildWith(field);
+    }
+
     public static FormDefinition Numeric(Type numericType, object minValue, object maxValue, object incrementValue)
     {
         if (!IsNumericType(numericType))

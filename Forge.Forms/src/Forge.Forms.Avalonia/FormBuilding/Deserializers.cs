@@ -24,6 +24,11 @@ public static class Deserializers
         return DateTimeOffset.Parse(expression, CultureInfo.InvariantCulture);
     }
 
+    public static object CreditCard(string expression)
+    {
+        return expression;
+    }
+
     public static object Boolean(string expression)
     {
         return bool.Parse(expression);

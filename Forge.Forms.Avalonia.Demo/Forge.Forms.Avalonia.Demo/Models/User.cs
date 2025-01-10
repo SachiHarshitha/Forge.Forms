@@ -1,4 +1,5 @@
 ﻿using System;
+using AvaloniaUI.Controls.Banking;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Forge.Forms.AvaloniaUI.Annotations;
 using MaterialDesign.Avalonia.PackIcon;
@@ -10,6 +11,7 @@ namespace Forge.Forms.Avalonia.Demo.Models;
 [Action("register", "REGISTER", Validates = true, IsDefault = true)]
 public class User : ObservableObject
 {
+    private SecureCreditCard _creditCard = new();
     private int age;
     private bool agreeToLicense;
     private string confirmPassword;
@@ -98,6 +100,16 @@ public class User : ObservableObject
         set => SetProperty(ref confirmPassword, value);
     }
 
+    [Break]
+    [Heading("Credit card details")]
+    [Field(Icon = PackIconKind.CreditCard)]
+    public SecureCreditCard CardDetails
+    {
+        get => _creditCard;
+        set => SetProperty(ref _creditCard, value);
+    }
+
+    [Break]
     [Break]
     [Heading("Review entered information")]
     [Text("Name: {Binding FirstName} {Binding LastName}")]

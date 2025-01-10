@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using AvaloniaUI.Controls.Banking;
 using Forge.Forms.AvaloniaUI.Annotations;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 
@@ -15,6 +16,14 @@ internal class StringFieldBuilder : TypeBuilder<string>
             IsPassword = property.GetCustomAttribute<PasswordAttribute>() != null,
             IsMultiline = property.GetCustomAttribute<MultiLineAttribute>() != null
         };
+    }
+}
+
+internal class CreditCardFieldBuilder : TypeBuilder<SecureCreditCard>
+{
+    protected override FormElement Build(IFormProperty property, Func<string, object> deserializer)
+    {
+        return new CreditCardField(property.Name);
     }
 }
 

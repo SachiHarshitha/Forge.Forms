@@ -29,12 +29,16 @@
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Slider.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.Switch.axaml" />
                 <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.TimePicker.axaml" />
+                <ResourceInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Material/Field.CreditCard.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
 
     <!-- Generic Styles -->
     <StyleInclude Source="avares://Forge.Forms.AvaloniaUI/Themes/Generic.axaml" />
+
+    <!-- AvaloniaUI Controls Styles -->
+    <StyleInclude Source="avares://AvaloniaUI.Controls/Banking/Themes/Material.axaml" />
 
     <!-- Packicon Styles  -->
     <StyleInclude Source="avares://MaterialDesign.Avalonia.PackIcon/Assets/Generic.xaml" />

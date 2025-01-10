@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using Avalonia.Controls;
 using Avalonia.Layout;
+using AvaloniaUI.Controls.Banking;
 using Forge.Forms.AvaloniaUI.Annotations;
 using Forge.Forms.AvaloniaUI.DynamicExpressions;
 using Forge.Forms.AvaloniaUI.FormBuilding.Defaults;
@@ -41,7 +42,8 @@ public class FormBuilder : IFormBuilder
             // Default property builders.
             new DirectContentBuilder(),
             new SelectFromBuilder(),
-            new SliderBuilder()
+            new SliderBuilder(),
+            new CreditCardFieldBuilder()
         };
 
         List<IFieldBuilder> AsList(params IFieldBuilder[] builders)
@@ -53,6 +55,7 @@ public class FormBuilder : IFormBuilder
         {
             [typeof(string)] = Primitive.String(),
             [typeof(DateTimeOffset)] = Primitive.DateTime(),
+            [typeof(SecureCreditCard)] = Primitive.CreditCard(),
             [typeof(bool)] = Primitive.Boolean(),
             [typeof(char)] = Primitive.Char(),
             [typeof(byte)] = Primitive.Byte(),
@@ -90,6 +93,9 @@ public class FormBuilder : IFormBuilder
 
             // Native controls
             [typeof(string)] = AsList(new StringFieldBuilder()),
+
+            // Custom data types
+            [typeof(SecureCreditCard)] = AsList(new CreditCardFieldBuilder()),
 
             // Temporarily converted.
             [typeof(DateTimeOffset)] = AsList(new DateTimeFieldBuilder()),
@@ -143,6 +149,7 @@ public class FormBuilder : IFormBuilder
             ["string"] = typeof(string),
             ["datetime"] = typeof(DateTimeOffset),
             ["time"] = typeof(DateTimeOffset),
+            ["creditcard"] = typeof(SecureCreditCard),
             ["bool"] = typeof(bool),
             ["char"] = typeof(char),
             ["byte"] = typeof(byte),
@@ -182,6 +189,7 @@ public class FormBuilder : IFormBuilder
                 ["password"] = _ => new TypeConstructor(typeof(string), new PasswordAttribute()),
                 ["datetime"] = _ => typeof(DateTimeOffset),
                 ["time"] = DefaultTypeConstructors.Time,
+                ["creditcard"] = _ => typeof(SecureCreditCard),
                 ["bool"] = _ => typeof(bool),
                 ["toggle"] = _ => new TypeConstructor(typeof(bool), new ToggleAttribute()),
                 ["char"] = _ => typeof(char),
@@ -219,6 +227,7 @@ public class FormBuilder : IFormBuilder
             [typeof(object)] = Deserializers.String,
             [typeof(string)] = Deserializers.String,
             [typeof(DateTimeOffset)] = Deserializers.DateTime,
+            [typeof(SecureCreditCard)] = Deserializers.CreditCard,
             [typeof(bool)] = Deserializers.Boolean,
             [typeof(char)] = Deserializers.Char,
             [typeof(byte)] = Deserializers.Byte,

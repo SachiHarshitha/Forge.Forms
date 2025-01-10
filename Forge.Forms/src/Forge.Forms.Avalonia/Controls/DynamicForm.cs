@@ -60,7 +60,6 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
 
     private Grid itemsGrid;
 
-    private ModelWrapper<object> modelWrapper;
     private int rows;
 
     static DynamicForm()
@@ -92,7 +91,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
         Unloaded += (s, e) => { ActiveForms.Remove(this); };
     }
 
-    public ModelWrapper<object> ModelWrapper => modelWrapper;
+    public ModelWrapper<object> ModelWrapper { get; private set; }
 
     protected override Type StyleKeyOverride => typeof(DynamicForm);
 
@@ -406,10 +405,7 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
                 break;
         }
 
-        if (element is DataFormField dataField)
-        {
-            currentFieldControls.Add(dataField, contentPresenter);
-        }
+        if (element is DataFormField dataField) currentFieldControls.Add(dataField, contentPresenter);
 
         return contentPresenter;
     }
@@ -461,22 +457,22 @@ public sealed partial class DynamicForm : ContentControl, IDynamicForm
 
     internal void SetModelWrapper(object model)
     {
-        if (modelWrapper != null)
-            modelWrapper.ValidationErrorsChanged -= HandleValidationErrorsChanged;
+        if (ModelWrapper != null)
+            ModelWrapper.ValidationErrorsChanged -= HandleValidationErrorsChanged;
 
         if (model == null)
         {
-            modelWrapper = null;
+            ModelWrapper = null;
         }
         else
         {
-            modelWrapper = new ModelWrapper<object>(model);
-            modelWrapper.ValidationErrorsChanged += HandleValidationErrorsChanged;
+            ModelWrapper = new ModelWrapper<object>(model);
+            ModelWrapper.ValidationErrorsChanged += HandleValidationErrorsChanged;
         }
     }
 
     /// <summary>
-    /// Handle Validation Errors Changed Event
+    ///     Handle Validation Errors Changed Event
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

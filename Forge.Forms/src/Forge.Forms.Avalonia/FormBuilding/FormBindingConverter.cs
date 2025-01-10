@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 
@@ -13,6 +14,22 @@ public class FormBindingConverter : IValueConverter
     {
         if (value is IBindingProvider field && parameter is string fieldName)
         {
+            if (fieldName.Contains("."))
+            {
+                var formValue = field.ProvideValue("Value") as Binding;
+                if (formValue == null) return null;
+
+                return new Binding
+                {
+                    Source = formValue.Source,
+                    Mode = formValue.Mode,
+                    Converter = formValue.Converter,
+                    ConverterParameter = formValue.ConverterParameter,
+                    Priority = formValue.Priority,
+                    Path = formValue.Path + "." + fieldName.Split(".").Last()
+                };
+            }
+
             var providedValue = field.ProvideValue(fieldName);
             return providedValue;
         }

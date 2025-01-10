@@ -1,0 +1,63 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:defaults="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding.Defaults"
+    xmlns:formBuilding="clr-namespace:Forge.Forms.AvaloniaUI.FormBuilding"
+    xmlns:internal="clr-namespace:Forge.Forms.AvaloniaUI.Controls.Internal"
+    xmlns:packIcon="clr-namespace:MaterialDesign.Avalonia.PackIcon;assembly=MaterialDesign.Avalonia.PackIcon"
+    xmlns:banking="clr-namespace:AvaloniaUI.Controls.Banking;assembly=AvaloniaUI.Controls">
+    <formBuilding:FormBindingConverter x:Key="FormBindingConverter" />
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://AvaloniaUI.Controls/Banking/Themes/Material/CreditCardControl.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTheme x:Key="{x:Type defaults:CreditCardPresenter}" TargetType="{x:Type defaults:CreditCardPresenter}">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid IsVisible="{formBuilding:FormBinding IsVisible}"
+                      Margin="8"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"
+                      RowDefinitions="Auto,Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <packIcon:PackIcon
+                        Grid.Column="0"
+                        Width="24"
+                        Height="24"
+                        Margin="0,0,16,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Theme="{StaticResource MaterialColoredIconStyle}"
+                        Kind="{formBuilding:FormBinding Icon}"
+                        IsVisible="{formBuilding:FormBinding IconVisibility}" />
+                    <TextBlock
+                        x:Name="PART_Name"
+                        VerticalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Text="{formBuilding:FormBinding Name}" />
+                    <banking:CreditCardControl Grid.Column=""
+                                               Grid.Row="1"
+                                               Grid.ColumnSpan="3"
+                                               Tag="{formBuilding:FormBinding Value}"
+                                               CardNumber="{Binding $self.Tag.CardNumber,Mode=TwoWay}"
+                                               ExpirationDate="{Binding $self.Tag.ExpirationDate,Mode=TwoWay}"
+                                               CVV="{Binding $self.Tag.CVV,Mode=TwoWay}"
+                                               CardholderName="{Binding $self.Tag.CardholderName,Mode=TwoWay}"
+                                               Name="ValueHolderControl"
+                                               Theme="{StaticResource MaterialCreditCardTemplate}"
+                                               internal:FocusHelper.InitialFocus="{formBuilding:FormBinding InitialFocus}"
+                                               FontSize="12"
+                                               IsEnabled="{formBuilding:FormBinding IsEnabled}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>
